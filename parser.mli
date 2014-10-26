@@ -36,5 +36,5 @@ type token =
   | ID
   | NUM of (int)
 
-val expr :
+val program :
   (Lexing.lexbuf  -> token) -> Lexing.lexbuf -> unit
