@@ -11,10 +11,13 @@ rule token = parse
 | ';' { SEMI }
 | ')' { RPAREN }
 | '}' { RBRACE }
+| '%' { MOD }
 | ',' { COMMA }
 | eof { EOF }
 | '+' { PLUS }
 | '*' { TIMES }
+| "->" { LINK }
+| "<->" { BILINK }
 | '-' { MINUS }
 | '/' { DIVIDE }
 | "==" { EQ }
@@ -34,6 +37,8 @@ rule token = parse
 | "for" { FOR }
 | "return" { RETURN }
 | "Graph" { GRAPH }
+| "NodeType" { NODETYPE }
+| "EdgeType" { EDGETYPE }
 | "Node" { NODE }
 | "bool" { BOOL }
 | "String" { STRING }
