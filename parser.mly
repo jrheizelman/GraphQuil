@@ -50,7 +50,7 @@ expr PLUS expr 		{ Binop ($1, Add, $3) }
 |expr NEQ expr 		{ Binop ($1, Neq, $3) }
 |expr OR expr 		{ Binop ($1, Or, $3) }
 |expr AND expr 		{ Binop ($1, And, $3) }
-|Not exp		{ Not($2) } 
+|Not expr		{ Not($2) } 
 |ID ASSIGN expr { Assign($1, $3) }
 |ID LPAREN actuals_opt RPAREN { Call($1, $3) }
 |LPAREN expr RPAREN { $2 }
