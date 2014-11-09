@@ -49,7 +49,9 @@ expr PLUS expr { Binop ($1, Add, $3)}
 |expr NEQ expr {}
 |expr OR expr {}
 |expr AND expr {}
-|expr ASSIGN expr {} 
+|ID ASSIGN expr { Assign($1, $3) }
+|ID LPAREN actuals_opt RPAREN { Call($1, $3) }
+|LPAREN expr RPAREN { $2 }
 |NUM { Lit($1)}
 /*|expr ID LPAREN expr RPAREN {} function call*/
 
@@ -81,6 +83,8 @@ stmt:
 
 vdecl:
   INT ID SEMI { $2 }
+  | BOOL ID SEMI { $2 }
+  | DOUBLE ID SEMI { $2 }
 
 vdecl_list:
   /* nothing */ { [] }
@@ -95,5 +99,5 @@ fdecl:
 
 program:
 	/* nothing */ { [], [] }
-	/*| program vdecl { ($2 :: fst $1), snd $1 }*/
+	| program vdecl { ($2 :: fst $1), snd $1 }
 	| program fdecl { fst $1, ($2 :: snd $1) }
