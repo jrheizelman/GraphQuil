@@ -13,6 +13,7 @@ rule token = parse
 | '}' { RBRACE }
 | '%' { MOD }
 | ',' { COMMA }
+| '.' { PERIOD }
 | eof { EOF }
 | '+' { PLUS }
 | '*' { TIMES }
