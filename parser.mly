@@ -18,7 +18,7 @@
 %left EQ NEQ
 %left LEQ GEQ LT GT
 %left PLUS MINUS
-%left TIMES DIVIDE
+%left TIMES DIVIDE MOD
 %right NEW
 %right NOT
 
