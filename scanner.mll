@@ -17,9 +17,9 @@ rule token = parse
 | '*' { TIMES }
 | '-' { MINUS }
 | '/' { DIVIDE }
+| "==" { EQ }
 | '=' { ASSIGN }
 | '.' {PERIOD}
-| "==" { EQ }
 | "!=" { NEQ }
 | "<=" { LEQ }
 | ">=" { GEQ }
@@ -33,13 +33,25 @@ rule token = parse
 | "while" { WHILE }
 | "for" { FOR }
 | "return" { RETURN }
-| "graph" { GRAPH }
-| "node" { NODE }
+| "Graph" { GRAPH }
+| "Node" { NODE }
 | "bool" { BOOL }
-| "string" { STRING }
+| "String" { STRING }
 | "type" { STRUCT }
 | "print" { PRINT }
 | "new" { NEW }
+| "continue" { CONTINUE }
+| "double" { DOUBLE }
+| "false" { FALSE }
+| "true" { TRUE }
+| "int" { INT }
+| "void" { VOID }
+| "dest" { DEST }
+| "edges" { EDGES }
+| "static" { STATIC }
+| "char" { CHAR }
+| "do" { DO }
+| "in" { IN }
 | ['0'-'9']+ as lxm { NUM(int_of_string lxm)}
 | ['a'-'z' 'A'-'Z']['a'-'z' 'A'-'Z' '0'-'9' '_']* as lxm { ID(lxm)}
 | _ as char { raise (Failure("illegal character " ^ Char.escaped char))}
