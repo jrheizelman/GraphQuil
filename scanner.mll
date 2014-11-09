@@ -9,6 +9,7 @@ rule token = parse
 | '(' { LPAREN }
 | '{' { LBRACE }
 | ';' { SEMI }
+| ':' { COLON }
 | ')' { RPAREN }
 | '}' { RBRACE }
 | '%' { MOD }
