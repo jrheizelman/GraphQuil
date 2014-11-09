@@ -2,6 +2,7 @@ type token =
   | LPAREN
   | LBRACE
   | SEMI
+  | COLON
   | RPAREN
   | RBRACE
   | MOD
@@ -47,7 +48,7 @@ type token =
   | DEST
   | EDGES
   | STATIC
-  | CHR
+  | CHAR
   | DO
   | IN
   | NUM of (int)
