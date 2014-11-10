@@ -1,17 +1,18 @@
-type operator = 
+type op = 
 Add 
 | Sub 
-| Mul 
+| Mult
 | Div 
-| Assn 
-| LThan 
-| GThan 
-| Equals 
-| LThanEq 
-| GThanEq 
-| NotEquals 
+| Assign 
+| Less 
+| Greater  
+| Leq 
+| Geq 
+| Neq 
 | And 
 | Or 
+| Mod
+| Equal
 
 type expr=
 Literal of int
@@ -21,6 +22,7 @@ Literal of int
 | Binop of expr * op * expr
 | Call of string * expr list
 | Lit of int
+| Not of expr
 
 type stmt =
 Block of stmt list
