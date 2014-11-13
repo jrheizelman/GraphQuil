@@ -55,4 +55,4 @@ type token =
   | ID of (string)
 
 val program :
-  (Lexing.lexbuf  -> token) -> Lexing.lexbuf -> unit
+  (Lexing.lexbuf  -> token) -> Lexing.lexbuf -> Ast.program

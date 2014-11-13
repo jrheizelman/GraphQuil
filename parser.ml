@@ -702,23 +702,23 @@ let yyact = [|
 # 103 "parser.mly"
                ( [], [] )
 # 705 "parser.ml"
-               : unit))
+               : Ast.program))
 ; (fun __caml_parser_env ->
-    let _1 = (Parsing.peek_val __caml_parser_env 1 : unit) in
+    let _1 = (Parsing.peek_val __caml_parser_env 1 : Ast.program) in
     let _2 = (Parsing.peek_val __caml_parser_env 0 : 'vdecl) in
     Obj.repr(
 # 104 "parser.mly"
                  ( (_2 :: fst _1), snd _1 )
 # 713 "parser.ml"
-               : unit))
+               : Ast.program))
 ; (fun __caml_parser_env ->
-    let _1 = (Parsing.peek_val __caml_parser_env 1 : unit) in
+    let _1 = (Parsing.peek_val __caml_parser_env 1 : Ast.program) in
     let _2 = (Parsing.peek_val __caml_parser_env 0 : 'fdecl) in
     Obj.repr(
 # 105 "parser.mly"
                  ( fst _1, (_2 :: snd _1) )
 # 721 "parser.ml"
-               : unit))
+               : Ast.program))
 (* Entry program *)
 ; (fun __caml_parser_env -> raise (Parsing.YYexit (Parsing.peek_val __caml_parser_env 0)))
 |]
@@ -740,4 +740,4 @@ let yytables =
     Parsing.names_const=yynames_const;
     Parsing.names_block=yynames_block }
 let program (lexfun : Lexing.lexbuf -> token) (lexbuf : Lexing.lexbuf) =
-   (Parsing.yyparse yytables 1 lexfun lexbuf : unit)
+   (Parsing.yyparse yytables 1 lexfun lexbuf : Ast.program)

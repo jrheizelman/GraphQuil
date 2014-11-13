@@ -1,12 +1,12 @@
-type op = Add | Sub | Mult | Div | Equal | Neq | Less | Greater
+type op = Add | Sub | Mult | Div | Equal | And | Neq | Mod | Leq | Geq | Greater | Less | Or
 
 type expr=
-Literal of int
+Lit of int
 | Noexpr
-| Id of string
 | Assign of string * expr
 | Binop of expr * op * expr
 | Call of string * expr list
+| Not of expr
 
 type stmt =
 Block of stmt list

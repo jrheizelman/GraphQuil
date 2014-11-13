@@ -23,7 +23,7 @@
 %right NOT
 
 %start program
-%type <unit> program
+%type <Ast.program> program
 
 
 %%
