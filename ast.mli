@@ -50,9 +50,7 @@ let string_of_opt string_of = function
   | None -> ""
 
 let rec string_of_expr = function
-    NumLit(n) -> string_of_float n
-  | BoolLit(b) -> string_of_bool b
-  | CharLit(c) -> "'" ^ Char.escaped c ^ "'"
+    Lit(n) -> string_of_int n
   | Id(s) -> s
   | Not(e) ->  "!" ^ string_of_expr e
   | Binop(e1, op, e2) ->
@@ -63,26 +61,6 @@ let rec string_of_expr = function
       | Leq -> " <= "   | Greater -> " > " | Geq -> " >= "
       | Concat -> " ^ " | And -> " && "    | Or -> " || ") ^
       string_of_expr e2
-  | FuncCallExpr(e, el) -> 
-      string_of_expr e ^ "(" ^ 
-      String.concat ", " (List.map string_of_expr el) ^ ")"
-  | FuncCreate(formals, body) ->
-      "(" ^ String.concat ", " formals ^ ") -> {\n" ^
-      String.concat "" (List.map string_of_stmt body) ^ "\n}"
-  | ListCreate(exprs) ->
-      "[" ^ String.concat ", " (List.map string_of_expr exprs) ^ "]"
-  | Sublist(e, eleft, eright) -> 
-      string_of_expr e ^ "[" ^ 
-      string_of_opt string_of_expr eleft ^ ":" ^ 
-      string_of_opt string_of_expr eright ^ "]"
-  | ListAccess(e1, e2) -> 
-      string_of_expr e1 ^ "[" ^ string_of_expr e2 ^ "]" 
-  | ObjCreate(props) ->
-      "{\n" ^ String.concat ",\n" (List.map 
-          (fun(prop) -> fst prop ^ ": " ^ string_of_expr (snd prop)) 
-      props) ^ "\n}"
-  | ObjAccess(e, s) ->
-      string_of_expr e ^ "." ^ s
 
 and string_of_stmt = function
     Return(expr) -> "return " ^ string_of_expr expr ^ ";";
@@ -99,9 +77,6 @@ and string_of_stmt = function
       "while (" ^ string_of_expr e ^ ") {\n" ^ 
       string_of_stmts s ^ "}"
   | Assign(a) -> string_of_assign a ^ ";"
-  | FuncCallStmt(e, el) ->
-      string_of_expr e ^ "(" ^ 
-      String.concat ", " (List.map string_of_expr el) ^ ");"
 
 and string_of_stmts stmts = 
   String.concat "\n" (List.map string_of_stmt stmts) ^ "\n"
