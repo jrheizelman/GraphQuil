@@ -14,13 +14,13 @@ Add
 | Mod
 | Equal
 
-type validtypes = Void | Int | Char | String
+type validtypes = Void | Int | Char | String | Double | Node 
+	| Graph | EdgeType | NodeType | Bool | Userdef
 
 type expr=
 Literal of int
 | Noexpr
 | Id of string
-| Assign of expr * expr
 | Binop of expr * op * expr
 | Call of string * expr list
 | Array of expr * expr
@@ -28,6 +28,7 @@ Literal of int
 | Not of expr
 | String of string
 | Char of string
+| Assign of expr * expr
 
 type stmt =
 Block of stmt list

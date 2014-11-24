@@ -17,7 +17,6 @@ rule token = parse
 | '%' { MOD }
 | ',' { COMMA }
 | '.' { PERIOD }
-| eof { EOF }
 | '+' { PLUS }
 | '*' { TIMES }
 | "->" { LINK }
@@ -63,7 +62,9 @@ rule token = parse
 | '"' [^'"']* '"'  as lxm { STRINGLIT(lxm) }
 | ''' [ ^'''] as ch ''' { CHARLIT(ch) }
 | ['0'-'9']+ as lxm { LITERAL(int_of_string lxm)}
-| ['a'-'z' 'A'-'Z']['a'-'z' 'A'-'Z' '0'-'9' '_']* as lxm { ID(lxm)}
+| ['a'-'z']['a'-'z' 'A'-'Z' '0'-'9' '_']* as lxm { ID(lxm)}
+| ['A'-'Z']['a'-'z' 'A'-'Z' '0'-'9' '_']* as lxm { TYPEID(lxm)}
+| eof { EOF }
 | _ as char { raise (Failure("illegal character " ^ Char.escaped char))}
 
 and comment = parse

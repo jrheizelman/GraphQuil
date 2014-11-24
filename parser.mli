@@ -7,7 +7,6 @@ type token =
   | RBRACE
   | MOD
   | COMMA
-  | PERIOD
   | EOF
   | PLUS
   | TIMES
@@ -17,6 +16,7 @@ type token =
   | DIVIDE
   | EQ
   | ASSIGN
+  | PERIOD
   | NEQ
   | LEQ
   | GEQ
@@ -25,6 +25,8 @@ type token =
   | NOT
   | AND
   | OR
+  | RBRACK
+  | LBRACK
   | IF
   | ELSE
   | WHILE
@@ -52,6 +54,7 @@ type token =
   | IN
   | LITERAL of (int)
   | ID of (string)
+  | TYPEID of (string)
   | CHARLIT of (string)
   | STRINGLIT of (string)
 

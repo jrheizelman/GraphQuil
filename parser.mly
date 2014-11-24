@@ -1,6 +1,6 @@
 %{ open Ast %}
 
-%token LPAREN LBRACE SEMI COLON RPAREN RBRACE MOD COMMA PERIOD EOF
+%token LPAREN LBRACE SEMI COLON RPAREN RBRACE MOD COMMA EOF
 %token PLUS TIMES LINK BILINK MINUS DIVIDE EQ ASSIGN PERIOD
 %token NEQ LEQ GEQ LT GT NOT AND OR RBRACK LBRACK
 %token IF ELSE WHILE FOR RETURN GRAPH NODETYPE EDGETYPE
@@ -8,6 +8,7 @@
 %token FALSE TRUE INT VOID DEST EDGES STATIC CHAR DO IN
 %token <int> LITERAL
 %token <string> ID
+%token <string> TYPEID
 %token <string> CHARLIT
 %token <string> STRINGLIT
 
@@ -28,7 +29,6 @@
 
 %start program
 %type <Ast.program> program
-
 
 %%
 
@@ -57,7 +57,7 @@ expr:
 |expr NEQ expr 		{ Binop ($1, Neq, $3) }
 |expr OR expr 		{ Binop ($1, Or, $3) }
 |expr AND expr 		{ Binop ($1, And, $3) }
-|expr ASSIGN expr { Assign($1, $3) }
+|var ASSIGN expr { Assign($1, $3) }
 |NOT expr		      { Not($2) } 
 |ID LPAREN actuals_opt RPAREN { Call($1, $3) }
 |LPAREN expr RPAREN { $2 }
@@ -98,14 +98,8 @@ stmt:
   | WHILE LPAREN expr RPAREN stmt { While($3, $5) }
 
 vdecl:
-  INT ID SEMI { $2 }
-  | INT ID ASSIGN expr SEMI { $2 }
-  | BOOL ID SEMI { $2 }
-  | DOUBLE ID SEMI { $2 }
-  | STRING ID SEMI { $2 }
-  | CHAR ID SEMI { $2 }
-  /*TODO define assignment with the other types
-    Split up into vdecl with/without assignment */
+  type_decl SEMI { $1 }
+  | type_decl ASSIGN expr SEMI { $1 }
 
 vdecl_list:
   /* nothing */ { [] }
@@ -122,9 +116,26 @@ fdecl:
 
 retval:
         INT ID LPAREN { [Int], $2  }
-        |CHAR ID LPAREN { [Char], $2  }
-        |VOID ID LPAREN { [Void], $2  }
-        /* TODO add more types here */
+        | CHAR ID LPAREN { [Char], $2  }
+        | VOID ID LPAREN { [Void], $2  }
+        | STRING ID LPAREN { [String], $2  }
+        | DOUBLE ID LPAREN { [Double], $2  }
+        | NODE ID LPAREN { [Node], $2  }
+        | BOOL ID LPAREN { [Bool], $2  }
+        | GRAPH ID LPAREN { [Graph], $2  }
+        | TYPEID ID LPAREN { [Userdef], $2  } /* User-defined types*/
+
+type_decl:
+ INT ID { $2 }
+ | DOUBLE ID { $2 }
+ | CHAR ID { $2 }
+ | STRING ID { $2 }
+ | BOOL ID { $2 }
+ | NODE ID { $2 }
+ | NODETYPE TYPEID { $2 }
+ | EDGETYPE TYPEID { $2 }
+ | GRAPH ID { $2 }
+ | TYPEID ID { $2 } /* The type could be defined by user, i.e. edgetype */
 
 program:
 	/* nothing */ { [], [] }
