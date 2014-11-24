@@ -14,15 +14,20 @@ Add
 | Mod
 | Equal
 
+type validtypes = Void | Int | Char | String
+
 type expr=
 Literal of int
 | Noexpr
 | Id of string
-| Assign of string * expr
+| Assign of expr * expr
 | Binop of expr * op * expr
 | Call of string * expr list
+| Array of expr * expr
 | Lit of int
 | Not of expr
+| String of string
+| Char of string
 
 type stmt =
 Block of stmt list
@@ -37,6 +42,7 @@ type func_decl = {
 	formals : string list;
 	locals : string list;
 	body : stmt list;
+	ret : validtypes list
 }
 
 type program = string list * func_decl list 

@@ -36,7 +36,6 @@ type token =
   | NODE
   | BOOL
   | STRING
-  | STRUCT
   | PRINT
   | NEW
   | CONTINUE
@@ -51,8 +50,10 @@ type token =
   | CHAR
   | DO
   | IN
-  | NUM of (int)
+  | LITERAL of (int)
   | ID of (string)
+  | CHARLIT of (string)
+  | STRINGLIT of (string)
 
 val program :
   (Lexing.lexbuf  -> token) -> Lexing.lexbuf -> Ast.program

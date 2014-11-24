@@ -2,14 +2,17 @@
 
 %token LPAREN LBRACE SEMI COLON RPAREN RBRACE MOD COMMA PERIOD EOF
 %token PLUS TIMES LINK BILINK MINUS DIVIDE EQ ASSIGN PERIOD
-%token NEQ LEQ GEQ LT GT NOT AND OR
+%token NEQ LEQ GEQ LT GT NOT AND OR RBRACK LBRACK
 %token IF ELSE WHILE FOR RETURN GRAPH NODETYPE EDGETYPE
-%token NODE BOOL STRING STRUCT PRINT NEW CONTINUE DOUBLE
+%token NODE BOOL STRING PRINT NEW CONTINUE DOUBLE
 %token FALSE TRUE INT VOID DEST EDGES STATIC CHAR DO IN
-%token <int> NUM
+%token <int> LITERAL
 %token <string> ID
+%token <string> CHARLIT
+%token <string> STRINGLIT
 
 /* state precedence of tokens - need this to avoid shift/reduce conflicts */
+/* goes from least to most important in precedence */
 %nonassoc NOELSE
 %nonassoc ELSE
 %right ASSIGN
@@ -21,6 +24,7 @@
 %left TIMES DIVIDE MOD
 %right NEW
 %right NOT
+%left LPAREN RPAREN
 
 %start program
 %type <Ast.program> program
@@ -37,10 +41,13 @@ actuals_list:
   | actuals_list COMMA expr { $3 :: $1 }
 
 expr:
-expr PLUS expr 		{ Binop ($1, Add, $3) }
+  LITERAL         { Literal($1) }
+|CHARLIT    { Char($1) }
+|STRINGLIT   { String($1) }
+|expr PLUS expr 	{ Binop ($1, Add, $3) }
 |expr MINUS expr 	{ Binop ($1, Sub, $3) }
 |expr TIMES expr 	{ Binop ($1, Mult, $3) }
-|expr DIVIDE expr 	{ Binop ($1, Div, $3) }
+|expr DIVIDE expr { Binop ($1, Div, $3) }
 |expr MOD expr 		{ Binop ($1, Mod, $1) }
 |expr LT expr 		{ Binop ($1, Less, $3) }
 |expr GT expr 		{ Binop ($1, Greater, $3) }
@@ -50,12 +57,19 @@ expr PLUS expr 		{ Binop ($1, Add, $3) }
 |expr NEQ expr 		{ Binop ($1, Neq, $3) }
 |expr OR expr 		{ Binop ($1, Or, $3) }
 |expr AND expr 		{ Binop ($1, And, $3) }
-|NOT expr		{ Not($2) } 
-|ID ASSIGN expr { Assign($1, $3) }
+|expr ASSIGN expr { Assign($1, $3) }
+|NOT expr		      { Not($2) } 
 |ID LPAREN actuals_opt RPAREN { Call($1, $3) }
 |LPAREN expr RPAREN { $2 }
-|NUM { Lit($1)}
+|var  { $1 }
 /*|expr ID LPAREN expr RPAREN {} function call*/
+
+var:
+        ID      { Id($1) }
+        | arr   { Array( fst $1, snd $1) }
+
+arr:
+        ID LBRACK expr RBRACK { Id($1),$3 }
 
 expr_opt:
   /* nothing */ {Noexpr }
@@ -85,21 +99,32 @@ stmt:
 
 vdecl:
   INT ID SEMI { $2 }
+  | INT ID ASSIGN expr SEMI { $2 }
   | BOOL ID SEMI { $2 }
   | DOUBLE ID SEMI { $2 }
   | STRING ID SEMI { $2 }
   | CHAR ID SEMI { $2 }
+  /*TODO define assignment with the other types
+    Split up into vdecl with/without assignment */
 
 vdecl_list:
   /* nothing */ { [] }
   | vdecl_list vdecl { $2 :: $1 }
 
 fdecl:
-  ID LPAREN formals_opt RPAREN LBRACE vdecl_list stmt_list RBRACE
-    {{  fname = $1;
-    	formals = $3;
-    	locals = List.rev $6;
-    	body = List.rev $7; }}
+   retval formals_opt RPAREN LBRACE vdecl_list stmt_list RBRACE
+     { { fname = snd $1;
+         formals = $2; 
+         locals = List.rev $5;
+         body = List.rev $6;
+         ret = fst $1
+         } }
+
+retval:
+        INT ID LPAREN { [Int], $2  }
+        |CHAR ID LPAREN { [Char], $2  }
+        |VOID ID LPAREN { [Void], $2  }
+        /* TODO add more types here */
 
 program:
 	/* nothing */ { [], [] }

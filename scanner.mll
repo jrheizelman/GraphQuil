@@ -8,10 +8,12 @@ rule token = parse
 | "/*" { comment lexbuf }
 | '(' { LPAREN }
 | '{' { LBRACE }
+| '[' { LBRACK }
 | ';' { SEMI }
 | ':' { COLON }
 | ')' { RPAREN }
 | '}' { RBRACE }
+| ']' { RBRACK }
 | '%' { MOD }
 | ',' { COMMA }
 | '.' { PERIOD }
@@ -44,7 +46,6 @@ rule token = parse
 | "Node" { NODE }
 | "bool" { BOOL }
 | "String" { STRING }
-| "type" { STRUCT }
 | "print" { PRINT }
 | "new" { NEW }
 | "continue" { CONTINUE }
@@ -59,7 +60,9 @@ rule token = parse
 | "char" { CHAR }
 | "do" { DO }
 | "in" { IN }
-| ['0'-'9']+ as lxm { NUM(int_of_string lxm)}
+| '"' [^'"']* '"'  as lxm { STRINGLIT(lxm) }
+| ''' [ ^'''] as ch ''' { CHARLIT(ch) }
+| ['0'-'9']+ as lxm { LITERAL(int_of_string lxm)}
 | ['a'-'z' 'A'-'Z']['a'-'z' 'A'-'Z' '0'-'9' '_']* as lxm { ID(lxm)}
 | _ as char { raise (Failure("illegal character " ^ Char.escaped char))}
 
