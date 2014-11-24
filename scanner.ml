@@ -2463,8 +2463,7 @@ let
             ( raise (Failure("illegal character " ^ Char.escaped char)))
 # 2465 "scanner.ml"
 
-  | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf; 
-      __ocaml_lex_token_rec lexbuf __ocaml_lex_state
+  | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf; __ocaml_lex_token_rec lexbuf __ocaml_lex_state
 
 and comment lexbuf =
     __ocaml_lex_comment_rec lexbuf 141
@@ -2473,15 +2472,14 @@ and __ocaml_lex_comment_rec lexbuf __ocaml_lex_state =
       | 0 ->
 # 67 "scanner.mll"
      ( token lexbuf )
-# 2477 "scanner.ml"
+# 2476 "scanner.ml"
 
   | 1 ->
 # 68 "scanner.mll"
     ( comment lexbuf )
-# 2482 "scanner.ml"
+# 2481 "scanner.ml"
 
-  | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf; 
-      __ocaml_lex_comment_rec lexbuf __ocaml_lex_state
+  | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf; __ocaml_lex_comment_rec lexbuf __ocaml_lex_state
 
 ;;
 

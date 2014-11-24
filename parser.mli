@@ -36,7 +36,6 @@ type token =
   | NODE
   | BOOL
   | STRING
-  | STRUCT
   | PRINT
   | NEW
   | CONTINUE
