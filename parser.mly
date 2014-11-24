@@ -87,6 +87,8 @@ vdecl:
   INT ID SEMI { $2 }
   | BOOL ID SEMI { $2 }
   | DOUBLE ID SEMI { $2 }
+  | STRING ID SEMI { $2 }
+  | CHAR ID SEMI { $2 }
 
 vdecl_list:
   /* nothing */ { [] }
