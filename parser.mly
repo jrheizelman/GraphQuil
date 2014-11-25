@@ -3,14 +3,11 @@
 %token LPAREN LBRACE SEMI COLON RPAREN RBRACE MOD COMMA EOF
 %token PLUS TIMES LINK BILINK MINUS DIVIDE EQ ASSIGN PERIOD
 %token NEQ LEQ GEQ LT GT NOT AND OR RBRACK LBRACK
-%token IF ELSE WHILE FOR RETURN GRAPH NODETYPE EDGETYPE
-%token NODE BOOL STRING PRINT NEW CONTINUE DOUBLE
+%token IF ELSE WHILE FOR RETURN NODETYPE EDGETYPE
+%token GRAPH NODE BOOL STRING PRINT NEW CONTINUE DOUBLE EDGE
 %token FALSE TRUE INT VOID DEST EDGES STATIC CHAR DO IN
 %token <int> LITERAL
-%token <string> ID
-%token <string> TYPEID
-%token <string> CHARLIT
-%token <string> STRINGLIT
+%token <string> ID TYPEID ARRID CHARLIT STRINGLIT
 
 /* state precedence of tokens - need this to avoid shift/reduce conflicts */
 /* goes from least to most important in precedence */
@@ -54,14 +51,33 @@ expr:
 |ID LPAREN actuals_opt RPAREN { Call($1, $3) }
 |LPAREN expr RPAREN { $2 }
 |var  { $1 }
-/*|expr ID LPAREN expr RPAREN {} function call*/
+|NEW obj_type LPAREN actuals_opt RPAREN { Construct($2, $4) }
+|NEW any_type LBRACK expr RBRACK { MakeArr($2, $4) }
 
 var:
         ID      { Id($1) }
         | arr   { Array( fst $1, snd $1) }
+        | ID PERIOD ID { Access($1, $3) }
 
 arr:
         ID LBRACK expr RBRACK { Id($1),$3 }
+
+any_type:
+INT { Int}
+| CHAR { Char }
+| STRING { String }
+| DOUBLE { Double }
+| BOOL { Bool }
+| ARRID { Arr } 
+| obj_type { $1 }
+
+obj_type:
+NODE { Node }
+| NODETYPE { NodeType }
+| EDGE { Edge }
+| EDGETYPE { EdgeType }
+| GRAPH { Graph }
+| TYPEID { Userdef }
 
 actuals_opt:
   /* nothing */ { [] }
@@ -115,27 +131,11 @@ fdecl:
          } }
 
 retval:
-        INT ID LPAREN { [Int], $2  }
-        | CHAR ID LPAREN { [Char], $2  }
-        | VOID ID LPAREN { [Void], $2  }
-        | STRING ID LPAREN { [String], $2  }
-        | DOUBLE ID LPAREN { [Double], $2  }
-        | NODE ID LPAREN { [Node], $2  }
-        | BOOL ID LPAREN { [Bool], $2  }
-        | GRAPH ID LPAREN { [Graph], $2  }
-        | TYPEID ID LPAREN { [Userdef], $2  } /* User-defined types*/
+        any_type ID LPAREN { [$1], $2  }
+        | VOID ID LPAREN { [Void], $2  } 
 
 type_decl:
- INT ID { $2 }
- | DOUBLE ID { $2 }
- | CHAR ID { $2 }
- | STRING ID { $2 }
- | BOOL ID { $2 }
- | NODE ID { $2 }
- | NODETYPE TYPEID { $2 }
- | EDGETYPE TYPEID { $2 }
- | GRAPH ID { $2 }
- | TYPEID ID { $2 } /* The type could be defined by user, i.e. edgetype */
+ any_type ID { $2 }
 
 program:
 	/* nothing */ { [], [] }

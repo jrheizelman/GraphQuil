@@ -14,8 +14,8 @@ Add
 | Mod
 | Equal
 
-type validtypes = Void | Int | Char | String | Double | Node 
-	| Graph | EdgeType | NodeType | Bool | Userdef
+type validtype = Void | Int | Char | String | Double | Node 
+	| Graph | EdgeType | NodeType | Bool | Userdef | Edge | Arr
 
 type expr=
 Literal of int
@@ -29,6 +29,9 @@ Literal of int
 | String of string
 | Char of string
 | Assign of expr * expr
+| Construct of validtype * expr list
+| MakeArr of validtype * expr
+| Access of string * string
 
 type stmt =
 Block of stmt list
@@ -43,7 +46,7 @@ type func_decl = {
 	formals : string list;
 	locals : string list;
 	body : stmt list;
-	ret : validtypes list
+	ret : validtype list
 }
 
 type program = string list * func_decl list 

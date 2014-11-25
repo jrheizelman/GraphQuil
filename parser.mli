@@ -32,9 +32,9 @@ type token =
   | WHILE
   | FOR
   | RETURN
-  | GRAPH
   | NODETYPE
   | EDGETYPE
+  | GRAPH
   | NODE
   | BOOL
   | STRING
@@ -42,6 +42,7 @@ type token =
   | NEW
   | CONTINUE
   | DOUBLE
+  | EDGE
   | FALSE
   | TRUE
   | INT
@@ -55,6 +56,7 @@ type token =
   | LITERAL of (int)
   | ID of (string)
   | TYPEID of (string)
+  | ARRID of (string)
   | CHARLIT of (string)
   | STRINGLIT of (string)
 
