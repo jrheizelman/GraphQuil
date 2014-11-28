@@ -1,12 +1,20 @@
 type op = Add | Sub | Mult | Div | Equal | And | Neq | Mod | Leq | Geq | Greater | Less | Or
 
 type expr=
-Lit of int
+Literal of int
 | Noexpr
-| Assign of string * expr
+| Id of string
 | Binop of expr * op * expr
 | Call of string * expr list
+| Array of expr * expr
+| Lit of int
 | Not of expr
+| String of string
+| Char of string
+| Assign of expr * expr
+| Construct of validtype * expr list
+| MakeArr of validtype * expr
+| Access of string * string
 
 type stmt =
 Block of stmt list
@@ -18,12 +26,13 @@ Block of stmt list
 
 type func_decl = {
 	fname : string;
-	formals : string list;
-	locals : string list;
-	body : stmt list;
+  formals : string list;
+  locals : string list;
+  body : stmt list;
+  ret : validtype list
 }
 
-type program = string list * func_decl list 
+type program = var_decl list * func_decl list 
 
 (*************************
 **** PRINT AST **********

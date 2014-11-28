@@ -49,4 +49,9 @@ type func_decl = {
 	ret : validtype list
 }
 
-type program = string list * func_decl list 
+type var_decl = {
+	vname: string;
+ 	vtype: validtype list;
+}
+
+type program = var_decl list * func_decl list 
