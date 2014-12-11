@@ -66,6 +66,7 @@ rule token = parse
 | ['a'-'z' 'A' - 'Z']['a'-'z' 'A'-'Z' '0'-'9' '_']*"[]" as lxm { ARRID(lxm)}
 | ['a'-'z']['a'-'z' 'A'-'Z' '0'-'9' '_']* as lxm { ID(lxm)}
 | ['A'-'Z']['a'-'z' 'A'-'Z' '0'-'9' '_']* as lxm { TYPEID(lxm)}
+| ("true" | "false") as lxm		{ BOOLLIT(bool_of_string lxm) }
 | eof { EOF }
 | _ as char { raise (Failure("illegal character " ^ Char.escaped char))}
 
