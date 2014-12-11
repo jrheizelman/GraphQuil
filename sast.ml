@@ -1,42 +1,45 @@
-include Ast
+open Ast
 (*Graphquil*)
 
-(*Make symbol table*)
-module StringMap = Map.Make(String)
+(* Elements from AST but with typing added*)
+
 
 type expr_t = 
-(*Difference between the first 4 lits and "Lit" or "char"?*)
-    Int_Literal_t of int * validtype list
-  | Double_Literal_t of double * validtype list
-  | Bool_Literal_t of bool * validtype list
-  | Char_Literal_t of char * validtype list
+    Literal_t of int
   | Noexpr_t
-  | Id_t of string * validtype list
-  | Binop_t of expr_t * op * expr_t * validtype list
-  | Call_t of string * expr_t list * validtype list
-  | Array_t of expr_t * expr_t * validtype list
-  | Not_t of expr_t * validtype list
-  | String_t of string * validtype list
-  | Assign_t of expr * expr * validtype list
-  | Construct_t of validtype * expr list * validtype list
-  | MakeArr_t of validtype * expr * validtype list
-  | Access_t of string * string * validtype list
+  | Id_t of validtype * string * int
+  | Binop_t of validtype * expr_t * bop * expr_t 
+  | Unop_t of validtype * expr_t * uop
+  | Call_t of symbol_table_func * expr_t list
+  | Array_t of validtype * expr_t * expr_t
+  | String_Lit_t of string 
+  | Char_t of char 
+  | Assign_t of validtype * expr_t * expr_t
+  | Construct_t of validtype * expr_t list
+  | MakeArr_t of validtype * expr_t
+  | Access_t of validtype * string * string 
+  | Bool_Lit_t of bool
 
 
 type stmt_t =  
-    Block_t of stmt_t list
+    Block_t of block_t
   | Expr_t of expr_t
   | Return_t of expr_t
-  | If_t of expr_t * stmt_t * stmt_t
-  | For_t of expr_t * expr_t * expr_t * stmt_t
-  | While_t of expr_t * stmt_t
+  | If_t of expr_t * block_t * block_t
+  | For_t of expr_t * expr_t * expr_t * block_t
+  | While_t of expr_t * block_t
 
-type function = {
-	param : var_entry list;
-	ret_t : validtype list
+type block_t = {
+  locals_t : symbol_table_var list;
+  statements : stmt_t list;
+  block_num_t : int
 }
 
-type variable = {
-	offset: int;
-	typ : validtype list;
+type function_t = {
+  fname_t: string;
+	formals_t : symbol_table_var list;
+	ret_t : validtype;
+  body_block_t : block_t;
 }
+
+type program_t = symbol_table_var list * function_t list

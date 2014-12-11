@@ -10,8 +10,8 @@ let ancestor_scope = Array.create 1000 0
 
 (* decl declared in ast.ml *)
 let string_of_decl = function
-	  Symbol_table_var(n, t, id) -> string_of_variable(n,t)
-	| Symbol_table_func(m, t, f, id) -> (string_of_valid_type t) ^ " " ^
+	  SymbTable_Var(n, t, id) -> string_of_variable(n,t)
+	| SymbTable_Func(m, t, f, id) -> (string_of_valid_type t) ^ " " ^
 										n ^ "(" ^
 										String.concet ", " (List.map string_of_valid_type f) ^ ")"
 
@@ -51,7 +51,7 @@ let rec symbol_table_add_var_list (vars:var list) env =
 	match vars with
 		  [] -> env
 		| (var_name, var_type) :: tail -> 
-			let env = symbol_table_add_decl vname (Symbol_table_var(var_name, var_type, snd env)) env in
+			let env = symbol_table_add_decl vname (SymbTable_Var(var_name, var_type, snd env)) env in
 				symbol_table_add_var_list tail env
 
 let rec symbol_table_add_stmt_list (stmts:stmt list) env =
@@ -74,7 +74,7 @@ and symbol_table_add_block (b:block) env =
 let symbol_table_add_func (f:func_decl) env = 
 	let id = snd env in 
 		let args = List.map snd f.formals in (* Get the name of each formal *)
-			let env = symbol_table_add_decl f.fname (Symbol_table_func(f.fname, f.ret, args, id)) env in
+			let env = symbol_table_add_decl f.fname (SymbTable_Func(f.fname, f.ret, args, id)) env in
 			let env = symbol_table_add_var_list f.formals ((fst env), f.body_block.block_num) in
 				symbol_table_add_block f.body_block ((fst env), id)
 

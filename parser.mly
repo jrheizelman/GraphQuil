@@ -2,7 +2,8 @@
 
 let scope = ref 1 (*contents of scope == 1*)
 
-let inc_block_num (u:unit) =
+let inc_block_num
+ (u:unit) =
     let x = scope.contents in
     scope := x + 1; x (*set the contents of scope to x+1, increments it by 1*)
 

@@ -11,9 +11,8 @@ Literal of int
 | Binop of expr * bop * expr
 | Unop of uop * expr
 | Call of string * expr list
-| Array of expr * expr
-| Lit of int
-| String of string
+| Array of expr * expr (* Come back to this *)
+| String_Lit of string
 | Char of string
 | Assign of expr * expr
 | Construct of validtype * expr list
@@ -52,7 +51,7 @@ string = name
 validtype = type
 int = block number (scope)
 *)
-type Symbol_table_var = string * validtype * int
+type symbol_table_var = string * validtype * int
 
 (*
 To be used to log the variable in the symbol table. 
@@ -61,7 +60,7 @@ validtype = return type
 validtype list = formals list
 int = block number (scope)
 *)
-type Symbol_table_func = string * validtype * validtype list * int
+type symbol_table_func = string * validtype * validtype list * int
 
 (*
 General declaration of either variable or function to be written in symbol table
