@@ -52,7 +52,7 @@ string = name
 validtype = type
 int = block number (scope)
 *)
-type symbol_table_var = string * validtype * int
+type Symbol_table_var = string * validtype * int
 
 (*
 To be used to log the variable in the symbol table. 
@@ -61,7 +61,7 @@ validtype = return type
 validtype list = formals list
 int = block number (scope)
 *)
-type symbol_table_func = string * validtype * validtype list * int
+type Symbol_table_func = string * validtype * validtype list * int
 
 (*
 General declaration of either variable or function to be written in symbol table
