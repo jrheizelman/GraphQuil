@@ -31,7 +31,7 @@ Block of block
 type func_decl = {
 	fname : string;
   formals : variable list;
-  body : block;
+  body_block : block;
   ret : validtype
 }
 
@@ -41,7 +41,7 @@ type block = {
   block_num: int;
 }
 
-type variable = validtype * string
+type variable = string * validtype
 
 type program = variable list * func_decl list 
 
