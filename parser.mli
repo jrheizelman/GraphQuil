@@ -54,11 +54,12 @@ type token =
   | DO
   | IN
   | LITERAL of (int)
+  | BOOLLIT of (bool)
   | ID of (string)
   | TYPEID of (string)
   | ARRID of (string)
-  | CHARLIT of (string)
   | STRINGLIT of (string)
+  | CHARLIT of (string)
 
 val program :
   (Lexing.lexbuf  -> token) -> Lexing.lexbuf -> Ast.program

@@ -3,7 +3,7 @@
 # 4 "scanner.ml"
 let __ocaml_lex_tables = {
   Lexing.lex_base = 
-   "\000\000\192\255\193\255\078\000\160\000\235\000\053\000\060\000\
+   "\000\000\191\255\192\255\078\000\160\000\235\000\053\000\060\000\
     \013\001\088\001\163\001\238\001\057\002\132\002\207\002\026\003\
     \101\003\176\003\251\003\070\004\145\004\220\004\039\005\114\005\
     \012\000\025\000\003\000\034\000\035\000\157\000\075\000\241\255\
@@ -24,10 +24,10 @@ let __ocaml_lex_tables = {
     \239\030\199\255\107\000\103\000\198\255\180\000\254\255\123\000\
     \255\255";
   Lexing.lex_backtrk = 
-   "\255\255\255\255\255\255\061\000\060\000\058\000\063\000\063\000\
+   "\255\255\255\255\255\255\061\000\060\000\058\000\064\000\064\000\
     \060\000\060\000\060\000\060\000\060\000\060\000\060\000\061\000\
     \060\000\061\000\061\000\061\000\060\000\060\000\060\000\060\000\
-    \063\000\063\000\026\000\027\000\020\000\025\000\017\000\255\255\
+    \064\000\064\000\026\000\027\000\020\000\025\000\017\000\255\255\
     \255\255\255\255\255\255\255\255\255\255\255\255\255\255\255\255\
     \255\255\255\255\255\255\255\255\018\000\255\255\000\000\255\255\
     \060\000\060\000\060\000\060\000\034\000\255\255\255\255\255\255\
@@ -2472,19 +2472,29 @@ let
 # 2473 "scanner.ml"
 
   | 62 ->
+let
 # 69 "scanner.mll"
-      ( EOF )
-# 2478 "scanner.ml"
+                        lxm
+# 2479 "scanner.ml"
+= Lexing.sub_lexeme lexbuf lexbuf.Lexing.lex_start_pos lexbuf.Lexing.lex_curr_pos in
+# 69 "scanner.mll"
+                            ( BOOLLIT(bool_of_string lxm) )
+# 2483 "scanner.ml"
 
   | 63 ->
-let
 # 70 "scanner.mll"
-       char
-# 2484 "scanner.ml"
-= Lexing.sub_lexeme_char lexbuf lexbuf.Lexing.lex_start_pos in
-# 70 "scanner.mll"
-            ( raise (Failure("illegal character " ^ Char.escaped char)))
+      ( EOF )
 # 2488 "scanner.ml"
+
+  | 64 ->
+let
+# 71 "scanner.mll"
+       char
+# 2494 "scanner.ml"
+= Lexing.sub_lexeme_char lexbuf lexbuf.Lexing.lex_start_pos in
+# 71 "scanner.mll"
+            ( raise(Failure("illegal character " ^ Char.escaped char)))
+# 2498 "scanner.ml"
 
   | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf; 
       __ocaml_lex_token_rec lexbuf __ocaml_lex_state
@@ -2494,14 +2504,14 @@ and comment lexbuf =
 and __ocaml_lex_comment_rec lexbuf __ocaml_lex_state =
   match Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
       | 0 ->
-# 73 "scanner.mll"
+# 74 "scanner.mll"
      ( token lexbuf )
-# 2500 "scanner.ml"
+# 2510 "scanner.ml"
 
   | 1 ->
-# 74 "scanner.mll"
+# 75 "scanner.mll"
     ( comment lexbuf )
-# 2505 "scanner.ml"
+# 2515 "scanner.ml"
 
   | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf; 
       __ocaml_lex_comment_rec lexbuf __ocaml_lex_state

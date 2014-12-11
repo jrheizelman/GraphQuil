@@ -16,7 +16,9 @@ let inc_block_num
 %token GRAPH NODE BOOL STRING PRINT NEW CONTINUE DOUBLE EDGE
 %token FALSE TRUE INT VOID DEST EDGES STATIC CHAR DO IN
 %token <int> LITERAL
-%token <string> ID TYPEID ARRID CHARLIT STRINGLIT
+%token <bool> BOOLLIT
+%token <string> ID TYPEID ARRID STRINGLIT
+%token <string> CHARLIT
 
 /* state precedence of tokens - need this to avoid shift/reduce conflicts */
 /* goes from least to most important in precedence */
@@ -39,54 +41,40 @@ let inc_block_num
 %%
 
 expr:
- LITERAL                                { Literal($1) }
-|CHARLIT                                { Char($1) }
-|ID                                     { Id($1)}
-|STRINGLIT                              { String_Lit($1) }
-|BOOLLIT                                { Bool_Lit($1)}
-|expr PLUS expr 	                      { Binop ($1, Add, $3) }
-|expr MINUS expr 	                      { Binop ($1, Sub, $3) }
-|expr TIMES expr 	                      { Binop ($1, Mult, $3) }
-|expr DIVIDE expr                       { Binop ($1, Div, $3) }
-|expr MOD expr 		                      { Binop ($1, Mod, $1) }
-|expr LT expr 		                      { Binop ($1, Less, $3) }
-|expr GT expr 		                      { Binop ($1, Greater, $3) }
-|expr LEQ expr 		                      { Binop ($1, Leq, $3) }
-|expr GEQ expr 		                      { Binop ($1, Geq, $3) }
-|expr EQ expr 	                        { Binop ($1, Equal, $3) }
-|expr NEQ expr 		                      { Binop ($1, Neq, $3) }
-|expr OR expr 		                      { Binop ($1, Or, $3) }
-|expr AND expr 		                      { Binop ($1, And, $3) }
-|NOT expr		                            { Unop(Not, $2) } 
-|MINUS expr %prec NEG                   { Unop(Neg, $2) }
-|expr ASSIGN expr                       { Assign($1, $3) }
-|ID LPAREN actuals_opt RPAREN           { Call($1, $3) }
-|LPAREN expr RPAREN                     { $2 }
-|var                                    { $1 }
-/*|NEW obj_type LPAREN actuals_opt RPAREN { Construct($2, $4) } /*Is this really an expression? it's a variable declaration*/
-|NEW any_type LBRACK expr RBRACK        { MakeArr($2, $4) } /*Is this really an expression as well?*/
-*/
+ LITERAL                                 { Literal($1) }
+| CHARLIT                                { Char($1) }
+| ID                                     { Id($1)}
+| STRINGLIT                              { String_Lit($1) }
+| BOOLLIT                                { Bool_Lit($1)}
+| expr PLUS expr 	                       { Binop ($1, Add, $3) }
+| expr MINUS expr 	                     { Binop ($1, Sub, $3) }
+| expr TIMES expr 	                     { Binop ($1, Mult, $3) }
+| expr DIVIDE expr                       { Binop ($1, Div, $3) }
+| expr MOD expr 		                     { Binop ($1, Mod, $1) }
+| expr LT expr 		                       { Binop ($1, Less, $3) }
+| expr GT expr 		                       { Binop ($1, Greater, $3) }
+| expr LEQ expr 		                     { Binop ($1, Leq, $3) }
+| expr GEQ expr 		                     { Binop ($1, Geq, $3) }
+| expr EQ expr 	                         { Binop ($1, Equal, $3) }
+| expr NEQ expr 		                     { Binop ($1, Neq, $3) }
+| expr OR expr 		                       { Binop ($1, Or, $3) }
+| expr AND expr 		                     { Binop ($1, And, $3) }
+| NOT expr		                           { Unop(Not, $2) } 
+| MINUS expr %prec NEG                   { Unop(Neg, $2) }
+| expr ASSIGN expr                       { Assign($1, $3) }
+| ID LPAREN actuals_opt RPAREN           { Call($1, $3) }
+| LPAREN expr RPAREN                     { $2 }
 
 expr_opt:
     /* nothing */ { Noexpr }
   | expr          { $1 }
 
-var:
-        ID             { Id($1) }
-        | arr          { Array( fst $1, snd $1) }
-        | ID PERIOD ID { Access($1, $3) }
-
-arr:
-        ID LBRACK expr RBRACK { Id($1),$3 }
-
 any_type:
 INT        { Int }
 | CHAR     { Char }
 | STRING   { String }
-| DOUBLE   { Double }
 | BOOL     { Bool }
-| ARRID    { Arr } 
-| obj_type { $1 }
+| obj_type { $1 } 
 
 obj_type:
 NODE       { Node }
@@ -109,8 +97,8 @@ expr_opt:
   | expr        { $1 }
 
 formals_list:
-  type_decl ID                      { [$2] }
-  | formals_list COMMA type_decl ID { $4 :: $1 }
+    vdecl                    { [$1]}
+  | formals_list COMMA vdecl { $3 :: $1 }
 
 formals_opt:
   /* nothing */  { [] }
@@ -124,38 +112,33 @@ block:
   LBRACE stmt_list RBRACE { {locals = []; statements = List.rev $2; block_id = inc_block_id ()} }
 
 stmt:
-  expr SEMI                                                     { Expr($1) }
-  | RETURN expr SEMI                                            { Return($2) }
-  | IF LPAREN expr RPAREN block %prec NOELSE                    { If($3, $5, {locals = []; statements = []; block_num = inc_block_num ()}) }
-  | IF LPAREN expr RPAREN block ELSE block                      { If ($3, $5, $7) }
-  | FOR LPAREN expr_opt SEMI expr_opt SEMI expr_opt RPAREN block { For($3, $5, $7, $9) }
-  | WHILE LPAREN expr RPAREN block                               { While($3, $5) }
+  block                                                           { Block($1)}
+  | expr SEMI                                                     { Expr($1) }
+  | RETURN expr SEMI                                              { Return($2) }
+  | IF LPAREN expr RPAREN block %prec NOELSE                      { If($3, $5, {locals = []; statements = []; block_num = inc_block_num ()}) }
+  | IF LPAREN expr RPAREN block ELSE block                        { If ($3, $5, $7) }
+  | FOR LPAREN expr_opt SEMI expr_opt SEMI expr_opt RPAREN block  { For($3, $5, $7, $9) }
+  | WHILE LPAREN expr RPAREN block                                { While($3, $5) }
 
 vdecl:
-  type_decl SEMI               { $1 }
-  | type_decl ASSIGN expr SEMI { $1 }
+  any_type ID      {$2, $1}
+
+glb_vdecl:
+  vdecl SEMI { $1 }
 
 vdecl_list:
-  /* nothing */      { [] }
-  | vdecl_list vdecl { $2 :: $1 }
+  /* nothing */           { [] }
+  | vdecl_list vdecl SEMI { $2 :: $1 }
 
 fdecl:
-   retval formals_opt RPAREN LBRACE vdecl_list stmt_list RBRACE
-     { { fname = snd $1;
-         formals = $2; 
-         locals = List.rev $5;
-         body_block = { locals = List.rev $5; statements = List.rev $6; block_num = inc_block_num () }
-         ret = fst $1
+   any_type ID LPAREN formals_opt RPAREN LBRACE vdecl_list stmt_list RBRACE
+     { { fname = $2;
+         formals = $4; 
+         body_block = { locals = List.rev $7; statements = List.rev $8; block_num = inc_block_num () }
+         ret = $1
          } }
-
-retval:
-        any_type ID LPAREN { [$1], $2  }
-        | VOID ID LPAREN   { [Void], $2  } 
-
-type_decl:
- any_type ID { $2 }
 
 program:
 	/* nothing */   { [], [] }
-	| program vdecl { ($2 :: fst $1), snd $1 }
+	| program glb_vdecl { ($2 :: fst $1), snd $1 }
 	| program fdecl { fst $1, ($2 :: snd $1) }

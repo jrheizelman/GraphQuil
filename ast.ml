@@ -8,11 +8,11 @@ type expr=
 Literal of int
 | Noexpr
 | Id of string
+| String_Lit of string
 | Binop of expr * bop * expr
 | Unop of uop * expr
 | Call of string * expr list
 | Array of expr * expr (* Come back to this *)
-| String_Lit of string
 | Char of string
 | Assign of expr * expr
 | Construct of validtype * expr list

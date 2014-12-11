@@ -47,7 +47,7 @@ let rec symbol_table_add_decl (name:string) (decl:decl) env =
 			else ((SymbolMap.add to_find decl table), id)
 
 (* Recursively add list of variables to symbol table *)
-let rec symbol_table_add_var_list (vars:var list) env = 
+let rec symbol_table_add_var_list (vars:variable list) env = 
 	match vars with
 		  [] -> env
 		| (var_name, var_type) :: tail -> 
