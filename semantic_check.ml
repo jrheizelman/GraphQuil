@@ -201,6 +201,17 @@ let rec check_statement (s:stmt) ret_type env (scope:int) =
 				if (type_of_expr ce = Bool)
 					then While_t(ce, check_block b ret_type env (scope + 1))
 				else raise(Failure("While loop must evaluate on a boolean expression"))
+		(*| Vdecl(t, id) ->
+			symbol_table_add_var_list *)
+		(*| Link(l, r) -> 
+			let checked_l = check_expr l env in 
+				let type_l = type_of_expr checked_l in
+					let checked_r = check_expr r env in 
+						let type_r = type_of_expr checked_r in
+							if(type_l = type_r) then Link_t(checked_l, checked_r)
+						else raise(Failure("Function tries to link type " ^
+							(string_of_valid_type type_l) ^ " with type " ^
+							(string_of_valid_type type_r) ^ "."))*)
 
 and check_block (b:block) (ret_type:validtype) env (scope:int) = 
 	let variables = check_is_vdecl_list b.locals (fst env, b.block_num) in

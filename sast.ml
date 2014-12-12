@@ -15,7 +15,6 @@ type expr_t =
   | Assign_t of validtype * expr_t * expr_t
   | Bool_Lit_t of bool
 
-
 type stmt_t =  
     Block_t of block_t
   | Expr_t of expr_t
@@ -23,6 +22,8 @@ type stmt_t =
   | If_t of expr_t * block_t * block_t
   | For_t of expr_t * expr_t * expr_t * block_t
   | While_t of expr_t * block_t
+  (*| Link_t of expr_t * expr_t*)
+  (*| Vdecl_t of validtype * string * expr_t*)
 
 and block_t = {
   locals_t : symbol_table_var list;

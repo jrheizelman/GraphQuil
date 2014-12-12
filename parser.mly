@@ -29,6 +29,7 @@ let parse_error s = (* Called by the parser function on error *)
 /* goes from least to most important in precedence */
 %nonassoc NOELSE
 %nonassoc ELSE
+%nonassoc NOASSIGN
 %right ASSIGN
 %left OR
 %left AND 
@@ -115,6 +116,7 @@ block:
 
 stmt:
   block                                                           { Block($1)}
+  /*| vdecl SEMI                                                    { Vdecl(snd $1, fst $1)}*/
   | expr SEMI                                                     { Expr($1) }
   | RETURN expr SEMI                                              { Return($2) }
   | IF LPAREN expr RPAREN block %prec NOELSE                      { If($3, $5, {locals = []; statements = []; block_num = inc_block_num ()}) }
