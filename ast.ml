@@ -123,7 +123,7 @@ let rec string_of_expr = function
   | Graph -> "Graph"
   | UserDef -> "UserDef"
 
-  let string_of_variable v = "" ^ fst v ^ " " ^ string_of_valid_type (snd v) 
+  let string_of_variable v = fst v ^ " " ^ string_of_valid_type (snd v) 
 
   let rec string_of_stmt = function
     Block(b) -> string_of_block b

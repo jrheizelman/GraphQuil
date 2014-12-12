@@ -1,5 +1,6 @@
-open ast
-open sast
+open Ast
+open Sast
+open SymbolTable
 
 let fst_of_three (t, _, _) = t
 let snd_of_three (_, t, _) = t
@@ -21,18 +22,14 @@ let type_of_expr = function
 	| Binop_t(t, _, _, _) -> t
 	| Unop_t(t, _, _) -> t
 	| Call_t(f, _) -> let (_,r,_,_) = f in r
-	| Array_t(t, _, _) -> t
-	| String_Lit_t(s) -> s
-	| Char_t(c) -> c
+	| String_Lit_t(s) -> String
+	| Char_t(c) -> Char
 	| Assign_t(t, _, _) -> t
-	| Construct_t(t, _) -> t
-	| MakeArr_t(t, _) -> t
-	| Access_t(t, _, _) -> t
-	| Bool_Lit_t(b) -> b
+	| Bool_Lit_t(b) -> Bool
 
 (* Error raised for improper binary operation *)
 let binop_err (t1:validtype) (t2:validtype) (op:bop) =
-		raise(Failure("Operator " ^ (string_op_bop op) ^ 
+		raise(Failure("Operator " ^ (string_of_bop op) ^ 
 			" not compatible with expressions of type " ^ 
 			string_of_valid_type t1 ^ " and  " ^ 
 			string_of_valid_type t2 ^ "."))
@@ -44,7 +41,7 @@ let check_binop (e1:expr_t) (e2:expr_t) (op:bop) =
 		(* Both are ints *)
 		match (t1, t2) with (Int, Int) -> 
 			(match op with
-		  	(Add | Sub | | Mult | Div | Mod) -> Binop_t(Int, e1, op, e2)
+		  	(Add | Sub | Mult | Div | Mod) -> Binop_t(Int, e1, op, e2)
 		  	| (Equal | Neq | Less | Leq | Greater | Geq) -> Binop_t(Bool, e1, op, e2) 
 		  	| _ -> binop_err t1 t2 op)
 		(* Both are bools *)
@@ -85,11 +82,9 @@ let assign_err (t1:validtype) (t2:validtype) =
 		string_of_valid_type t1 ^ "."))
 
 let check_assign (l:expr_t) (r:expr_t) = 
-	let (l_t, r_2) = (type_of_expr e1, type_of_expr e2) in
-		match (l_t, l_t) with 
-		  (validtype(v1), validtype(v2)) -> 
-		  	if(t1 = t2) then Assign_t(t2, l, r)
-		  | _ -> assign_err t1 t2 
+	let (l_t, r_t) = (type_of_expr l, type_of_expr r) in
+		  if(l_t = r_t) then Assign_t(l_t, l, r)
+		  else assign_err l_t r_t 
 
 (* compare arg lists with func formal params *)
 let rec compare_args formals actuals =
@@ -100,8 +95,8 @@ let rec compare_args formals actuals =
 			(head1 = head2) && compare_args tail1 tail2)
 		| _ -> false
 
- and check_func_call (name:string) (elist: expr_t list) env =
- 	let decl = symbolTable.symbol_table_find name env in
+ and check_func_call (name:string) (eList: expr_t list) env =
+ 	let decl = symbol_table_find name env in
  		let fdecl = 
  			(match decl with
  				(* make sure it is a function *)
@@ -124,20 +119,20 @@ let rec compare_args formals actuals =
 
 let rec check_valid_id (id_name:string) env = 
 	(* Check if id is in the symbol table *)
-	let decl = symbolTable.symbol_table_find id_name env in
+	let decl = symbol_table_find id_name env in
 		(* Check if id is in the correct scope *)
-		let id = symbolTable.symbol_table_get_id id_name env in
+		let id = symbol_table_get_id id_name env in
 			(match decl with
 				(* SymbTable_Var = name * type * id *)
 				SymbTable_Var(v) -> (snd_of_three v, fst_of_three v, id)
 				| _ -> raise(Failure("Symbol " ^ id_name ^ " is not a variable.")))
  
  (* Unclear if we need this *)
-let get_left_value_of_expr (e:expr_t) env = 
+let rec get_left_value_of_expr (e:expr_t) env = 
  	match e with 
  		Id_t(t, s, _) -> s
- 		| Binop_t(t, l, o, r) -> get_left_value_of_expr l
- 		| Unop_t(t, l, o) -> get_left_value_of_expr l
+ 		| Binop_t(t, l, o, r) -> get_left_value_of_expr l env
+ 		| Unop_t(t, l, o) -> get_left_value_of_expr l env
  		| _ -> raise(Failure("Cannot get the left value of expression."))
 
 and check_left_value (e:expr) env = 
@@ -151,12 +146,12 @@ and check_left_value (e:expr) env =
 and check_expr (e:expr) env = 
 	match e with 
 	 Literal(i) -> Literal_t(i) 
-	 | Noexpr -> Noexpr
-	 | Id(s) -> Id_t(s)
+	 | Noexpr -> Noexpr_t
+	 | Id(s) -> let (t, st, id) = check_valid_id s env in Id_t(t, st, id)
 	 | Binop(e1, op, e2) -> 
-	 	let(ce1, ce2) = check_expr e1 env, check_expr e2 env) in
+	 	let(ce1, ce2) = (check_expr e1 env, check_expr e2 env) in
 			check_binop ce1 ce2 op
-	 | Unop(e, op) -> 
+	 | Unop(op, e) -> 
 	 	let ce = check_expr e env in
 	 		check_unop ce op
 	 | Call(n, eList) -> 
@@ -170,12 +165,12 @@ and check_expr (e:expr) env =
 	 			check_assign checked_l checked_r
 	 | Bool_Lit(b) -> Bool_Lit_t(b)
 
-and check_exprList (elist: expr list) env = 
+and check_exprList (eList: expr list) env = 
 	match eList with
 		  [] -> []
 		| head::tail -> (check_expr head env) :: (check_exprList tail env)
 
-let check_statement (s:stmt) ret_type (scope:int) =
+let rec check_statement (s:stmt) ret_type env (scope:int) =
 	match s with 
 		  Block(b) -> 
 			let checked_block = check_block b ret_type env scope in
@@ -191,15 +186,15 @@ let check_statement (s:stmt) ret_type (scope:int) =
 		| If(e, b1, b2) -> 
 			let ce = check_expr e env in
 				let te = type_of_expr ce in
-					match (te with
+					(match te with
 						  Bool -> If_t(ce, check_block b1 ret_type env scope, check_block b2 ret_type env scope)
-						| _ -> raise(Failure("If statement  must evaluate on a boolean expression."))
-					)
+						  | _ -> raise(Failure("If statement must evaluate on a boolean expression.")))
+					
 		| For(e1, e2, e3, b) ->
 			let(c1, c2, c3) = (check_expr e1 env, check_expr e2 env, check_expr e3 env) in 
 				if (type_of_expr c2 = Bool) then
 					(* Increment scope, check block to be valid block *)
-					For_t(c1, c2, c3, check_block b ret_type, env (scope + 1))
+					For_t(c1, c2, c3, check_block b ret_type env (scope + 1))
 				else raise(Failure("For loop condition must evaluate to a boolean expression"))
 		| While(e, b) ->
 			let ce = check_expr e env in
@@ -208,7 +203,7 @@ let check_statement (s:stmt) ret_type (scope:int) =
 				else raise(Failure("While loop must evaluate on a boolean expression"))
 
 and check_block (b:block) (ret_type:validtype) env (scope:int) = 
-	let variables = check_is_vdecl_list b.locals (fst env, block.block_num) in
+	let variables = check_is_vdecl_list b.locals (fst env, b.block_num) in
 		let stmts = check_stmt_list b.statements ret_type (fst env, b.block_num) scope in
 			{locals_t = variables; statements_t = stmts; block_num_t = b.block_num}
 
@@ -223,19 +218,19 @@ and check_is_vdecl_list (vars:variable list) env =
 	match vars with
 		  [] -> []
 		| head :: tail -> 
-			let decl = symbolTable.symbol_table_find (fst head) env in
-				let id = symbolTable.symbol_table_get_id (fst head) env in
+			let decl = symbol_table_find (fst head) env in
+				let id = symbol_table_get_id (fst head) env in
 					match decl with
 						  SymbTable_Func(f) -> raise(Failure("Symbol "^ (fst head) ^
 							 "is a function, not a vairable "))
 						| SymbTable_Var(v) ->
 							let varType = snd_of_three v in
 								match varType with 
-									validtype(a) -> (fst_of_three v, snd_of_three v, id) :: check_is_vdecl_list tail env
+									validtype -> (fst_of_three v, snd_of_three v, id) :: check_is_vdecl_list tail env
 
 
-let check_is_fdecl (func:string) env =
-	let fdecl = symbolTable.symbol_table_find func env in
+let rec check_is_fdecl (func:string) env =
+	let fdecl = symbol_table_find func env in
 		match fdecl with
 			  SymbTable_Var(v) -> raise(Failure("Symbol is a variable, not a function."))
 			| SymbTable_Func(f) -> f
