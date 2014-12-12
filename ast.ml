@@ -12,12 +12,8 @@ Literal of int
 | Binop of expr * bop * expr
 | Unop of uop * expr
 | Call of string * expr list
-| Array of expr * expr (* Come back to this *)
 | Char of string
 | Assign of expr * expr
-| Construct of validtype * expr list
-| MakeArr of validtype * expr
-| Access of string * string
 | Bool_Lit of bool
 
 type variable = string * validtype
@@ -80,7 +76,6 @@ let string_of_bop = function
   | Mult -> "*" 
   | Div -> "/" 
   | Mod -> "mod"
-  | Child -> "%"
   | Equal -> "==" 
   | Neq -> "!="
   | Less -> "<" 
@@ -96,7 +91,7 @@ let string_of_unop = function
 
 let rec string_of_expr = function
     Literal(n) -> string_of_int n
-  | Char(n) -> "\'" ^ (String.make 1) n ^"\'"
+  | Char(n) -> "\'" ^ n ^"\'"
   | Id(s) -> s
   | String_Lit(s) -> "\"" ^ s ^ "\""
   | Bool_Lit(l) -> string_of_bool l
@@ -112,6 +107,7 @@ let rec string_of_expr = function
       string_of_expr e
   | Call(f, argl) ->
     f ^ "(" ^ String.concat ", " (List.map string_of_expr argl) ^ ")" 
+  | Noexpr -> ""
  
  let string_of_valid_type = function
     Int -> "int"
@@ -125,18 +121,18 @@ let rec string_of_expr = function
   | Edge -> "Edge"
   | EdgeType -> "EdgeType"
   | Graph -> "Graph"
-  | Userdef -> "UserDef"
+  | UserDef -> "UserDef"
 
-  let string_of_variable v = string_of_valid_type  (fst v) ^ " " ^
-                             snd v
+  let string_of_variable v = "" ^ fst v ^ " " ^ string_of_valid_type (snd v) 
 
-  let string_of_stmt = function
-    Expr(expr) -> string_of_expr expr ^ ";\n"
+  let rec string_of_stmt = function
+    Block(b) -> string_of_block b
+  | Expr(expr) -> string_of_expr expr ^ ";\n"
   | Return(expr) -> "return " ^ string_of_expr expr ^ ";\n";
   | If(e1, b1, b2) -> 
       (match b2.statements with
-        [] -> "if (" ^ string_of_expr e ^ ")\n" ^ string_of_block b1
-      | _  -> "if (" ^ string_of_expr e ^ ")\n" ^
+        [] -> "if (" ^ string_of_expr e1 ^ ")\n" ^ string_of_block b1
+      | _  -> "if (" ^ string_of_expr e1 ^ ")\n" ^
               string_of_block b1 ^ "else\n" ^ string_of_block b2)
   | For(a1, e, a2, b) ->
       "for (" ^ string_of_expr a1 ^ "; " ^ 
@@ -154,7 +150,7 @@ let rec string_of_expr = function
 
   let string_of_func fdecl = (string_of_valid_type fdecl.ret) ^ " " ^
     fdecl.fname ^ "(" ^ String.concat ", " (List.map string_of_variable fdecl.formals) ^ ")\n" ^
-    (string_of_block func_decl.block)
+    (string_of_block fdecl.body_block)
 
   let string_of_prog prog = String.concat ";\n" (List.map string_of_variable (fst prog)) ^
     (if (List.length (fst prog)) > 0 then ";\n" else "") ^

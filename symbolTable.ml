@@ -6,29 +6,29 @@ open Ast
 module SymbolMap = Map.Make(String)
 
 (* each index in the array refers to a block and holds within it the scope of the parent block *)
-let ancestor_scope = Array.create 1000 0
+let ancestor_scope = Array.make 1000 0
 
-(* decl declared in ast.ml *)
+
 let string_of_decl = function
-	  SymbTable_Var(n, t, id) -> string_of_variable(n,t)
-	| SymbTable_Func(m, t, f, id) -> (string_of_valid_type t) ^ " " ^
+	  SymbTable_Var(n, t, id) -> string_of_variable (n,t)
+	| SymbTable_Func(n, t, f, id) -> (string_of_valid_type t) ^ " " ^
 										n ^ "(" ^
-										String.concet ", " (List.map string_of_valid_type f) ^ ")"
+										String.concat ", " (List.map string_of_valid_type f) ^ ")"
 
 (* table == env in lorax *)
 let string_of_symbol_table env = 
 	let symbol_list = SymbolMap.fold 
-		(fun f e symList) -> (string_of_decl e) :: symList)) (fst env) [] in
+		(fun f e symList -> (string_of_decl e) :: symList) (fst env) [] in
 	let sortedMap = List.sort Pervasives.compare symbol_list in
 	String.concat "\n" sortedMap
 
 (* A symbol's id also refers to its scope *)
 let rec symbol_table_get_id (name:string) env =
 	let(table, id) = env in
-		let to_find = name ^ "_" (string_of_int id) in
+		let to_find = name ^ "_" ^ (string_of_int id) in
 			if SymbolMap.mem to_find table then id
 			else 
-				if id = 0 then raise (Failure("Symbol " ^ name ^ " not declared in current scope! (Scope: " ^ id ^ ")"))
+				if id = 0 then raise (Failure("Symbol " ^ name ^ " not declared in current scope! (Scope: " ^ string_of_int id ^ ")"))
 				else symbol_table_get_id name (table, ancestor_scope.(id))
 
 (* Look for symbol in given scope (block id) and if not found, recursively check all ancestor scopes*)
@@ -37,13 +37,13 @@ let rec symbol_table_find (name:string) env =
 		let to_find = name ^ "-" ^ (string_of_int id) in
 			if SymbolMap.mem to_find table then SymbolMap.find to_find table
 			else 
-				if id = 0 then raise (Failure("Symbol " ^ name ^ " not declared in current scope! (Scope: " ^ id ^ ")"))
+				if id = 0 then raise (Failure("Symbol " ^ name ^ " not declared in current scope! (Scope: " ^ string_of_int id ^ ")"))
 				else symbol_table_find name (table, ancestor_scope.(id))
 
-let rec symbol_table_add_decl (name:string) (decl:decl) env =
+let rec symbol_table_add_decl (name:string) (decl:declaration) env =
 	let (table, id) = env in
 		let to_find = name ^ "_" ^ (string_of_int id) in
-			if SymbolMap.mem to_find table then raise(Failure("Symbol " ^ name ^ " already declared in this scope! (Scope: " ^ id ^ ")"))
+			if SymbolMap.mem to_find table then raise(Failure("Symbol " ^ name ^ " already declared in this scope! (Scope: " ^ string_of_int id ^ ")"))
 			else ((SymbolMap.add to_find decl table), id)
 
 (* Recursively add list of variables to symbol table *)
@@ -51,7 +51,7 @@ let rec symbol_table_add_var_list (vars:variable list) env =
 	match vars with
 		  [] -> env
 		| (var_name, var_type) :: tail -> 
-			let env = symbol_table_add_decl vname (SymbTable_Var(var_name, var_type, snd env)) env in
+			let env = symbol_table_add_decl var_name (SymbTable_Var(var_name, var_type, snd env)) env in
 				symbol_table_add_var_list tail env
 
 let rec symbol_table_add_stmt_list (stmts:stmt list) env =
@@ -67,8 +67,8 @@ let rec symbol_table_add_stmt_list (stmts:stmt list) env =
 and symbol_table_add_block (b:block) env = 
 	let (table, id) = env in
 		let env = symbol_table_add_var_list b.locals (table, b.block_num) in
-			let env = symbol_table_add_stmt_list b.statements env in
-				ancestor_scope.(b.block_num) <- id (* Note which scope we are putting this block into *)
+			let env = symbol_table_add_stmt_list b.statements env in 
+					ancestor_scope.(b.block_num) <- id;(* Note which scope we are putting this block into *)
 				((fst env), id) (* Return old scope we started int(block id) and name of last statement we added*)
 
 let symbol_table_add_func (f:func_decl) env = 
@@ -79,7 +79,7 @@ let symbol_table_add_func (f:func_decl) env =
 				symbol_table_add_block f.body_block ((fst env), id)
 
 
-let symbol_table_add_func_list (funcs:func_decl list) env = 
+let rec symbol_table_add_func_list (funcs:func_decl list) env = 
 	match funcs with
 		  [] -> env
 		| head :: tail -> let env = symbol_table_add_func head env in
@@ -87,8 +87,9 @@ let symbol_table_add_func_list (funcs:func_decl list) env =
 
 let symbol_table_of_prog (p:Ast.program) =
 	(* Table starts off as an empty map with scope (block id) set to 0 *)
-	let env = symtab_add_vars (fst p) env in
-		symbol_table_add_func_list (snd p) env
+	let env = (SymbolMap.empty, 0) in
+		let env = symbol_table_add_var_list (fst p) env in
+			symbol_table_add_func_list (snd p) env
 
 
 
