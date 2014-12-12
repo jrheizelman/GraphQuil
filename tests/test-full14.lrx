@@ -1,0 +1,9 @@
+/* 
+ * Author: Zhaarn Maheswaran
+ * Tests arithmetic. Adapted from Stephen Edwards microc.
+ */
+
+int main()
+{
+  print(39 + 3);
+}

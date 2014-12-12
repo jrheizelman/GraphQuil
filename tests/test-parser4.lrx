@@ -1,0 +1,11 @@
+/* 
+ * Author: Chris D'Angelo
+ * Testing valid parseable file
+ */
+
+int main() {
+	string a;
+	a = "hello, world";
+	print(a);
+	return 0;
+}

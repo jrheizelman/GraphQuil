@@ -1,0 +1,13 @@
+/* 
+ * Authors:
+ * Chris D'Angelo
+ * tree child, and @ with char arithmetic
+ */
+
+int main()
+{
+	tree <char>t(2);
+	t = 'E'['F', 'G'];
+
+	print(t%0@ + ('B'-'A'));
+}

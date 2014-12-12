@@ -1,0 +1,9 @@
+/*
+ * Author: Chris D'Angelo
+ * Testing valid semantic analysis
+ */
+
+int main()
+{
+	return 0;
+}

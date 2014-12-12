@@ -1,0 +1,26 @@
+/*
+ * Author: Chris D'Angelo
+ * Testing valid semantic analysis
+ */
+
+int d;
+
+int add()
+{
+	return 0;
+}
+
+int chris(int a, int c, int f)
+{
+	int d;
+	while(true) {
+		a = 4;
+	}
+	d = 5;
+}
+
+int main()
+{
+	int b;
+	chris(b, 4, add());
+}

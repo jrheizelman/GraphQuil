@@ -1,0 +1,12 @@
+/*
+ * Author: Chris D'Angelo
+ * Testing valid semantic analysis
+ */
+
+int main()
+{
+	tree <int>t(2);
+	t = 3[4[], 5];
+	t = 3[];
+	return 0;
+}

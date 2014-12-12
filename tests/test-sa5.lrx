@@ -1,0 +1,23 @@
+/*
+ * Author: Chris D'Angelo
+ * Testing valid semantic analysis
+ */
+
+int main()
+{
+	int a;
+	float b;
+	char c;
+	bool d;
+
+	a = 4;
+	b = 5.0;
+	c = 'b';
+	d = false;
+
+	3 + a;
+	3.0 - b;
+	'a' + c;
+	true && d;
+	return 0;
+}

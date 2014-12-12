@@ -1,0 +1,10 @@
+/*
+ * Author: Chris D'Angelo
+ * Testing valid semantic analysis
+ */
+
+int main()
+{
+	1[2, 3[4, 5]];
+	return 0;
+}

@@ -1,0 +1,12 @@
+/* 
+ * Author: Zhaarn Maheswaran
+ * Test fucntion return types 
+ */
+ 
+int function()
+{
+	return true;
+}
+int main () {
+	function();
+}

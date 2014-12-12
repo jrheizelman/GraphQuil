@@ -26,6 +26,8 @@ Block of block
 | If of expr * block * block
 | For of expr * expr * expr * block
 | While of expr * block
+(*| Vdecl of  validtype * string*)
+(*| Link of expr * expr*)
 
 and block = {
   locals : variable list;
@@ -144,6 +146,8 @@ let rec string_of_expr = function
   | While(e, b) -> 
       "while (" ^ string_of_expr e ^ ") {\n" ^ 
       string_of_block b ^ "}"
+  (*| Vdecl(t, id) -> 
+      string_of_valid_type t ^ " " ^ id ^ ";"*)
 
   and string_of_block (b:block) = "{\n" ^
     String.concat ";\n" (List.map string_of_variable b.locals) ^ (if (List.length b.locals) > 0 then ";\n" else "") ^

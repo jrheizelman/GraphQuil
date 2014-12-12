@@ -1,0 +1,11 @@
+/* 
+ * Author: Zhaarn Maheswaran
+ * Tests for scanner error 
+ */
+
+int main () {
+	
+	int i;
+	i = 1; 
+	i?2;
+}

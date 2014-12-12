@@ -1,0 +1,15 @@
+/* 
+ * Author: Kira Whitehouse
+ * Stress testing empty brace edge case tree definition
+ */
+
+int main()
+{
+	print("hello world\n\n");
+
+	print(1[2, 3, 4, 5[], 6, 7[]], "\n");
+
+	print('a'['b'['c'[]]], "\n\n\n");
+
+	print(true[true[false, true], false[]], "\n");
+}

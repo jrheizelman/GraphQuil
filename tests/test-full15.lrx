@@ -1,0 +1,9 @@
+/* 
+ * Author: Zhaarn Maheswaran
+ * Tests order of operations. Adapted from Stephen Edwards microc.
+ */
+
+int main()
+{
+  print(1 + 2 * 3 + 4);
+}

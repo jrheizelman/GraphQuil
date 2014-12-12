@@ -1,0 +1,10 @@
+/* 
+ * Author: Chris D'Angelo
+ * Testing valid parseable file
+ */
+
+int main()
+{
+	tree <int>t(1);
+	t%1 == null;
+}
