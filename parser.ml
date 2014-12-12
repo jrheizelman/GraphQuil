@@ -147,10 +147,9 @@ let yylhs = "\255\255\
 \002\000\002\000\002\000\002\000\002\000\002\000\002\000\004\000\
 \004\000\005\000\005\000\005\000\005\000\005\000\006\000\006\000\
 \006\000\006\000\006\000\006\000\003\000\003\000\007\000\007\000\
-\004\000\004\000\008\000\008\000\010\000\010\000\011\000\011\000\
-\013\000\012\000\012\000\012\000\012\000\012\000\012\000\012\000\
-\009\000\014\000\015\000\015\000\016\000\001\000\001\000\001\000\
-\000\000"
+\008\000\008\000\010\000\010\000\011\000\011\000\013\000\012\000\
+\012\000\012\000\012\000\012\000\012\000\012\000\009\000\014\000\
+\015\000\015\000\016\000\001\000\001\000\001\000\000\000"
 
 let yylen = "\002\000\
 \001\000\001\000\001\000\001\000\001\000\003\000\003\000\003\000\
@@ -158,27 +157,26 @@ let yylen = "\002\000\
 \003\000\003\000\002\000\002\000\003\000\004\000\003\000\000\000\
 \001\000\001\000\001\000\001\000\001\000\001\000\001\000\001\000\
 \001\000\001\000\001\000\001\000\000\000\001\000\001\000\003\000\
-\000\000\001\000\001\000\003\000\000\000\001\000\000\000\002\000\
-\003\000\001\000\002\000\003\000\005\000\007\000\009\000\005\000\
-\002\000\002\000\000\000\003\000\009\000\000\000\002\000\002\000\
-\002\000"
+\001\000\003\000\000\000\001\000\000\000\002\000\003\000\001\000\
+\002\000\003\000\005\000\007\000\009\000\005\000\002\000\002\000\
+\000\000\003\000\009\000\000\000\002\000\002\000\002\000"
 
 let yydefred = "\000\000\
-\062\000\000\000\000\000\032\000\034\000\035\000\031\000\029\000\
+\060\000\000\000\000\000\032\000\034\000\035\000\031\000\029\000\
 \028\000\033\000\026\000\027\000\036\000\000\000\030\000\000\000\
-\063\000\064\000\000\000\058\000\000\000\000\000\000\000\043\000\
-\000\000\057\000\000\000\000\000\044\000\059\000\000\000\000\000\
-\000\000\060\000\000\000\047\000\061\000\000\000\000\000\000\000\
+\061\000\062\000\000\000\056\000\000\000\000\000\000\000\041\000\
+\000\000\055\000\000\000\000\000\042\000\057\000\000\000\000\000\
+\000\000\058\000\000\000\045\000\059\000\000\000\000\000\000\000\
 \000\000\000\000\000\000\001\000\005\000\000\000\004\000\002\000\
-\000\000\048\000\050\000\000\000\000\000\020\000\019\000\000\000\
-\000\000\000\000\000\000\000\000\051\000\000\000\000\000\000\000\
+\000\000\046\000\048\000\000\000\000\000\020\000\019\000\000\000\
+\000\000\000\000\000\000\000\000\049\000\000\000\000\000\000\000\
 \000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\
-\000\000\000\000\000\000\023\000\049\000\000\000\000\000\000\000\
-\000\000\052\000\000\000\000\000\000\000\010\000\000\000\008\000\
+\000\000\000\000\000\000\023\000\047\000\000\000\000\000\000\000\
+\000\000\050\000\000\000\000\000\000\000\010\000\000\000\008\000\
 \000\000\009\000\000\000\000\000\000\000\000\000\000\000\000\000\
 \000\000\000\000\000\000\000\000\000\000\000\000\022\000\000\000\
-\000\000\056\000\000\000\000\000\000\000\000\000\054\000\000\000\
-\000\000\055\000"
+\000\000\054\000\000\000\000\000\000\000\000\000\052\000\000\000\
+\000\000\053\000"
 
 let yydgoto = "\002\000\
 \003\000\080\000\084\000\081\000\022\000\015\000\085\000\023\000\
@@ -235,16 +233,16 @@ let yytable = "\049\000\
 \039\000\019\000\021\000\038\000\017\000\040\000\108\000\041\000\
 \042\000\043\000\025\000\020\000\025\000\039\000\021\000\026\000\
 \028\000\027\000\040\000\030\000\041\000\042\000\043\000\034\000\
-\056\000\057\000\058\000\060\000\109\000\047\000\047\000\044\000\
-\045\000\046\000\047\000\102\000\047\000\048\000\103\000\104\000\
-\036\000\047\000\053\000\053\000\044\000\045\000\046\000\053\000\
-\110\000\047\000\048\000\047\000\113\000\035\000\053\000\065\000\
-\047\000\057\000\047\000\047\000\047\000\045\000\046\000\024\000\
-\053\000\038\000\037\000\038\000\024\000\053\000\014\000\053\000\
-\053\000\053\000\062\000\039\000\063\000\064\000\053\000\000\000\
-\065\000\066\000\047\000\047\000\047\000\000\000\000\000\047\000\
-\047\000\000\000\000\000\000\000\000\000\000\000\000\000\053\000\
-\053\000\053\000\000\000\000\000\053\000\053\000\000\000\000\000\
+\056\000\057\000\058\000\060\000\109\000\045\000\045\000\044\000\
+\045\000\046\000\045\000\102\000\047\000\048\000\103\000\104\000\
+\036\000\045\000\051\000\051\000\044\000\045\000\046\000\051\000\
+\110\000\047\000\048\000\045\000\113\000\035\000\051\000\063\000\
+\045\000\055\000\045\000\045\000\045\000\043\000\044\000\024\000\
+\051\000\038\000\037\000\038\000\024\000\051\000\014\000\051\000\
+\051\000\051\000\062\000\039\000\063\000\064\000\053\000\000\000\
+\065\000\066\000\045\000\045\000\045\000\000\000\000\000\045\000\
+\045\000\000\000\000\000\000\000\000\000\000\000\000\000\051\000\
+\051\000\051\000\000\000\000\000\051\000\051\000\000\000\000\000\
 \000\000\000\000\044\000\045\000\046\000\000\000\000\000\047\000\
 \048\000\004\000\005\000\006\000\007\000\008\000\009\000\000\000\
 \000\000\000\000\000\000\010\000\000\000\000\000\011\000\000\000\
@@ -435,387 +433,374 @@ let yyact = [|
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : int) in
     Obj.repr(
-# 44 "parser.mly"
-                                         ( Literal(_1) )
-# 441 "parser.ml"
-               : 'expr))
-; (fun __caml_parser_env ->
-    let _1 = (Parsing.peek_val __caml_parser_env 0 : string) in
-    Obj.repr(
 # 45 "parser.mly"
-                                         ( Char(_1) )
-# 448 "parser.ml"
+                                         ( Literal(_1) )
+# 439 "parser.ml"
                : 'expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : string) in
     Obj.repr(
 # 46 "parser.mly"
-                                         ( Id(_1))
-# 455 "parser.ml"
+                                         ( Char(_1) )
+# 446 "parser.ml"
                : 'expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : string) in
     Obj.repr(
 # 47 "parser.mly"
+                                         ( Id(_1))
+# 453 "parser.ml"
+               : 'expr))
+; (fun __caml_parser_env ->
+    let _1 = (Parsing.peek_val __caml_parser_env 0 : string) in
+    Obj.repr(
+# 48 "parser.mly"
                                          ( String_Lit(_1) )
-# 462 "parser.ml"
+# 460 "parser.ml"
                : 'expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : bool) in
     Obj.repr(
-# 48 "parser.mly"
-                                         ( Bool_Lit(_1))
-# 469 "parser.ml"
-               : 'expr))
-; (fun __caml_parser_env ->
-    let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
-    let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
-    Obj.repr(
 # 49 "parser.mly"
-                                         ( Binop (_1, Add, _3) )
-# 477 "parser.ml"
+                                         ( Bool_Lit(_1))
+# 467 "parser.ml"
                : 'expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
 # 50 "parser.mly"
-                                        ( Binop (_1, Sub, _3) )
-# 485 "parser.ml"
+                                         ( Binop (_1, Add, _3) )
+# 475 "parser.ml"
                : 'expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
 # 51 "parser.mly"
-                                        ( Binop (_1, Mult, _3) )
-# 493 "parser.ml"
+                                        ( Binop (_1, Sub, _3) )
+# 483 "parser.ml"
                : 'expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
 # 52 "parser.mly"
-                                         ( Binop (_1, Div, _3) )
-# 501 "parser.ml"
+                                        ( Binop (_1, Mult, _3) )
+# 491 "parser.ml"
                : 'expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
 # 53 "parser.mly"
-                                       ( Binop (_1, Mod, _1) )
-# 509 "parser.ml"
+                                         ( Binop (_1, Div, _3) )
+# 499 "parser.ml"
                : 'expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
 # 54 "parser.mly"
-                                        ( Binop (_1, Less, _3) )
-# 517 "parser.ml"
+                                       ( Binop (_1, Mod, _1) )
+# 507 "parser.ml"
                : 'expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
 # 55 "parser.mly"
-                                        ( Binop (_1, Greater, _3) )
-# 525 "parser.ml"
+                                        ( Binop (_1, Less, _3) )
+# 515 "parser.ml"
                : 'expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
 # 56 "parser.mly"
-                                       ( Binop (_1, Leq, _3) )
-# 533 "parser.ml"
+                                        ( Binop (_1, Greater, _3) )
+# 523 "parser.ml"
                : 'expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
 # 57 "parser.mly"
-                                       ( Binop (_1, Geq, _3) )
-# 541 "parser.ml"
+                                       ( Binop (_1, Leq, _3) )
+# 531 "parser.ml"
                : 'expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
 # 58 "parser.mly"
-                                         ( Binop (_1, Equal, _3) )
-# 549 "parser.ml"
+                                       ( Binop (_1, Geq, _3) )
+# 539 "parser.ml"
                : 'expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
 # 59 "parser.mly"
-                                       ( Binop (_1, Neq, _3) )
-# 557 "parser.ml"
+                                         ( Binop (_1, Equal, _3) )
+# 547 "parser.ml"
                : 'expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
 # 60 "parser.mly"
-                                        ( Binop (_1, Or, _3) )
-# 565 "parser.ml"
+                                       ( Binop (_1, Neq, _3) )
+# 555 "parser.ml"
                : 'expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
 # 61 "parser.mly"
-                                       ( Binop (_1, And, _3) )
-# 573 "parser.ml"
-               : 'expr))
-; (fun __caml_parser_env ->
-    let _2 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
-    Obj.repr(
-# 62 "parser.mly"
-                                       ( Unop(Not, _2) )
-# 580 "parser.ml"
-               : 'expr))
-; (fun __caml_parser_env ->
-    let _2 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
-    Obj.repr(
-# 63 "parser.mly"
-                                         ( Unop(Neg, _2) )
-# 587 "parser.ml"
+                                        ( Binop (_1, Or, _3) )
+# 563 "parser.ml"
                : 'expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
+# 62 "parser.mly"
+                                       ( Binop (_1, And, _3) )
+# 571 "parser.ml"
+               : 'expr))
+; (fun __caml_parser_env ->
+    let _2 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
+    Obj.repr(
+# 63 "parser.mly"
+                                       ( Unop(Not, _2) )
+# 578 "parser.ml"
+               : 'expr))
+; (fun __caml_parser_env ->
+    let _2 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
+    Obj.repr(
 # 64 "parser.mly"
+                                         ( Unop(Neg, _2) )
+# 585 "parser.ml"
+               : 'expr))
+; (fun __caml_parser_env ->
+    let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
+    let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
+    Obj.repr(
+# 65 "parser.mly"
                                          ( Assign(_1, _3) )
-# 595 "parser.ml"
+# 593 "parser.ml"
                : 'expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 3 : string) in
     let _3 = (Parsing.peek_val __caml_parser_env 1 : 'actuals_opt) in
     Obj.repr(
-# 65 "parser.mly"
+# 66 "parser.mly"
                                          ( Call(_1, _3) )
-# 603 "parser.ml"
+# 601 "parser.ml"
                : 'expr))
 ; (fun __caml_parser_env ->
     let _2 = (Parsing.peek_val __caml_parser_env 1 : 'expr) in
     Obj.repr(
-# 66 "parser.mly"
+# 67 "parser.mly"
                                          ( _2 )
-# 610 "parser.ml"
+# 608 "parser.ml"
                : 'expr))
 ; (fun __caml_parser_env ->
     Obj.repr(
-# 69 "parser.mly"
+# 70 "parser.mly"
                   ( Noexpr )
-# 616 "parser.ml"
+# 614 "parser.ml"
                : 'expr_opt))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
-# 70 "parser.mly"
+# 71 "parser.mly"
                   ( _1 )
-# 623 "parser.ml"
+# 621 "parser.ml"
                : 'expr_opt))
 ; (fun __caml_parser_env ->
     Obj.repr(
-# 73 "parser.mly"
-           ( Int )
-# 629 "parser.ml"
-               : 'any_type))
-; (fun __caml_parser_env ->
-    Obj.repr(
 # 74 "parser.mly"
-           ( Char )
-# 635 "parser.ml"
+           ( Int )
+# 627 "parser.ml"
                : 'any_type))
 ; (fun __caml_parser_env ->
     Obj.repr(
 # 75 "parser.mly"
-           ( String )
-# 641 "parser.ml"
+           ( Char )
+# 633 "parser.ml"
                : 'any_type))
 ; (fun __caml_parser_env ->
     Obj.repr(
 # 76 "parser.mly"
+           ( String )
+# 639 "parser.ml"
+               : 'any_type))
+; (fun __caml_parser_env ->
+    Obj.repr(
+# 77 "parser.mly"
            ( Bool )
-# 647 "parser.ml"
+# 645 "parser.ml"
                : 'any_type))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : 'obj_type) in
     Obj.repr(
-# 77 "parser.mly"
+# 78 "parser.mly"
            ( _1 )
-# 654 "parser.ml"
+# 652 "parser.ml"
                : 'any_type))
 ; (fun __caml_parser_env ->
     Obj.repr(
-# 80 "parser.mly"
-           ( Node )
-# 660 "parser.ml"
-               : 'obj_type))
-; (fun __caml_parser_env ->
-    Obj.repr(
 # 81 "parser.mly"
-           ( NodeType )
-# 666 "parser.ml"
+           ( Node )
+# 658 "parser.ml"
                : 'obj_type))
 ; (fun __caml_parser_env ->
     Obj.repr(
 # 82 "parser.mly"
-           ( Edge )
-# 672 "parser.ml"
+           ( NodeType )
+# 664 "parser.ml"
                : 'obj_type))
 ; (fun __caml_parser_env ->
     Obj.repr(
 # 83 "parser.mly"
-           ( EdgeType )
-# 678 "parser.ml"
+           ( Edge )
+# 670 "parser.ml"
                : 'obj_type))
 ; (fun __caml_parser_env ->
     Obj.repr(
 # 84 "parser.mly"
+           ( EdgeType )
+# 676 "parser.ml"
+               : 'obj_type))
+; (fun __caml_parser_env ->
+    Obj.repr(
+# 85 "parser.mly"
            ( Graph )
-# 684 "parser.ml"
+# 682 "parser.ml"
                : 'obj_type))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : string) in
     Obj.repr(
-# 85 "parser.mly"
-           ( Userdef )
-# 691 "parser.ml"
+# 86 "parser.mly"
+           ( UserDef )
+# 689 "parser.ml"
                : 'obj_type))
 ; (fun __caml_parser_env ->
     Obj.repr(
-# 88 "parser.mly"
+# 89 "parser.mly"
                  ( [] )
-# 697 "parser.ml"
+# 695 "parser.ml"
                : 'actuals_opt))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : 'actuals_list) in
     Obj.repr(
-# 89 "parser.mly"
+# 90 "parser.mly"
                  ( List.rev _1 )
-# 704 "parser.ml"
+# 702 "parser.ml"
                : 'actuals_opt))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
-# 92 "parser.mly"
+# 93 "parser.mly"
                             ( [_1] )
-# 711 "parser.ml"
+# 709 "parser.ml"
                : 'actuals_list))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'actuals_list) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
-# 93 "parser.mly"
+# 94 "parser.mly"
                             ( _3 :: _1 )
-# 719 "parser.ml"
+# 717 "parser.ml"
                : 'actuals_list))
-; (fun __caml_parser_env ->
-    Obj.repr(
-# 96 "parser.mly"
-                (Noexpr )
-# 725 "parser.ml"
-               : 'expr_opt))
-; (fun __caml_parser_env ->
-    let _1 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
-    Obj.repr(
-# 97 "parser.mly"
-                ( _1 )
-# 732 "parser.ml"
-               : 'expr_opt))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : 'vdecl) in
     Obj.repr(
-# 100 "parser.mly"
+# 97 "parser.mly"
                              ( [_1])
-# 739 "parser.ml"
+# 724 "parser.ml"
                : 'formals_list))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'formals_list) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'vdecl) in
     Obj.repr(
-# 101 "parser.mly"
+# 98 "parser.mly"
                              ( _3 :: _1 )
-# 747 "parser.ml"
+# 732 "parser.ml"
                : 'formals_list))
 ; (fun __caml_parser_env ->
     Obj.repr(
-# 104 "parser.mly"
+# 101 "parser.mly"
                  ( [] )
-# 753 "parser.ml"
+# 738 "parser.ml"
                : 'formals_opt))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : 'formals_list) in
     Obj.repr(
-# 105 "parser.mly"
+# 102 "parser.mly"
                  ( List.rev _1 )
-# 760 "parser.ml"
+# 745 "parser.ml"
                : 'formals_opt))
 ; (fun __caml_parser_env ->
     Obj.repr(
-# 108 "parser.mly"
+# 105 "parser.mly"
                    ( [] )
-# 766 "parser.ml"
+# 751 "parser.ml"
                : 'stmt_list))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 1 : 'stmt_list) in
     let _2 = (Parsing.peek_val __caml_parser_env 0 : 'stmt) in
     Obj.repr(
-# 109 "parser.mly"
+# 106 "parser.mly"
                    ( _2 :: _1 )
-# 774 "parser.ml"
+# 759 "parser.ml"
                : 'stmt_list))
 ; (fun __caml_parser_env ->
     let _2 = (Parsing.peek_val __caml_parser_env 1 : 'stmt_list) in
     Obj.repr(
-# 112 "parser.mly"
-                          ( {locals = []; statements = List.rev _2; block_id = inc_block_id ()} )
-# 781 "parser.ml"
+# 109 "parser.mly"
+                          ( {locals = []; statements = List.rev _2; block_num = inc_block_num ()} )
+# 766 "parser.ml"
                : 'block))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : 'block) in
     Obj.repr(
-# 115 "parser.mly"
+# 112 "parser.mly"
                                                                   ( Block(_1))
-# 788 "parser.ml"
+# 773 "parser.ml"
                : 'stmt))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 1 : 'expr) in
     Obj.repr(
-# 116 "parser.mly"
+# 113 "parser.mly"
                                                                   ( Expr(_1) )
-# 795 "parser.ml"
+# 780 "parser.ml"
                : 'stmt))
 ; (fun __caml_parser_env ->
     let _2 = (Parsing.peek_val __caml_parser_env 1 : 'expr) in
     Obj.repr(
-# 117 "parser.mly"
+# 114 "parser.mly"
                                                                   ( Return(_2) )
-# 802 "parser.ml"
+# 787 "parser.ml"
                : 'stmt))
 ; (fun __caml_parser_env ->
     let _3 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _5 = (Parsing.peek_val __caml_parser_env 0 : 'block) in
     Obj.repr(
-# 118 "parser.mly"
+# 115 "parser.mly"
                                                                   ( If(_3, _5, {locals = []; statements = []; block_num = inc_block_num ()}) )
-# 810 "parser.ml"
+# 795 "parser.ml"
                : 'stmt))
 ; (fun __caml_parser_env ->
     let _3 = (Parsing.peek_val __caml_parser_env 4 : 'expr) in
     let _5 = (Parsing.peek_val __caml_parser_env 2 : 'block) in
     let _7 = (Parsing.peek_val __caml_parser_env 0 : 'block) in
     Obj.repr(
-# 119 "parser.mly"
+# 116 "parser.mly"
                                                                   ( If (_3, _5, _7) )
-# 819 "parser.ml"
+# 804 "parser.ml"
                : 'stmt))
 ; (fun __caml_parser_env ->
     let _3 = (Parsing.peek_val __caml_parser_env 6 : 'expr_opt) in
@@ -823,46 +808,46 @@ let yyact = [|
     let _7 = (Parsing.peek_val __caml_parser_env 2 : 'expr_opt) in
     let _9 = (Parsing.peek_val __caml_parser_env 0 : 'block) in
     Obj.repr(
-# 120 "parser.mly"
+# 117 "parser.mly"
                                                                   ( For(_3, _5, _7, _9) )
-# 829 "parser.ml"
+# 814 "parser.ml"
                : 'stmt))
 ; (fun __caml_parser_env ->
     let _3 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _5 = (Parsing.peek_val __caml_parser_env 0 : 'block) in
     Obj.repr(
-# 121 "parser.mly"
+# 118 "parser.mly"
                                                                   ( While(_3, _5) )
-# 837 "parser.ml"
+# 822 "parser.ml"
                : 'stmt))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 1 : 'any_type) in
     let _2 = (Parsing.peek_val __caml_parser_env 0 : string) in
     Obj.repr(
-# 124 "parser.mly"
-                   (_2, _1)
-# 845 "parser.ml"
+# 121 "parser.mly"
+              (_2, _1)
+# 830 "parser.ml"
                : 'vdecl))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 1 : 'vdecl) in
     Obj.repr(
-# 127 "parser.mly"
+# 124 "parser.mly"
              ( _1 )
-# 852 "parser.ml"
+# 837 "parser.ml"
                : 'glb_vdecl))
 ; (fun __caml_parser_env ->
     Obj.repr(
-# 130 "parser.mly"
+# 128 "parser.mly"
                           ( [] )
-# 858 "parser.ml"
+# 843 "parser.ml"
                : 'vdecl_list))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'vdecl_list) in
     let _2 = (Parsing.peek_val __caml_parser_env 1 : 'vdecl) in
     Obj.repr(
-# 131 "parser.mly"
+# 129 "parser.mly"
                           ( _2 :: _1 )
-# 866 "parser.ml"
+# 851 "parser.ml"
                : 'vdecl_list))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 8 : 'any_type) in
@@ -871,35 +856,34 @@ let yyact = [|
     let _7 = (Parsing.peek_val __caml_parser_env 2 : 'vdecl_list) in
     let _8 = (Parsing.peek_val __caml_parser_env 1 : 'stmt_list) in
     Obj.repr(
-# 135 "parser.mly"
+# 133 "parser.mly"
      ( { fname = _2;
          formals = _4; 
-         body_block = { locals = List.rev _7; statements = List.rev _8; block_num = inc_block_num () }
-         ret = _1
-         } )
-# 881 "parser.ml"
+         body_block = {locals = List.rev _7; statements = List.rev _8; block_num = inc_block_num()} ;
+         ret = _1 } )
+# 865 "parser.ml"
                : 'fdecl))
 ; (fun __caml_parser_env ->
     Obj.repr(
-# 142 "parser.mly"
+# 139 "parser.mly"
                  ( [], [] )
-# 887 "parser.ml"
+# 871 "parser.ml"
                : Ast.program))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 1 : Ast.program) in
     let _2 = (Parsing.peek_val __caml_parser_env 0 : 'glb_vdecl) in
     Obj.repr(
-# 143 "parser.mly"
+# 140 "parser.mly"
                      ( (_2 :: fst _1), snd _1 )
-# 895 "parser.ml"
+# 879 "parser.ml"
                : Ast.program))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 1 : Ast.program) in
     let _2 = (Parsing.peek_val __caml_parser_env 0 : 'fdecl) in
     Obj.repr(
-# 144 "parser.mly"
+# 141 "parser.mly"
                  ( fst _1, (_2 :: snd _1) )
-# 903 "parser.ml"
+# 887 "parser.ml"
                : Ast.program))
 (* Entry program *)
 ; (fun __caml_parser_env -> raise (Parsing.YYexit (Parsing.peek_val __caml_parser_env 0)))

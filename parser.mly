@@ -32,7 +32,8 @@ let inc_block_num
 %left PLUS MINUS
 %left TIMES DIVIDE MOD
 %right NEW
-%right NEG NOT
+%right NOT
+%right NEG
 %left LPAREN RPAREN
 
 %start program
@@ -82,7 +83,7 @@ NODE       { Node }
 | EDGE     { Edge }
 | EDGETYPE { EdgeType }
 | GRAPH    { Graph }
-| TYPEID   { Userdef }
+| TYPEID   { UserDef }
 
 actuals_opt:
   /* nothing */  { [] }
@@ -91,10 +92,6 @@ actuals_opt:
 actuals_list:
   expr                      { [$1] }
   | actuals_list COMMA expr { $3 :: $1 }
-
-expr_opt:
-  /* nothing */ {Noexpr }
-  | expr        { $1 }
 
 formals_list:
     vdecl                    { [$1]}
@@ -109,7 +106,7 @@ stmt_list:
   | stmt_list stmt { $2 :: $1 }
 
 block:
-  LBRACE stmt_list RBRACE { {locals = []; statements = List.rev $2; block_id = inc_block_id ()} }
+  LBRACE stmt_list RBRACE { {locals = []; statements = List.rev $2; block_num = inc_block_num ()} }
 
 stmt:
   block                                                           { Block($1)}
@@ -121,10 +118,11 @@ stmt:
   | WHILE LPAREN expr RPAREN block                                { While($3, $5) }
 
 vdecl:
-  any_type ID      {$2, $1}
+  any_type ID {$2, $1}
 
 glb_vdecl:
   vdecl SEMI { $1 }
+
 
 vdecl_list:
   /* nothing */           { [] }
@@ -134,9 +132,8 @@ fdecl:
    any_type ID LPAREN formals_opt RPAREN LBRACE vdecl_list stmt_list RBRACE
      { { fname = $2;
          formals = $4; 
-         body_block = { locals = List.rev $7; statements = List.rev $8; block_num = inc_block_num () }
-         ret = $1
-         } }
+         body_block = {locals = List.rev $7; statements = List.rev $8; block_num = inc_block_num()} ;
+         ret = $1 } }
 
 program:
 	/* nothing */   { [], [] }

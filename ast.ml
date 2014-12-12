@@ -18,7 +18,9 @@ Literal of int
 | Construct of validtype * expr list
 | MakeArr of validtype * expr
 | Access of string * string
-| Bool_lit of bool
+| Bool_Lit of bool
+
+type variable = string * validtype
 
 type stmt =
 Block of block
@@ -28,20 +30,19 @@ Block of block
 | For of expr * expr * expr * block
 | While of expr * block
 
+and block = {
+  locals : variable list;
+  statements: stmt list;
+  block_num: int;
+}
+
+
 type func_decl = {
 	fname : string;
   formals : variable list;
   body_block : block;
   ret : validtype
 }
-
-type block = {
-  locals : variable list;
-  statements: stmt list;
-  block_num: int;
-}
-
-type variable = string * validtype
 
 type program = variable list * func_decl list 
 
