@@ -14,6 +14,7 @@ type expr_t =
   | Char_t of string 
   | Assign_t of validtype * expr_t * expr_t
   | Bool_Lit_t of bool
+  | Doub_Lit_t of float
 
 
 type stmt_t =  

@@ -54,6 +54,7 @@ type token =
   | DO
   | IN
   | LITERAL of (int)
+  | DOUBLIT of (float)
   | BOOLLIT of (bool)
   | ID of (string)
   | TYPEID of (string)

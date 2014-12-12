@@ -62,7 +62,8 @@ rule token = parse
 | "in" { IN }
 | '"' [^'"']* '"'  as lxm { STRINGLIT(lxm) }
 | ''' [ ^'''] as ch ''' { CHARLIT(ch) }
-| ['0'-'9']+ as lxm { LITERAL(int_of_string lxm)}
+| ['0'-'9']+'.'['0'-'9']+ as lxm { DOUBLIT(float_of_string lxm)}
+| ['0'-'9']+' ' as lxm { LITERAL(int_of_string lxm)}
 | ['a'-'z' 'A' - 'Z']['a'-'z' 'A'-'Z' '0'-'9' '_']*"[]" as lxm { ARRID(lxm)}
 | ['a'-'z']['a'-'z' 'A'-'Z' '0'-'9' '_']* as lxm { ID(lxm)}
 | ['A'-'Z']['a'-'z' 'A'-'Z' '0'-'9' '_']* as lxm { TYPEID(lxm)}
