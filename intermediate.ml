@@ -1,5 +1,6 @@
 open Ast
 open Sast
+open Semantic_check
 
 (* Returns the string name for the date type*)
 let rec get_data_type = function
@@ -12,11 +13,20 @@ Int_Literal_t (n, d) -> string_of_int n
  | Id_t (s, d) -> s  (*will double check this construction vs. (match (String.get s 0) with 'R' -> s^"()"*)
  | Binop_t of expr_t (e1, op, e2, d) -> get_data_type e1 ^
  	(match op with
-	  Add -> "+ "^get_data_type e2 | Sub -> "- "^get_data_type e2 | Mult -> "* "^get_data_type e2
-	 | Div -> "/ "^get_data_type e2| Equal -> "== "^get_data_type e2 | Neq -> "!= "^get_data_type e2
-       	| Less -> "< "^get_data_type e2 | Leq -> "<= "^get_data_type e2 | Greater -> "> "^get_data_type e2 
-	| Geq -> ">= "^get_data_type e2| Or -> "|| "^get_data_type e2 | And -> "&& "^ get_data_type e2
-	| Dequal -> ".equals(" ^ get_data_type e2 ^")")
+	  Add -> "+ " ^ get_data_type e2 
+	  | Sub -> "- " ^ get_data_type e2 
+	  | Mult -> "* " ^ get_data_type e2
+	  | Div -> "/ " ^ get_data_type e2
+	  | Mod -> "mop" ^ get_data_type e2
+	  | Child -> "%" ^ get_data_type e2
+	  | Equal -> "== " ^ get_data_type e2 
+	  | Neq -> "!= " ^ get_data_type e2
+      | Less -> "< " ^ get_data_type e2 
+      | Leq -> "<= " ^ get_data_type e2 
+      | Greater -> "> " ^ get_data_type e2 
+	  | Geq -> ">= " ^ get_data_type e2
+	  | And -> "&& " ^ get_data_type e2
+	  | Or -> "|| " ^ get_data_type e2 
 
  | Call_t (f, argl, d) (*this will be lengthy*)
 
