@@ -1,7 +1,7 @@
-OBJS = ast.cmo sast.cmo symbolTable.cmo semantic_check.cmo parser.cmo scanner.cmo graphQuil.cmo
+OBJS = ast.cmo sast.cmo symbolTable.cmo semantic_check.cmo parser.cmo scanner.cmo graphquil.cmo
 
-graphquil : $(OBJS) 
-	ocamlc -o graphquil -g unix.cma $(OBJS) 
+graphquil : $(OBJS)
+	ocamlc -o graphquil -g unix.cma $(OBJS)
 
 .PHONY : test
 test : graphquil testall.sh

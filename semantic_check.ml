@@ -17,7 +17,6 @@ let main_fdecl (f:function_t) =
 (* called to get the type of an expression *)
 let type_of_expr = function
 	  Literal_t(i) -> Int
-	| Doub_Lit_t(d) -> Double
 	| Noexpr_t -> raise (Failure("Type of expression called on noexpr type."))
 	| Id_t(t, _, _) -> t
 	| Binop_t(t, _, _, _) -> t
@@ -147,7 +146,6 @@ and check_left_value (e:expr) env =
 and check_expr (e:expr) env = 
 	match e with 
 	 Literal(i) -> Literal_t(i) 
-	 | Doub_Lit(d) -> Doub_Lit_t(d)
 	 | Noexpr -> Noexpr_t
 	 | Id(s) -> let (t, st, id) = check_valid_id s env in Id_t(t, st, id)
 	 | Binop(e1, op, e2) -> 

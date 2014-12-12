@@ -16,7 +16,6 @@ let inc_block_num
 %token GRAPH NODE BOOL STRING PRINT NEW CONTINUE DOUBLE EDGE
 %token FALSE TRUE INT VOID DEST EDGES STATIC CHAR DO IN
 %token <int> LITERAL
-%token <float> DOUBLIT
 %token <bool> BOOLLIT
 %token <string> ID TYPEID ARRID STRINGLIT
 %token <string> CHARLIT
@@ -45,7 +44,6 @@ let inc_block_num
 
 expr:
  LITERAL                                 { Literal($1) }
-| DOUBLIT                                { Doub_Lit($1) }
 | CHARLIT                                { Char($1) }
 | ID                                     { Id($1)}
 | STRINGLIT                              { String_Lit($1) }

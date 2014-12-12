@@ -1,8 +1,0 @@
-/* 
- * Author: Zhaarn Maheswaran
- * Tests for faulty tree declaration 
- */
-
-int main () {
-	tree <int> tree();
-}

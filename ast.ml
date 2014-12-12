@@ -15,7 +15,6 @@ Literal of int
 | Char of string
 | Assign of expr * expr
 | Bool_Lit of bool
-| Doub_Lit of float
 
 type variable = string * validtype
 
@@ -94,7 +93,6 @@ let string_of_unop = function
 
 let rec string_of_expr = function
     Literal(n) -> string_of_int n
-  | Doub_Lit(d) -> string_of_float d
   | Char(n) -> "\'" ^ n ^"\'"
   | Id(s) -> s
   | String_Lit(s) -> "\"" ^ s ^ "\""

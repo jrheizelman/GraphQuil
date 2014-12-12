@@ -6,7 +6,6 @@ open semantic_check
 let rec get_datatype_name = function
  
 Literal_t (t) -> string_of_int t
- | Doub_Lit_t (d) -> string_of_float d
  | Id_t (_, t, _) -> t 
  | Binop_t (d, e1, op, e2) -> get_datatype_name e1 ^
  	(match op with

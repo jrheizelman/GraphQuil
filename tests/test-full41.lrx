@@ -1,9 +1,0 @@
-/* 
- * Author: Chris D'Angelo
- * Test for mod operator
- */
-
-int main()
-{
-	print("should print 2 = ", 7 mod 5, "\n");
-}
