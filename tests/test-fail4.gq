@@ -3,7 +3,7 @@
  * Tests wrong types
  */
 
-
+int t;
 int main () {
 	bool t;
 	1 + t;

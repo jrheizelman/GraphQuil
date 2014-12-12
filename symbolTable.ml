@@ -10,10 +10,10 @@ let ancestor_scope = Array.make 1000 0
 
 
 let string_of_decl = function
-	  SymbTable_Var(n, t, id) -> string_of_variable (n,t)
+	  SymbTable_Var(n, t, id) -> string_of_variable (n,t) ^ " scope: " ^string_of_int id
 	| SymbTable_Func(n, t, f, id) -> (string_of_valid_type t) ^ " " ^
 										n ^ "(" ^
-										String.concat ", " (List.map string_of_valid_type f) ^ ")"
+										String.concat ", " (List.map string_of_valid_type f) ^ ") scope: " ^ string_of_int id
 
 (* table == env in lorax *)
 let string_of_symbol_table env = 
@@ -28,16 +28,16 @@ let rec symbol_table_get_id (name:string) env =
 		let to_find = name ^ "_" ^ (string_of_int id) in
 			if SymbolMap.mem to_find table then id
 			else 
-				if id = 0 then raise (Failure("Symbol " ^ name ^ " not declared in current scope! (Scope: " ^ string_of_int id ^ ")"))
+				if id = 0 then raise (Failure("Get id - Symbol " ^ name ^ " not declared in current scope! (Scope: " ^ string_of_int id ^ ")"))
 				else symbol_table_get_id name (table, ancestor_scope.(id))
 
 (* Look for symbol in given scope (block id) and if not found, recursively check all ancestor scopes*)
 let rec symbol_table_find (name:string) env = 
 	let(table, id) = env in
-		let to_find = name ^ "-" ^ (string_of_int id) in
+		let to_find = name ^ "_" ^ (string_of_int id) in
 			if SymbolMap.mem to_find table then SymbolMap.find to_find table
 			else 
-				if id = 0 then raise (Failure("Symbol " ^ name ^ " not declared in current scope! (Scope: " ^ string_of_int id ^ ")"))
+				if id = 0 then raise (Failure("Find name - Symbol " ^ name ^ " not declared in current scope! (Scope: " ^ string_of_int id ^ ")"))
 				else symbol_table_find name (table, ancestor_scope.(id))
 
 let rec symbol_table_add_decl (name:string) (decl:declaration) env =
