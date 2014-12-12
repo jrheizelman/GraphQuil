@@ -438,86 +438,35 @@ let yyact = [|
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : int) in
     Obj.repr(
-<<<<<<< HEAD
-# 50 "parser.mly"
+# 51 "parser.mly"
                                          ( Literal(_1) )
 # 444 "parser.ml"
-=======
-<<<<<<< HEAD
-# 47 "parser.mly"
-                                         ( Literal(_1) )
-# 450 "parser.ml"
-               : 'expr))
-; (fun __caml_parser_env ->
-    let _1 = (Parsing.peek_val __caml_parser_env 0 : float) in
-    Obj.repr(
-# 48 "parser.mly"
-                                         ( Doub_Lit(_1) )
-# 457 "parser.ml"
-=======
-# 45 "parser.mly"
-                                         ( Literal(_1) )
-# 439 "parser.ml"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
                : 'expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : string) in
     Obj.repr(
-<<<<<<< HEAD
-# 51 "parser.mly"
-=======
-<<<<<<< HEAD
-# 49 "parser.mly"
-=======
-# 46 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 52 "parser.mly"
                                          ( Char(_1) )
 # 451 "parser.ml"
                : 'expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : string) in
     Obj.repr(
-<<<<<<< HEAD
-# 52 "parser.mly"
-=======
-<<<<<<< HEAD
-# 50 "parser.mly"
-=======
-# 47 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 53 "parser.mly"
                                          ( Id(_1))
 # 458 "parser.ml"
                : 'expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : string) in
     Obj.repr(
-<<<<<<< HEAD
-# 53 "parser.mly"
-=======
-<<<<<<< HEAD
-# 51 "parser.mly"
-=======
-# 48 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 54 "parser.mly"
                                          ( String_Lit(_1) )
 # 465 "parser.ml"
                : 'expr))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : bool) in
     Obj.repr(
-<<<<<<< HEAD
-# 54 "parser.mly"
-=======
-<<<<<<< HEAD
-# 52 "parser.mly"
-=======
-# 49 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 55 "parser.mly"
                                          ( Bool_Lit(_1))
 # 472 "parser.ml"
                : 'expr))
@@ -525,15 +474,7 @@ let yyact = [|
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
-<<<<<<< HEAD
-# 55 "parser.mly"
-=======
-<<<<<<< HEAD
-# 53 "parser.mly"
-=======
-# 50 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 56 "parser.mly"
                                          ( Binop (_1, Add, _3) )
 # 480 "parser.ml"
                : 'expr))
@@ -541,15 +482,7 @@ let yyact = [|
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
-<<<<<<< HEAD
-# 56 "parser.mly"
-=======
-<<<<<<< HEAD
-# 54 "parser.mly"
-=======
-# 51 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 57 "parser.mly"
                                         ( Binop (_1, Sub, _3) )
 # 488 "parser.ml"
                : 'expr))
@@ -557,15 +490,7 @@ let yyact = [|
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
-<<<<<<< HEAD
-# 57 "parser.mly"
-=======
-<<<<<<< HEAD
-# 55 "parser.mly"
-=======
-# 52 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 58 "parser.mly"
                                         ( Binop (_1, Mult, _3) )
 # 496 "parser.ml"
                : 'expr))
@@ -573,15 +498,7 @@ let yyact = [|
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
-<<<<<<< HEAD
-# 58 "parser.mly"
-=======
-<<<<<<< HEAD
-# 56 "parser.mly"
-=======
-# 53 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 59 "parser.mly"
                                          ( Binop (_1, Div, _3) )
 # 504 "parser.ml"
                : 'expr))
@@ -589,15 +506,7 @@ let yyact = [|
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
-<<<<<<< HEAD
-# 59 "parser.mly"
-=======
-<<<<<<< HEAD
-# 57 "parser.mly"
-=======
-# 54 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 60 "parser.mly"
                                        ( Binop (_1, Mod, _1) )
 # 512 "parser.ml"
                : 'expr))
@@ -605,15 +514,7 @@ let yyact = [|
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
-<<<<<<< HEAD
-# 60 "parser.mly"
-=======
-<<<<<<< HEAD
-# 58 "parser.mly"
-=======
-# 55 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 61 "parser.mly"
                                         ( Binop (_1, Less, _3) )
 # 520 "parser.ml"
                : 'expr))
@@ -621,15 +522,7 @@ let yyact = [|
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
-<<<<<<< HEAD
-# 61 "parser.mly"
-=======
-<<<<<<< HEAD
-# 59 "parser.mly"
-=======
-# 56 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 62 "parser.mly"
                                         ( Binop (_1, Greater, _3) )
 # 528 "parser.ml"
                : 'expr))
@@ -637,15 +530,7 @@ let yyact = [|
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
-<<<<<<< HEAD
-# 62 "parser.mly"
-=======
-<<<<<<< HEAD
-# 60 "parser.mly"
-=======
-# 57 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 63 "parser.mly"
                                        ( Binop (_1, Leq, _3) )
 # 536 "parser.ml"
                : 'expr))
@@ -653,15 +538,7 @@ let yyact = [|
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
-<<<<<<< HEAD
-# 63 "parser.mly"
-=======
-<<<<<<< HEAD
-# 61 "parser.mly"
-=======
-# 58 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 64 "parser.mly"
                                        ( Binop (_1, Geq, _3) )
 # 544 "parser.ml"
                : 'expr))
@@ -669,15 +546,7 @@ let yyact = [|
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
-<<<<<<< HEAD
-# 64 "parser.mly"
-=======
-<<<<<<< HEAD
-# 62 "parser.mly"
-=======
-# 59 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 65 "parser.mly"
                                          ( Binop (_1, Equal, _3) )
 # 552 "parser.ml"
                : 'expr))
@@ -685,15 +554,7 @@ let yyact = [|
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
-<<<<<<< HEAD
-# 65 "parser.mly"
-=======
-<<<<<<< HEAD
-# 63 "parser.mly"
-=======
-# 60 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 66 "parser.mly"
                                        ( Binop (_1, Neq, _3) )
 # 560 "parser.ml"
                : 'expr))
@@ -701,15 +562,7 @@ let yyact = [|
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
-<<<<<<< HEAD
-# 66 "parser.mly"
-=======
-<<<<<<< HEAD
-# 64 "parser.mly"
-=======
-# 61 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 67 "parser.mly"
                                         ( Binop (_1, Or, _3) )
 # 568 "parser.ml"
                : 'expr))
@@ -717,45 +570,21 @@ let yyact = [|
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
-<<<<<<< HEAD
-# 67 "parser.mly"
-=======
-<<<<<<< HEAD
-# 65 "parser.mly"
-=======
-# 62 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 68 "parser.mly"
                                        ( Binop (_1, And, _3) )
 # 576 "parser.ml"
                : 'expr))
 ; (fun __caml_parser_env ->
     let _2 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
-<<<<<<< HEAD
-# 68 "parser.mly"
-=======
-<<<<<<< HEAD
-# 66 "parser.mly"
-=======
-# 63 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 69 "parser.mly"
                                        ( Unop(Not, _2) )
 # 583 "parser.ml"
                : 'expr))
 ; (fun __caml_parser_env ->
     let _2 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
-<<<<<<< HEAD
-# 69 "parser.mly"
-=======
-<<<<<<< HEAD
-# 67 "parser.mly"
-=======
-# 64 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 70 "parser.mly"
                                          ( Unop(Neg, _2) )
 # 590 "parser.ml"
                : 'expr))
@@ -763,15 +592,7 @@ let yyact = [|
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
-<<<<<<< HEAD
-# 70 "parser.mly"
-=======
-<<<<<<< HEAD
-# 68 "parser.mly"
-=======
-# 65 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 71 "parser.mly"
                                          ( Assign(_1, _3) )
 # 598 "parser.ml"
                : 'expr))
@@ -779,259 +600,115 @@ let yyact = [|
     let _1 = (Parsing.peek_val __caml_parser_env 3 : string) in
     let _3 = (Parsing.peek_val __caml_parser_env 1 : 'actuals_opt) in
     Obj.repr(
-<<<<<<< HEAD
-# 71 "parser.mly"
-=======
-<<<<<<< HEAD
-# 69 "parser.mly"
-=======
-# 66 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 72 "parser.mly"
                                          ( Call(_1, _3) )
 # 606 "parser.ml"
                : 'expr))
 ; (fun __caml_parser_env ->
     let _2 = (Parsing.peek_val __caml_parser_env 1 : 'expr) in
     Obj.repr(
-<<<<<<< HEAD
-# 72 "parser.mly"
-=======
-<<<<<<< HEAD
-# 70 "parser.mly"
-=======
-# 67 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 73 "parser.mly"
                                          ( _2 )
 # 613 "parser.ml"
                : 'expr))
 ; (fun __caml_parser_env ->
     Obj.repr(
-<<<<<<< HEAD
-# 75 "parser.mly"
-=======
-<<<<<<< HEAD
-# 73 "parser.mly"
-=======
-# 70 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 76 "parser.mly"
                   ( Noexpr )
 # 619 "parser.ml"
                : 'expr_opt))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
-<<<<<<< HEAD
-# 76 "parser.mly"
-=======
-<<<<<<< HEAD
-# 74 "parser.mly"
-=======
-# 71 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 77 "parser.mly"
                   ( _1 )
 # 626 "parser.ml"
                : 'expr_opt))
 ; (fun __caml_parser_env ->
     Obj.repr(
-<<<<<<< HEAD
-# 79 "parser.mly"
-=======
-<<<<<<< HEAD
-# 77 "parser.mly"
-=======
-# 74 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 80 "parser.mly"
            ( Int )
 # 632 "parser.ml"
                : 'any_type))
 ; (fun __caml_parser_env ->
     Obj.repr(
-<<<<<<< HEAD
-# 80 "parser.mly"
-=======
-<<<<<<< HEAD
-# 78 "parser.mly"
-=======
-# 75 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 81 "parser.mly"
            ( Char )
 # 638 "parser.ml"
                : 'any_type))
 ; (fun __caml_parser_env ->
     Obj.repr(
-<<<<<<< HEAD
-# 81 "parser.mly"
-=======
-<<<<<<< HEAD
-# 79 "parser.mly"
-=======
-# 76 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 82 "parser.mly"
            ( String )
 # 644 "parser.ml"
                : 'any_type))
 ; (fun __caml_parser_env ->
     Obj.repr(
-<<<<<<< HEAD
-# 82 "parser.mly"
-=======
-<<<<<<< HEAD
-# 80 "parser.mly"
-=======
-# 77 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 83 "parser.mly"
            ( Bool )
 # 650 "parser.ml"
                : 'any_type))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : 'obj_type) in
     Obj.repr(
-<<<<<<< HEAD
-# 83 "parser.mly"
-=======
-<<<<<<< HEAD
-# 81 "parser.mly"
-=======
-# 78 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 84 "parser.mly"
            ( _1 )
 # 657 "parser.ml"
                : 'any_type))
 ; (fun __caml_parser_env ->
     Obj.repr(
-<<<<<<< HEAD
-# 86 "parser.mly"
-=======
-<<<<<<< HEAD
-# 84 "parser.mly"
-=======
-# 81 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 87 "parser.mly"
            ( Node )
 # 663 "parser.ml"
                : 'obj_type))
 ; (fun __caml_parser_env ->
     Obj.repr(
-<<<<<<< HEAD
-# 87 "parser.mly"
-=======
-<<<<<<< HEAD
-# 85 "parser.mly"
-=======
-# 82 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 88 "parser.mly"
            ( NodeType )
 # 669 "parser.ml"
                : 'obj_type))
 ; (fun __caml_parser_env ->
     Obj.repr(
-<<<<<<< HEAD
-# 88 "parser.mly"
-=======
-<<<<<<< HEAD
-# 86 "parser.mly"
-=======
-# 83 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 89 "parser.mly"
            ( Edge )
 # 675 "parser.ml"
                : 'obj_type))
 ; (fun __caml_parser_env ->
     Obj.repr(
-<<<<<<< HEAD
-# 89 "parser.mly"
-=======
-<<<<<<< HEAD
-# 87 "parser.mly"
-=======
-# 84 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 90 "parser.mly"
            ( EdgeType )
 # 681 "parser.ml"
                : 'obj_type))
 ; (fun __caml_parser_env ->
     Obj.repr(
-<<<<<<< HEAD
-# 90 "parser.mly"
-=======
-<<<<<<< HEAD
-# 88 "parser.mly"
-=======
-# 85 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 91 "parser.mly"
            ( Graph )
 # 687 "parser.ml"
                : 'obj_type))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : string) in
     Obj.repr(
-<<<<<<< HEAD
-# 91 "parser.mly"
-=======
-<<<<<<< HEAD
-# 89 "parser.mly"
-=======
-# 86 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 92 "parser.mly"
            ( UserDef )
 # 694 "parser.ml"
                : 'obj_type))
 ; (fun __caml_parser_env ->
     Obj.repr(
-<<<<<<< HEAD
-# 94 "parser.mly"
-=======
-<<<<<<< HEAD
-# 92 "parser.mly"
-=======
-# 89 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 95 "parser.mly"
                  ( [] )
 # 700 "parser.ml"
                : 'actuals_opt))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : 'actuals_list) in
     Obj.repr(
-<<<<<<< HEAD
-# 95 "parser.mly"
-=======
-<<<<<<< HEAD
-# 93 "parser.mly"
-=======
-# 90 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 96 "parser.mly"
                  ( List.rev _1 )
 # 707 "parser.ml"
                : 'actuals_opt))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
-<<<<<<< HEAD
-# 98 "parser.mly"
-=======
-<<<<<<< HEAD
-# 96 "parser.mly"
-=======
-# 93 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 99 "parser.mly"
                             ( [_1] )
 # 714 "parser.ml"
                : 'actuals_list))
@@ -1039,30 +716,14 @@ let yyact = [|
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'actuals_list) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'expr) in
     Obj.repr(
-<<<<<<< HEAD
-# 99 "parser.mly"
-=======
-<<<<<<< HEAD
-# 97 "parser.mly"
-=======
-# 94 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 100 "parser.mly"
                             ( _3 :: _1 )
 # 722 "parser.ml"
                : 'actuals_list))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : 'vdecl) in
     Obj.repr(
-<<<<<<< HEAD
-# 102 "parser.mly"
-=======
-<<<<<<< HEAD
-# 100 "parser.mly"
-=======
-# 97 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 103 "parser.mly"
                              ( [_1])
 # 729 "parser.ml"
                : 'formals_list))
@@ -1070,58 +731,26 @@ let yyact = [|
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'formals_list) in
     let _3 = (Parsing.peek_val __caml_parser_env 0 : 'vdecl) in
     Obj.repr(
-<<<<<<< HEAD
-# 103 "parser.mly"
-=======
-<<<<<<< HEAD
-# 101 "parser.mly"
-=======
-# 98 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 104 "parser.mly"
                              ( _3 :: _1 )
 # 737 "parser.ml"
                : 'formals_list))
 ; (fun __caml_parser_env ->
     Obj.repr(
-<<<<<<< HEAD
-# 106 "parser.mly"
-=======
-<<<<<<< HEAD
-# 104 "parser.mly"
-=======
-# 101 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 107 "parser.mly"
                  ( [] )
 # 743 "parser.ml"
                : 'formals_opt))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : 'formals_list) in
     Obj.repr(
-<<<<<<< HEAD
-# 107 "parser.mly"
-=======
-<<<<<<< HEAD
-# 105 "parser.mly"
-=======
-# 102 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 108 "parser.mly"
                  ( List.rev _1 )
 # 750 "parser.ml"
                : 'formals_opt))
 ; (fun __caml_parser_env ->
     Obj.repr(
-<<<<<<< HEAD
-# 110 "parser.mly"
-=======
-<<<<<<< HEAD
-# 108 "parser.mly"
-=======
-# 105 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 111 "parser.mly"
                    ( [] )
 # 756 "parser.ml"
                : 'stmt_list))
@@ -1129,75 +758,35 @@ let yyact = [|
     let _1 = (Parsing.peek_val __caml_parser_env 1 : 'stmt_list) in
     let _2 = (Parsing.peek_val __caml_parser_env 0 : 'stmt) in
     Obj.repr(
-<<<<<<< HEAD
-# 111 "parser.mly"
-=======
-<<<<<<< HEAD
-# 109 "parser.mly"
-=======
-# 106 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 112 "parser.mly"
                    ( _2 :: _1 )
 # 764 "parser.ml"
                : 'stmt_list))
 ; (fun __caml_parser_env ->
     let _2 = (Parsing.peek_val __caml_parser_env 1 : 'stmt_list) in
     Obj.repr(
-<<<<<<< HEAD
-# 114 "parser.mly"
-=======
-<<<<<<< HEAD
-# 112 "parser.mly"
-=======
-# 109 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 115 "parser.mly"
                           ( {locals = []; statements = List.rev _2; block_num = inc_block_num ()} )
 # 771 "parser.ml"
                : 'block))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 0 : 'block) in
     Obj.repr(
-<<<<<<< HEAD
-# 117 "parser.mly"
-=======
-<<<<<<< HEAD
-# 115 "parser.mly"
-=======
-# 112 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 118 "parser.mly"
                                                                   ( Block(_1))
 # 778 "parser.ml"
                : 'stmt))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 1 : 'expr) in
     Obj.repr(
-<<<<<<< HEAD
-# 118 "parser.mly"
-=======
-<<<<<<< HEAD
-# 117 "parser.mly"
-=======
-# 113 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 120 "parser.mly"
                                                                   ( Expr(_1) )
 # 785 "parser.ml"
                : 'stmt))
 ; (fun __caml_parser_env ->
     let _2 = (Parsing.peek_val __caml_parser_env 1 : 'expr) in
     Obj.repr(
-<<<<<<< HEAD
-# 119 "parser.mly"
-=======
-<<<<<<< HEAD
-# 118 "parser.mly"
-=======
-# 114 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 121 "parser.mly"
                                                                   ( Return(_2) )
 # 792 "parser.ml"
                : 'stmt))
@@ -1205,15 +794,7 @@ let yyact = [|
     let _3 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _5 = (Parsing.peek_val __caml_parser_env 0 : 'block) in
     Obj.repr(
-<<<<<<< HEAD
-# 120 "parser.mly"
-=======
-<<<<<<< HEAD
-# 119 "parser.mly"
-=======
-# 115 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 122 "parser.mly"
                                                                   ( If(_3, _5, {locals = []; statements = []; block_num = inc_block_num ()}) )
 # 800 "parser.ml"
                : 'stmt))
@@ -1222,15 +803,7 @@ let yyact = [|
     let _5 = (Parsing.peek_val __caml_parser_env 2 : 'block) in
     let _7 = (Parsing.peek_val __caml_parser_env 0 : 'block) in
     Obj.repr(
-<<<<<<< HEAD
-# 121 "parser.mly"
-=======
-<<<<<<< HEAD
-# 120 "parser.mly"
-=======
-# 116 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 123 "parser.mly"
                                                                   ( If (_3, _5, _7) )
 # 809 "parser.ml"
                : 'stmt))
@@ -1240,15 +813,7 @@ let yyact = [|
     let _7 = (Parsing.peek_val __caml_parser_env 2 : 'expr_opt) in
     let _9 = (Parsing.peek_val __caml_parser_env 0 : 'block) in
     Obj.repr(
-<<<<<<< HEAD
-# 122 "parser.mly"
-=======
-<<<<<<< HEAD
-# 121 "parser.mly"
-=======
-# 117 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 124 "parser.mly"
                                                                   ( For(_3, _5, _7, _9) )
 # 819 "parser.ml"
                : 'stmt))
@@ -1256,15 +821,7 @@ let yyact = [|
     let _3 = (Parsing.peek_val __caml_parser_env 2 : 'expr) in
     let _5 = (Parsing.peek_val __caml_parser_env 0 : 'block) in
     Obj.repr(
-<<<<<<< HEAD
-# 123 "parser.mly"
-=======
-<<<<<<< HEAD
-# 122 "parser.mly"
-=======
-# 118 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 125 "parser.mly"
                                                                   ( While(_3, _5) )
 # 827 "parser.ml"
                : 'stmt))
@@ -1272,44 +829,20 @@ let yyact = [|
     let _1 = (Parsing.peek_val __caml_parser_env 1 : 'any_type) in
     let _2 = (Parsing.peek_val __caml_parser_env 0 : string) in
     Obj.repr(
-<<<<<<< HEAD
-# 126 "parser.mly"
-=======
-<<<<<<< HEAD
-# 125 "parser.mly"
-=======
-# 121 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 128 "parser.mly"
               (_2, _1)
 # 835 "parser.ml"
                : 'vdecl))
 ; (fun __caml_parser_env ->
     let _1 = (Parsing.peek_val __caml_parser_env 1 : 'vdecl) in
     Obj.repr(
-<<<<<<< HEAD
-# 129 "parser.mly"
-=======
-<<<<<<< HEAD
-# 128 "parser.mly"
-=======
-# 124 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 131 "parser.mly"
              ( _1 )
 # 842 "parser.ml"
                : 'glb_vdecl))
 ; (fun __caml_parser_env ->
     Obj.repr(
-<<<<<<< HEAD
-# 133 "parser.mly"
-=======
-<<<<<<< HEAD
-# 132 "parser.mly"
-=======
-# 128 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 135 "parser.mly"
                           ( [] )
 # 848 "parser.ml"
                : 'vdecl_list))
@@ -1317,15 +850,7 @@ let yyact = [|
     let _1 = (Parsing.peek_val __caml_parser_env 2 : 'vdecl_list) in
     let _2 = (Parsing.peek_val __caml_parser_env 1 : 'vdecl) in
     Obj.repr(
-<<<<<<< HEAD
-# 134 "parser.mly"
-=======
-<<<<<<< HEAD
-# 133 "parser.mly"
-=======
-# 129 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 136 "parser.mly"
                           ( _2 :: _1 )
 # 856 "parser.ml"
                : 'vdecl_list))
@@ -1336,15 +861,7 @@ let yyact = [|
     let _7 = (Parsing.peek_val __caml_parser_env 2 : 'vdecl_list) in
     let _8 = (Parsing.peek_val __caml_parser_env 1 : 'stmt_list) in
     Obj.repr(
-<<<<<<< HEAD
-# 138 "parser.mly"
-=======
-<<<<<<< HEAD
-# 137 "parser.mly"
-=======
-# 133 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 140 "parser.mly"
      ( { fname = _2;
          formals = _4; 
          body_block = {locals = List.rev _7; statements = List.rev _8; block_num = inc_block_num()} ;
@@ -1353,15 +870,7 @@ let yyact = [|
                : 'fdecl))
 ; (fun __caml_parser_env ->
     Obj.repr(
-<<<<<<< HEAD
-# 144 "parser.mly"
-=======
-<<<<<<< HEAD
-# 143 "parser.mly"
-=======
-# 139 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 146 "parser.mly"
                  ( [], [] )
 # 876 "parser.ml"
                : Ast.program))
@@ -1369,15 +878,7 @@ let yyact = [|
     let _1 = (Parsing.peek_val __caml_parser_env 1 : Ast.program) in
     let _2 = (Parsing.peek_val __caml_parser_env 0 : 'glb_vdecl) in
     Obj.repr(
-<<<<<<< HEAD
-# 145 "parser.mly"
-=======
-<<<<<<< HEAD
-# 144 "parser.mly"
-=======
-# 140 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 147 "parser.mly"
                      ( (_2 :: fst _1), snd _1 )
 # 884 "parser.ml"
                : Ast.program))
@@ -1385,15 +886,7 @@ let yyact = [|
     let _1 = (Parsing.peek_val __caml_parser_env 1 : Ast.program) in
     let _2 = (Parsing.peek_val __caml_parser_env 0 : 'fdecl) in
     Obj.repr(
-<<<<<<< HEAD
-# 146 "parser.mly"
-=======
-<<<<<<< HEAD
-# 145 "parser.mly"
-=======
-# 141 "parser.mly"
->>>>>>> parent of 0b45b0a... Added double literals, fixed Makefile bug
->>>>>>> 99a0ad6d8034c44425eb4e49d0dd2b1a5e2f635c
+# 148 "parser.mly"
                  ( fst _1, (_2 :: snd _1) )
 # 892 "parser.ml"
                : Ast.program))

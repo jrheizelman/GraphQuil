@@ -33,10 +33,10 @@ symbolTable.cmo: ast.cmo sast.cmo
 symbolTable.cmx: ast.cmx sast.cmx
 semantic_check.cmo: symbolTable.cmo
 semantic_check.cmx: symbolTable.cmx
-graphquil.cmo: scanner.cmo parser.cmi ast.cmo sast.cmo symbolTable.cmo semantic_check.cmo
-graphquil.cmx: scanner.cmx parser.cmx ast.cmx sast.cmx symbolTable.cmx semantic_check.cmx 
 parser.cmo: ast.cmo parser.cmi 
 parser.cmx: ast.cmx parser.cmi 
 scanner.cmo: parser.cmi 
 scanner.cmx: parser.cmx 
 parser.cmi: ast.cmo 
+graphquil.cmo: scanner.cmo parser.cmi ast.cmo sast.cmo symbolTable.cmo semantic_check.cmo
+graphquil.cmx: scanner.cmx parser.cmx ast.cmx sast.cmx symbolTable.cmx semantic_check.cmx 
