@@ -1,0 +1,13 @@
+/* 
+ * Author: Gemma Ragozzine
+ * Tests function return types
+ */
+
+ 
+int function()
+{
+	return true;
+}
+int main () {
+	function();
+}

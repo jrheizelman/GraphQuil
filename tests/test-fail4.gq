@@ -1,0 +1,10 @@
+/* 
+ * Author: Gemma Ragozzine
+ * Tests wrong types
+ */
+
+
+int main () {
+	bool t;
+	1 + t;
+}

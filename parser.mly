@@ -7,6 +7,11 @@ let inc_block_num
     let x = scope.contents in
     scope := x + 1; x (*set the contents of scope to x+1, increments it by 1*)
 
+
+let parse_error s = (* Called by the parser function on error *)
+  print_endline s;
+  flush stdout   
+
 %}
 
 %token LPAREN LBRACE SEMI COLON RPAREN RBRACE MOD COMMA EOF
