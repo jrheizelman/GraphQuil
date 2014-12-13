@@ -2,20 +2,16 @@
 Written by Jon Paul
 *)
 
+
 open ast
 open sast
 open semantic_check
 
-<<<<<<< HEAD
-(* Returns the name for the date type as a string*)
-=======
-let string_of_intermediate = function
-
 
 (* Returns the string name for the date type*)
->>>>>>> 5ae36ccd0984b3882a40452c63d450525631ef5f
 let rec get_datatype_name = function
  
+
 Literal_t (t) -> string_of_int t
  | Id_t (_, t, _) -> t 
  | Binop_t (d, e1, op, e2) -> get_datatype_name e1 ^
@@ -69,7 +65,7 @@ Block_t (stmts) -> "{\n" ^ String.concat "" (List.map get_java_statement stmts) 
 
 
 (* Returns java declaration of the datatype as a string*)
-(* Not entire sure of left hand side construction *)
+(* Not entirely sure that left hand side is valid in this form *)
 and get_java_declaration hasID expr =
 	(match hasID with 
 		(*each of these is taken from the ast.ml file with the line "type validtype"*)
@@ -85,5 +81,29 @@ and get_java_declaration hasID expr =
 				| _ -> "= " ^ get_datatype_name expr ^ ";")
 		| _ -> get_datatype_name expr ^ ";")
 
+and outputToJavaFile stringOfProgram=
+	let file= open_out ("graphquil.java") in
+	fprintf file "%s" stringOfProgram
 
-(*in let rec get_datatype_as_string hasName = function *)
+and createJavaProgram program=
+	let (statements)= program in
+	let body= String.concat "" (List.rev(List.map get_java_statement statements))
+	in sprintf 
+	"
+
+	public class Graphquil
+
+	{
+
+		public static void main(String[] args)
+		{
+
+		%s
+
+		}
+
+	}
+
+	" body in 
+	createJavaProgram statements;
+	statements

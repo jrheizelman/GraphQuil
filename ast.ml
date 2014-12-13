@@ -7,7 +7,7 @@ type bop = Add | Sub | Mult | Div | Equal | And | Neq | Mod | Leq | Geq | Greate
 type uop = Neg | Not
 
 type validtype = Int | Char | String | Double | Bool | Arr | Node | Edge | Graph | Void 
-| Int_at
+(*| Int_at*)
 
 type expr=
 Literal of int
@@ -20,7 +20,7 @@ Literal of int
 | Char of string
 | Assign of expr * expr
 | Bool_Lit of bool
-| Add_at of expr * expr
+(*| Add_at of expr * expr*)
 
 type variable = string * validtype
 
@@ -116,7 +116,7 @@ let rec string_of_expr = function
   | Call(f, argl) ->
     f ^ "(" ^ String.concat ", " (List.map string_of_expr argl) ^ ")" 
   | Noexpr -> ""
-  | Add_at(e1, e2) -> string_of_expr e1 ^ " add " ^ string_of_expr e2
+  (*| Add_at(e1, e2) -> string_of_expr e1 ^ " add " ^ string_of_expr e2*)
  
  let string_of_valid_type = function
     Int -> "int"
@@ -129,7 +129,7 @@ let rec string_of_expr = function
   | Edge -> "Edge"
   | Graph -> "Graph"
   | Void -> "Void"
-  | Int_at -> "Int_at"
+  (*| Int_at -> "Int_at"*)
 
   let string_of_variable v = fst v ^ " " ^ string_of_valid_type (snd v) 
 
