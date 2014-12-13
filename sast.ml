@@ -1,3 +1,8 @@
+(*
+Author: Gemma Ragozzine
+        John Heizelman
+*)
+
 open Ast
 (*Graphquil*)
 

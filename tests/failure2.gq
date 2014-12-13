@@ -1,0 +1,8 @@
+/* Author: Gemma Ragozzine
+ * Tests return type of main
+ */ 
+ 
+String main(){
+	int j;
+	j = 1;
+}

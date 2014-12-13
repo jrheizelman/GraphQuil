@@ -1,3 +1,7 @@
+(*
+	Author: Gemma Ragozzine
+*)
+
 open Ast
 open Sast
 open SymbolTable
@@ -7,11 +11,12 @@ let snd_of_three (_, t, _) = t
 let fst_of_four (t, _, _, _) = t
 
 (* Structure the main function *)
-let main_fdecl (f:function_t) =
-	if f.fname_t = "main" && 
-		f.ret_t = Int &&
-		f.formals_t = [] 
-		then true
+let main_fdecl (f:function_t) = 
+	if f.fname_t = "main" then
+		if f.ret_t = Void then
+			if f.formals_t = [] then true
+			else raise(Failure("Main method argument list must be empty"))
+		else raise(Failure("Main method must return void"))
 	else false
 
 (* called to get the type of an expression *)

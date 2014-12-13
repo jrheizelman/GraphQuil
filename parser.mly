@@ -1,3 +1,8 @@
+/*
+Authors: Gemma Ragozzine
+         John HeizelMan
+*/
+
 %{ open Ast 
 
 let scope = ref 1 (*contents of scope == 1*)
@@ -141,6 +146,11 @@ fdecl:
          formals = $4; 
          body_block = {locals = List.rev $7; statements = List.rev $8; block_num = inc_block_num()} ;
          ret = $1 } }
+  | VOID ID LPAREN formals_opt RPAREN LBRACE vdecl_list stmt_list RBRACE
+     { { fname = $2;
+         formals = $4; 
+         body_block = {locals = List.rev $7; statements = List.rev $8; block_num = inc_block_num()} ;
+         ret = Void } }
 
 program:
 	/* nothing */   { [], [] }

@@ -1,0 +1,8 @@
+/* 
+ * Author: Gemma Ragozzine
+ * Test formal arguments of main method
+ */
+
+void main(int j, int k){
+	String a;
+}

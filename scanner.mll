@@ -1,3 +1,10 @@
+(*
+Authors: Jon Paul
+		 Gemma Ragozzine
+		 John Heizelman
+		 Steven Weiner
+*)
+
 { open Parser }
 
 let digit = ['0'-'9']
@@ -46,19 +53,15 @@ rule token = parse
 | "Edge" { EDGE }
 | "bool" { BOOL }
 | "String" { STRING }
-| "print" { PRINT }
 | "new" { NEW }
 | "continue" { CONTINUE }
 | "double" { DOUBLE }
-| "false" { FALSE }
-| "true" { TRUE }
 | "int" { INT }
 | "void" { VOID }
 | "dest" { DEST }
 | "edges" { EDGES }
 | "static" { STATIC }
 | "char" { CHAR }
-| "do" { DO }
 | "in" { IN }
 | '"' [^'"']* '"'  as lxm { STRINGLIT(lxm) }
 | ''' [ ^'''] as ch ''' { CHARLIT(ch) }

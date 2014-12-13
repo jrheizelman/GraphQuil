@@ -1,8 +1,12 @@
+(*
+Author: Gemma Ragozzine
+*)
+
 type bop = Add | Sub | Mult | Div | Equal | And | Neq | Mod | Leq | Geq | Greater | Less | Or
 
 type uop = Neg | Not
 
-type validtype = Int | Char | String | Double | Bool | Arr | Node | NodeType | Edge | EdgeType | Graph | UserDef
+type validtype = Int | Char | String | Double | Bool | Arr | Node | NodeType | Edge | EdgeType | Graph | UserDef | Void
 
 type expr=
 Literal of int
@@ -95,7 +99,7 @@ let rec string_of_expr = function
     Literal(n) -> string_of_int n
   | Char(n) -> "\'" ^ n ^"\'"
   | Id(s) -> s
-  | String_Lit(s) -> "\"" ^ s ^ "\""
+  | String_Lit(s) -> s 
   | Bool_Lit(l) -> string_of_bool l
   | Binop(e1, op, e2) ->
       string_of_expr e1 ^ " " ^ 

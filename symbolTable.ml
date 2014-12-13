@@ -1,3 +1,6 @@
+(*
+Author: Gemma Ragozzine
+*)
 open Ast
 
 (* Symbol table made of a map containing pairs of String: ast.decl pairs *)
@@ -85,11 +88,16 @@ let rec symbol_table_add_func_list (funcs:func_decl list) env =
 		| head :: tail -> let env = symbol_table_add_func head env in
 		symbol_table_add_func_list tail env
 
+let add_built_in_funcs env = symbol_table_add_decl "print" (SymbTable_Func("print", Int, [], 0)) env
+
 let symbol_table_of_prog (p:Ast.program) =
 	(* Table starts off as an empty map with scope (block id) set to 0 *)
-	let env = (SymbolMap.empty, 0) in
+	let env = add_built_in_funcs(SymbolMap.empty, 0) in
 		let env = symbol_table_add_var_list (fst p) env in
 			symbol_table_add_func_list (snd p) env
+
+
+
 
 
 

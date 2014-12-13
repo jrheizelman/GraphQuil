@@ -1,8 +1,6 @@
 (* 
- * Authors:
- * Chris D'Angelo
- * Special thanks to Dara Hazeghi's strlang and Stephen Edward's MicroC
- * which provided background knowledge.
+ * Author:
+ * Gemma Ragozzine
  *)
 
 open Unix
