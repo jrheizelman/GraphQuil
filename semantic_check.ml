@@ -28,7 +28,7 @@ let type_of_expr = function
 	| Char_t(c) -> Char
 	| Assign_t(t, _, _) -> t
 	| Bool_Lit_t(b) -> Bool
-	| Add_at_t(e1, e2) -> Node
+	(*| Add_at_t(e1, e2) -> Node*)
 
 (* Error raised for improper binary operation *)
 let binop_err (t1:validtype) (t2:validtype) (op:bop) =
@@ -70,12 +70,12 @@ let check_unop (e:expr_t) (op:uop) =
 		(* Expression is an int *)
 		   Int ->
 		   	(match op with
-			 	  Neg -> Unop_t(Int, e, op)
+			 	  Neg -> Unop_t(Int, op, e)
 			 	| _ -> unop_err t op)
 		(* Expression is a bool *)
 		 | Bool ->
 		 	(match op with
-			 	  Not -> Unop_t(Bool, e, op)
+			 	  Not -> Unop_t(Bool, op, e)
 			 	  | _ -> unop_err t op)
 		 | _ -> unop_err t op
 
@@ -135,7 +135,7 @@ let rec get_left_value_of_expr (e:expr_t) env =
  	match e with 
  		Id_t(t, s, _) -> s
  		| Binop_t(t, l, o, r) -> get_left_value_of_expr l env
- 		| Unop_t(t, l, o) -> get_left_value_of_expr l env
+ 		| Unop_t(t, o, l) -> get_left_value_of_expr l env
  		| _ -> raise(Failure("Cannot get the left value of expression."))
 
 and check_left_value (e:expr) env = 
