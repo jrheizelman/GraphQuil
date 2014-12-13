@@ -1,4 +1,4 @@
-OBJS = ast.cmo sast.cmo symbolTable.cmo semantic_check.cmo parser.cmo scanner.cmo graphquil.cmo
+OBJS = ast.cmo sast.cmo symbolTable.cmo semantic_check.cmo parser.cmo scanner.cmo graphQuil.cmo
 
 graphquil : $(OBJS)
 	ocamlc -o graphquil -g unix.cma $(OBJS)

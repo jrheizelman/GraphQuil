@@ -128,6 +128,7 @@ let rec string_of_expr = function
   | EdgeType -> "EdgeType"
   | Graph -> "Graph"
   | UserDef -> "UserDef"
+  | Void -> "Void"
 
   let string_of_variable v = fst v ^ " " ^ string_of_valid_type (snd v) 
 
