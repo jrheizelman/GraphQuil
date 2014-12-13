@@ -1,4 +1,4 @@
-OBJS = ast.cmo sast.cmo symbolTable.cmo semantic_check.cmo parser.cmo scanner.cmo graphquil.cmo
+OBJS = ast.cmo sast.cmo symbolTable.cmo semantic_check.cmo parser.cmo scanner.cmo produceJava.cmo graphQuil.cmo
 
 graphquil : $(OBJS)
 	ocamlc -o graphquil -g unix.cma $(OBJS)
@@ -34,9 +34,11 @@ symbolTable.cmx: ast.cmx sast.cmx
 semantic_check.cmo: symbolTable.cmo
 semantic_check.cmx: symbolTable.cmx
 parser.cmo: ast.cmo parser.cmi 
-parser.cmx: ast.cmx parsesr.cmi 
+parser.cmx: ast.cmx parser.cmi 
 scanner.cmo: parser.cmi 
 scanner.cmx: parser.cmx 
 parser.cmi: ast.cmo 
-graphquil.cmo: scanner.cmo parser.cmi ast.cmo sast.cmo symbolTable.cmo semantic_check.cmo
-graphquil.cmx: scanner.cmx parser.cmx ast.cmx sast.cmx symbolTable.cmx semantic_check.cmx 
+produceJava.cmo: scanner.cmo parser.cmi ast.cmo sast.cmo symbolTable.cmo semantic_check.cmo
+produceJava.cmx: scanner.cmx parser.cmx ast.cmx sast.cmx symbolTable.cmx semantic_check.cmx
+graphquil.cmo: scanner.cmo parser.cmi ast.cmo sast.cmo symbolTable.cmo semantic_check.cmo produceJava.cmo
+graphquil.cmx: scanner.cmx parser.cmx ast.cmx sast.cmx symbolTable.cmx semantic_check.cmx produceJava.cmx

@@ -3,9 +3,9 @@ Written by Jon Paul
 *)
 
 
-open ast
-open sast
-open semantic_check
+open Ast
+open Sast
+open Semantic_check
 
 
 (* Returns the string name for the date type*)
@@ -32,7 +32,7 @@ Literal_t (t) -> string_of_int t
 	  | Or -> " || " ^ get_datatype_name e2 )
  | Unop_t (d, e1, op) -> get_datatype_name e1 ^
  	(match op with
- 	 Neg-> "-"
+ 	 Neg-> "-"	
  	 | Not -> "!")
  | Call_t (f, ) (*unsure of meaning of construction in semantic file*)
  (*| Array_t (t, _, _) -> t Removed from SAST, no longer needed atm*) (*should be similar to Assign_t with get_datatype_name function implemented *)
@@ -69,15 +69,15 @@ Block_t (stmts) -> "{\n" ^ String.concat "" (List.map get_java_statement stmts) 
 and get_java_declaration hasID expr =
 	(match hasID with 
 		(*each of these is taken from the ast.ml file with the line "type validtype"*)
-		validtype(Int)-> "int "
-		| validtype(Char)-> "char "
-		| validtype(String)-> "String "
-		| validtype(Bool)-> "boolean "
-		| validtype(Void)-> "void " ) ^ " " ^
+		Int-> "int "
+		| Char-> "char "
+		| String-> "String "
+		| Bool-> "boolean "
+		| Void-> "void " ) ^ " " ^
  		(match expr with
 			Assign_t (t, l, _)->  t ^ 
 			(match hasID with 
-				validtype(String)-> "= new String(" ^ get_datatype_name expr ^ ");"
+				String-> "= new String(" ^ get_datatype_name expr ^ ");"
 				| _ -> "= " ^ get_datatype_name expr ^ ";")
 		| _ -> get_datatype_name expr ^ ";")
 
