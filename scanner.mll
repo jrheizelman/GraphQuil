@@ -47,8 +47,6 @@ rule token = parse
 | "for" { FOR }
 | "return" { RETURN }
 | "Graph" { GRAPH }
-| "NodeType" { NODETYPE }
-| "EdgeType" { EDGETYPE }
 | "Node" { NODE }
 | "Edge" { EDGE }
 | "bool" { BOOL }
@@ -63,6 +61,7 @@ rule token = parse
 | "static" { STATIC }
 | "char" { CHAR }
 | "in" { IN }
+| "add" { ADD }
 | '"' [^'"']* '"'  as lxm { STRINGLIT(lxm) }
 | ''' [ ^'''] as ch ''' { CHARLIT(ch) }
 | ['0'-'9']+ as lxm { LITERAL(int_of_string lxm)}
