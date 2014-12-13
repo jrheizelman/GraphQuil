@@ -6,19 +6,12 @@ open ast
 open sast
 open semantic_check
 
-<<<<<<< HEAD
-(* Returns the name for the date type as a string*)
-=======
-let string_of_intermediate = function
-
-
 (* Returns the string name for the date type*)
->>>>>>> 5ae36ccd0984b3882a40452c63d450525631ef5f
 let rec get_datatype_name = function
  
 Literal_t (t) -> string_of_int t
  | Id_t (_, t, _) -> t 
- | Binop_t (d, e1, op, e2) -> get_datatype_name e1 ^
+ | Binop_t (d, e1, op, e2) -> get_datatype_name e1 in
  	(match op with
 	  Add -> " + " ^ get_datatype_name e2 
 	  | Sub -> " - " ^ get_datatype_name e2 
@@ -34,7 +27,7 @@ Literal_t (t) -> string_of_int t
 	  | Geq -> " >= " ^ get_datatype_name e2
 	  | And -> " && " ^ get_datatype_name e2
 	  | Or -> " || " ^ get_datatype_name e2 )
- | Unop_t (d, e1, op) -> get_datatype_name e1 ^
+ | Unop_t (d, e1, op) -> get_datatype_name e1 in
  	(match op with
  	 Neg-> "-"
  	 | Not -> "!")
@@ -70,20 +63,22 @@ Block_t (stmts) -> "{\n" ^ String.concat "" (List.map get_java_statement stmts) 
 
 (* Returns java declaration of the datatype as a string*)
 (* Not entire sure of left hand side construction *)
-and get_java_declaration hasID expr =
+let get_java_declaration hasID expr =
 	(match hasID with 
 		(*each of these is taken from the ast.ml file with the line "type validtype"*)
-		validtype(Int)-> "int "
-		| validtype(Char)-> "char "
-		| validtype(String)-> "String "
-		| validtype(Bool)-> "boolean "
-		| validtype(Void)-> "void " ) ^ " " ^
+		Int-> "int "
+		| Char-> "char "
+		| String-> "String "
+		| Bool-> "boolean "
+		| Void-> "void " ^ " " ^
  		(match expr with
-			Assign_t (t, l, _)->  t ^ 
+			Assign_t (t, l, _)->  t in 
 			(match hasID with 
-				validtype(String)-> "= new String(" ^ get_datatype_name expr ^ ");"
+				String-> "= new String(" ^ get_datatype_name expr ^ ");"
 				| _ -> "= " ^ get_datatype_name expr ^ ";")
 		| _ -> get_datatype_name expr ^ ";")
 
+and get_java_expression e = match e with
+Assign_t (t, l, _)->  t in 
 
 (*in let rec get_datatype_as_string hasName = function *)
