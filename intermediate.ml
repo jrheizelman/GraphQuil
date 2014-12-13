@@ -2,6 +2,9 @@ open ast
 open sast
 open semantic_check
 
+let string_of_intermediate = function
+
+
 (* Returns the string name for the date type*)
 let rec get_datatype_name = function
  
@@ -52,8 +55,6 @@ Block_t (stmts) -> "{\n" ^ String.concat "" (List.map get_java_statement stmts) 
 
 | If_t (expr, stmts, stmts2) -> "if (" ^ get_datatype_name expr ^ ")\n" ^ get_java_statement stmts ^ "else\n" ^ get_java_statement stmts2
 
-| For_t (expr1, expr2, expr3, stmts) -> "for ( int i=" ^ get_datatype_name expr1 ^ "; i<=" ^ get_datatype_name expr2 
-
 | For_t (expr1, expr2, expr3, stmts) -> "for ( int " ^ get_datatype_name expr1 ^ "=" get_datatype_name expr2 "; i<=" ^ get_datatype_name expr3 ^ ";" ^get_datatype_name expr1^"++)" ^ get_java_statement stmts
 
 | While_t (expr, stmts) -> "while (" ^ get_datatype_name expr ^ ") " ^ get_java_statement stmts
@@ -63,8 +64,3 @@ Block_t (stmts) -> "{\n" ^ String.concat "" (List.map get_java_statement stmts) 
 
 
 (*in let rec get_datatype_as_string hasName = function *)
-
-
-
-
-
