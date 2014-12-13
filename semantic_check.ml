@@ -31,6 +31,7 @@ let type_of_expr = function
 	| Char_t(c) -> Char
 	| Assign_t(t, _, _) -> t
 	| Bool_Lit_t(b) -> Bool
+	| Add_at_t(e1, e2) -> Node
 
 (* Error raised for improper binary operation *)
 let binop_err (t1:validtype) (t2:validtype) (op:bop) =
@@ -169,6 +170,13 @@ and check_expr (e:expr) env =
 	 		let checked_l = check_left_value l env in
 	 			check_assign checked_l checked_r
 	 | Bool_Lit(b) -> Bool_Lit_t(b)
+	 | Add_at(e1, e2) -> 
+	 	let(ce1, ce2) = (check_expr e1 env, check_expr e2 env) in 
+	 		let(te1, te2) = (type_of_expr ce1, type_of_expr ce2) in
+	 			if (te1 = Node && te2 = Int_at) then Add_at_t(ce1, ce2)
+	 		else raise(Failure("Add must be of type attribute to type Node, " ^ 
+	 			"this function tryies to add " ^ string_of_valid_type te2 ^ 
+	 			" to type " ^ string_of_valid_type te1 ^ "."))
 
 and check_exprList (eList: expr list) env = 
 	match eList with
