@@ -19,6 +19,7 @@ type expr_t =
   | Char_t of string 
   | Assign_t of validtype * expr_t * expr_t
   | Bool_Lit_t of bool
+  | Add_at_t of expr_t * expr_t
 
 type stmt_t =  
     Block_t of block_t

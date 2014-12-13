@@ -32,8 +32,8 @@ type token =
   | WHILE
   | FOR
   | RETURN
-  | NODETYPE
-  | EDGETYPE
+  | ADD
+  | INTAT
   | GRAPH
   | NODE
   | BOOL

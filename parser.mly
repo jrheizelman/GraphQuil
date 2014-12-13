@@ -22,7 +22,8 @@ let parse_error s = (* Called by the parser function on error *)
 %token LPAREN LBRACE SEMI COLON RPAREN RBRACE MOD COMMA EOF
 %token PLUS TIMES LINK BILINK MINUS DIVIDE EQ ASSIGN PERIOD
 %token NEQ LEQ GEQ LT GT NOT AND OR RBRACK LBRACK
-%token IF ELSE WHILE FOR RETURN NODETYPE EDGETYPE
+%token IF ELSE WHILE FOR RETURN ADD
+%token INTAT
 %token GRAPH NODE BOOL STRING PRINT NEW CONTINUE DOUBLE EDGE
 %token FALSE TRUE INT VOID DEST EDGES STATIC CHAR DO IN
 %token <int> LITERAL
@@ -71,6 +72,7 @@ expr:
 | expr NEQ expr 		                     { Binop ($1, Neq, $3) }
 | expr OR expr 		                       { Binop ($1, Or, $3) }
 | expr AND expr 		                     { Binop ($1, And, $3) }
+| expr ADD expr                          { Add_at($1, $3) }
 | NOT expr		                           { Unop(Not, $2) } 
 | MINUS expr %prec NEG                   { Unop(Neg, $2) }
 | expr ASSIGN expr                       { Assign($1, $3) }
@@ -87,14 +89,15 @@ INT        { Int }
 | STRING   { String }
 | BOOL     { Bool }
 | obj_type { $1 } 
+| attr_type { $1 }
 
 obj_type:
 NODE       { Node }
-| NODETYPE { NodeType }
 | EDGE     { Edge }
-| EDGETYPE { EdgeType }
 | GRAPH    { Graph }
-| TYPEID   { UserDef }
+
+attr_type:
+INTAT      { Int_at}
 
 actuals_opt:
   /* nothing */  { [] }

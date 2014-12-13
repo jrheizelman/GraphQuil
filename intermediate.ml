@@ -6,7 +6,14 @@ open ast
 open sast
 open semantic_check
 
+<<<<<<< HEAD
 (* Returns the name for the date type as a string*)
+=======
+let string_of_intermediate = function
+
+
+(* Returns the string name for the date type*)
+>>>>>>> 5ae36ccd0984b3882a40452c63d450525631ef5f
 let rec get_datatype_name = function
  
 Literal_t (t) -> string_of_int t
@@ -56,8 +63,6 @@ Block_t (stmts) -> "{\n" ^ String.concat "" (List.map get_java_statement stmts) 
 
 | If_t (expr, stmts, stmts2) -> "if (" ^ get_datatype_name expr ^ ")\n" ^ get_java_statement stmts ^ "else\n" ^ get_java_statement stmts2
 
-| For_t (expr1, expr2, expr3, stmts) -> "for ( int i=" ^ get_datatype_name expr1 ^ "; i<=" ^ get_datatype_name expr2 
-
 | For_t (expr1, expr2, expr3, stmts) -> "for ( int " ^ get_datatype_name expr1 ^ "=" get_datatype_name expr2 "; i<=" ^ get_datatype_name expr3 ^ ";" ^get_datatype_name expr1^"++)" ^ get_java_statement stmts
 
 | While_t (expr, stmts) -> "while (" ^ get_datatype_name expr ^ ") " ^ get_java_statement stmts
@@ -82,8 +87,3 @@ and get_java_declaration hasID expr =
 
 
 (*in let rec get_datatype_as_string hasName = function *)
-
-
-
-
-
