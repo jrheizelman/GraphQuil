@@ -72,7 +72,7 @@ expr:
 | expr NEQ expr 		                     { Binop ($1, Neq, $3) }
 | expr OR expr 		                       { Binop ($1, Or, $3) }
 | expr AND expr 		                     { Binop ($1, And, $3) }
-| expr ADD expr                          { Add_at($1, $3) }
+/*| expr ADD expr                          { Add_at($1, $3) }*/
 | NOT expr		                           { Unop(Not, $2) } 
 | MINUS expr %prec NEG                   { Unop(Neg, $2) }
 | expr ASSIGN expr                       { Assign($1, $3) }
@@ -89,15 +89,15 @@ INT        { Int }
 | STRING   { String }
 | BOOL     { Bool }
 | obj_type { $1 } 
-| attr_type { $1 }
+/*| attr_type { $1 }*/
 
 obj_type:
 NODE       { Node }
 | EDGE     { Edge }
 | GRAPH    { Graph }
 
-attr_type:
-INTAT      { Int_at}
+/*attr_type:
+INTAT      { Int_at}*/
 
 actuals_opt:
   /* nothing */  { [] }
