@@ -30,7 +30,7 @@ Literal_t (t) -> string_of_int t
 	  | Geq -> " >= " ^ get_datatype_name e2
 	  | And -> " && " ^ get_datatype_name e2
 	  | Or -> " || " ^ get_datatype_name e2 )
- | Unop_t (d, e1, op) -> get_datatype_name e1 ^
+ | Unop_t (d, e1, op) -> get_datatype_name e1 ^ 
  	(match op with
  	 Neg-> "-"	
  	 | Not -> "!")

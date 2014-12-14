@@ -23,7 +23,7 @@ type expr_t =
   | Char_t of string 
   | Assign_t of validtype * expr_t * expr_t
   | Bool_Lit_t of bool
-  (*| Add_at_t of expr_t * expr_t*)
+  | Add_at_t of expr_t * expr_t (* each expr_t is the id of the node and attr, type checked *)
 
 type stmt_t =  
     Block_t of block_t
@@ -75,6 +75,8 @@ let rec string_of_expr_t = function
   | Call_t(f, argl) ->
     fst_of_four f ^ "(" ^ String.concat ", " (List.map string_of_expr_t argl) ^ ")" 
   | Noexpr_t -> ""
+  | Add_at_t(n, e) -> string_of_expr_t n ^ " add " ^ string_of_expr_t e
+
   
   let string_of_symb_table_var v = string_of_valid_type (snd_of_three v) ^ " " ^ fst_of_three v
 

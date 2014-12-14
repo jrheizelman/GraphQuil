@@ -28,7 +28,7 @@ let type_of_expr = function
 	| Char_t(c) -> Char
 	| Assign_t(t, _, _) -> t
 	| Bool_Lit_t(b) -> Bool
-	(*| Add_at_t(e1, e2) -> Node*)
+	| Add_at_t(n, e) -> Node
 
 (* Error raised for improper binary operation *)
 let binop_err (t1:validtype) (t2:validtype) (op:bop) =
@@ -167,13 +167,20 @@ and check_expr (e:expr) env =
 	 		let checked_l = check_left_value l env in
 	 			check_assign checked_l checked_r
 	 | Bool_Lit(b) -> Bool_Lit_t(b)
-	 (*| Add_at(e1, e2) -> 
-	 	let(ce1, ce2) = (check_expr e1 env, check_expr e2 env) in 
-	 		let(te1, te2) = (type_of_expr ce1, type_of_expr ce2) in
-	 			if (te1 = Node && te2 = Int_at) then Add_at_t(ce1, ce2)
-	 		else raise(Failure("Add must be of type attribute to type Node, " ^ 
-	 			"this function tryies to add " ^ string_of_valid_type te2 ^ 
-	 			" to type " ^ string_of_valid_type te1 ^ "."))*)
+	 | Add_at(n, at) -> 
+	 	let (nt, nstr, nid) = check_valid_id n env in
+	 		let (att, atstr, atid)  = check_valid_id at env in
+	 			if nt != Node then raise(Failure("First argument must " ^ 
+	 				"be of type Node, " ^ string_of_valid_type nt ^ " was given."))
+	 		else
+	 			match att with
+	 				Int_at -> Add_at_t((Id_t(nt, nstr, nid), Id_t(att, atstr, atid)))
+	 				| Bool_at -> Add_at_t((Id_t(nt, nstr, nid), Id_t(att, atstr, atid)))
+	 				| Char_at -> Add_at_t((Id_t(nt, nstr, nid), Id_t(att, atstr, atid)))
+	 				| String_at -> Add_at_t((Id_t(nt, nstr, nid), Id_t(att, atstr, atid)))
+	 				| _ -> raise(Failure("Second argument must " ^ 
+	 				"be an attribute type, " ^ string_of_valid_type nt ^ " was given.")) 
+
 
 and check_exprList (eList: expr list) env = 
 	match eList with

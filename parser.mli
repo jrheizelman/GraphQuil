@@ -34,8 +34,11 @@ type token =
   | RETURN
   | ADD
   | INTAT
-  | GRAPH
+  | STRINGAT
+  | CHARAT
+  | BOOLAT
   | NODE
+  | GRAPH
   | BOOL
   | STRING
   | PRINT
