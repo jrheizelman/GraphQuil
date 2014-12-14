@@ -35,7 +35,6 @@ let parse_error s = (* Called by the parser function on error *)
 /* goes from least to most important in precedence */
 %nonassoc NOELSE
 %nonassoc ELSE
-%nonassoc NOASSIGN
 %right ASSIGN
 %left OR
 %left AND 
@@ -78,6 +77,10 @@ expr:
 | expr ASSIGN expr                       { Assign($1, $3) }
 | ID LPAREN actuals_opt RPAREN           { Call($1, $3) }
 | LPAREN expr RPAREN                     { $2 }
+| expr ASSIGN LBRACK STRINGLIT COLON BOOLLIT RBRACK { Assign_Bool_at($1, $4, $6) }
+| expr ASSIGN LBRACK STRINGLIT COLON STRINGLIT RBRACK { Assign_String_at($1, $4, $6) }
+| expr ASSIGN LBRACK STRINGLIT COLON CHARLIT RBRACK { Assign_Char_at($1, $4, $6) }
+| expr ASSIGN LBRACK STRINGLIT COLON LITERAL RBRACK { Assign_Int_at($1, $4, $6) }
 
 expr_opt:
     /* nothing */ { Noexpr }

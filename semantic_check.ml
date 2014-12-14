@@ -28,7 +28,11 @@ let type_of_expr = function
 	| Char_t(c) -> Char
 	| Assign_t(t, _, _) -> t
 	| Bool_Lit_t(b) -> Bool
-	| Add_at_t(n, e) -> Node
+	| Add_at_t(_, _) -> Node
+	| Assign_Bool_at_t(_, _, _) -> Bool_at
+	| Assign_String_at_t(_, _, _) -> String_at
+	| Assign_Char_at_t(_, _, _) -> Char_at
+	| Assign_Int_at_t(_, _, _) -> Int_at
 
 (* Error raised for improper binary operation *)
 let binop_err (t1:validtype) (t2:validtype) (op:bop) =
@@ -167,10 +171,34 @@ and check_expr (e:expr) env =
 	 		let checked_l = check_left_value l env in
 	 			check_assign checked_l checked_r
 	 | Bool_Lit(b) -> Bool_Lit_t(b)
+	 | Assign_Bool_at(e, tag, b) ->
+	 	let l = check_left_value e env in 
+	 		let l_t = type_of_expr l in
+	 			if l_t = Bool_at then Assign_Bool_at_t((l, tag, b))
+	 		else raise(Failure("bool_at type expected for assign, " ^ 
+	 			string_of_valid_type l_t ^ " was given."))
+	| Assign_Char_at(id, tag, c) ->
+	 	let l = check_left_value e env in 
+	 		let l_t = type_of_expr l in
+	 			if l_t = Char_at then Assign_Char_at_t((l, tag, c))
+	 		else raise(Failure("char_at type expected for assign, " ^ 
+	 			string_of_valid_type l_t ^ " was given."))
+	| Assign_String_at(id, tag, s) ->
+	 	let l = check_left_value e env in 
+	 		let l_t = type_of_expr l in
+	 			if l_t = String_at then Assign_String_at_t((l, tag, s))
+	 		else raise(Failure("String_at type expected for assign, " ^ 
+	 			string_of_valid_type l_t ^ " was given."))
+	 | Assign_Int_at(id, tag, i) ->
+	 	let l = check_left_value e env in 
+	 		let l_t = type_of_expr l in
+	 			if l_t = Int_at then Assign_Int_at_t((l, tag, i))
+	 		else raise(Failure("int_at type expected for assign, " ^ 
+	 			string_of_valid_type l_t ^ " was given."))
 	 | Add_at(n, at) -> 
 	 	let (nt, nstr, nid) = check_valid_id n env in
 	 		let (att, atstr, atid)  = check_valid_id at env in
-	 			if nt != Node then raise(Failure("First argument must " ^ 
+	 			if (nt != Node && nt != Edge) then raise(Failure("First argument must " ^ 
 	 				"be of type Node, " ^ string_of_valid_type nt ^ " was given."))
 	 		else
 	 			match att with
@@ -179,8 +207,7 @@ and check_expr (e:expr) env =
 	 				| Char_at -> Add_at_t((Id_t(nt, nstr, nid), Id_t(att, atstr, atid)))
 	 				| String_at -> Add_at_t((Id_t(nt, nstr, nid), Id_t(att, atstr, atid)))
 	 				| _ -> raise(Failure("Second argument must " ^ 
-	 				"be an attribute type, " ^ string_of_valid_type nt ^ " was given.")) 
-
+	 				"be an attribute type, " ^ string_of_valid_type nt ^ " was given."))
 
 and check_exprList (eList: expr list) env = 
 	match eList with

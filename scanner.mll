@@ -54,6 +54,10 @@ rule token = parse
 | "new" { NEW }
 | "continue" { CONTINUE }
 | "double" { DOUBLE }
+| "int_at" { INTAT}
+| "String_at" { STRINGAT }
+| "char_at" { CHARAT }
+| "bool_at" { BOOLAT}
 | "int" { INT }
 | "void" { VOID }
 | "dest" { DEST }

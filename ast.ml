@@ -20,6 +20,10 @@ Literal of int
 | Assign of expr * expr
 | Bool_Lit of bool
 | Add_at of string * string
+| Assign_Bool_at of expr * string * bool
+| Assign_Char_at of expr * string * string
+| Assign_String_at of expr * string * string
+| Assign_Int_at of expr * string * int
 
 type variable = string * validtype
 
@@ -116,6 +120,14 @@ let rec string_of_expr = function
     f ^ "(" ^ String.concat ", " (List.map string_of_expr argl) ^ ")" 
   | Noexpr -> ""
   | Add_at(n, e) -> n ^ " add " ^ e
+  | Assign_Bool_at(id, tag, b) ->
+      string_of_expr id ^ " \"" ^ tag ^ "\" " ^ string_of_bool b 
+  | Assign_Char_at(id, tag, c) -> 
+      string_of_expr id ^ " \"" ^ tag ^ "\" " ^ c
+  | Assign_String_at(id, tag, s) -> 
+      string_of_expr id ^ " \"" ^ tag ^ "\" " ^ s 
+  | Assign_Int_at(id, tag, i) -> 
+      string_of_expr id ^ " \"" ^ tag ^ "\" " ^ string_of_int i
  
  and string_of_valid_type = function
     Int -> "int"
