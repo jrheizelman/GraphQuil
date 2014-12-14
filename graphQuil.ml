@@ -64,7 +64,8 @@ let _ =
                           let inter = Intermediate.string_of_intermediate checked(*print_string "hello\n"*)*)
         | Compile -> let env = SymbolTable.symbol_table_of_prog program in
                      let checked = Semantic_check.check_program program env in
-                     ProduceJava.createJavaProgram checked
+                     let produced = ProduceJava.createJavaProgram checked in
+                     ignore produced; print_string "compiled"
         | Help -> print_endline (usage Sys.argv.(0))) (* impossible case *)
 (*let action =
 if Array.length Sys.argv > 1 then
