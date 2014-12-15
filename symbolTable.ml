@@ -1,5 +1,6 @@
 (*
-Author: Gemma Ragozzine
+Authors: Gemma Ragozzine
+		John Heizelman
 *)
 open Ast
 
@@ -7,6 +8,7 @@ open Ast
 (* fst of each pair is the string of decl, snd of each pair is the decl type *)
 
 module SymbolMap = Map.Make(String)
+module TagMap = Map.Make(String)
 
 (* each index in the array refers to a block and holds within it the scope of the parent block *)
 let ancestor_scope = Array.make 1000 0

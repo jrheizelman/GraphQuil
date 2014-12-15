@@ -1,5 +1,6 @@
 (*
-	Author: Gemma Ragozzine
+	Authors: Gemma Ragozzine
+			 John Heizelman
 *)
 
 open Ast
@@ -29,10 +30,13 @@ let type_of_expr = function
 	| Assign_t(t, _, _) -> t
 	| Bool_Lit_t(b) -> Bool
 	| Add_at_t(_, _) -> Node
-	| Assign_Bool_at_t(_, _, _) -> Bool_at
-	| Assign_String_at_t(_, _, _) -> String_at
-	| Assign_Char_at_t(_, _, _) -> Char_at
-	| Assign_Int_at_t(_, _, _) -> Int_at
+	| Assign_at_t(t, _, _) -> t
+
+let type_of_attribute = function
+	Char_rat_t(_, _) -> Char_at
+	| String_rat_t(_,_) -> String_at
+	| Int_rat_t(_, _) -> Int_at
+	| Bool_rat_t(_, _) -> Bool_at
 
 (* Error raised for improper binary operation *)
 let binop_err (t1:validtype) (t2:validtype) (op:bop) =
@@ -88,10 +92,30 @@ let assign_err (t1:validtype) (t2:validtype) =
 		string_of_valid_type t2 ^ " to expression of type " ^
 		string_of_valid_type t1 ^ "."))
 
+let add_err (t1:validtype) (t2:validtype) = 
+	raise(Failure("Add must be of attribute type " ^ 
+		  	"to Node type, " ^ string_of_valid_type t1 ^ " and " ^ 
+		  	string_of_valid_type t2 ^ " was given."))
+
 let check_assign (l:expr_t) (r:expr_t) = 
 	let (l_t, r_t) = (type_of_expr l, type_of_expr r) in
 		  if(l_t = r_t) then Assign_t(l_t, l, r)
 		  else assign_err l_t r_t 
+
+let check_assign_attribute (l:expr_t) (r:attribute_t) = 
+	let(l_t, r_t) = (type_of_expr l, type_of_attribute r) in
+		if(l_t = r_t) then Assign_at_t(l_t, l, r)
+		else assign_err l_t r_t 
+
+let check_add (l:expr_t) (r:expr_t) = 
+	let (l_t, r_t) = (type_of_expr l, type_of_expr r) in
+		  if(l_t = Node) then match r_t with
+		  	String_at -> Add_at_t(l, r)
+		  	| Int_at -> Add_at_t(l, r)
+		  	| Char_at -> Add_at_t(l, r)
+		  	| Bool_at -> Add_at_t(l, r)
+		  	| _ -> add_err l_t r_t
+		  else add_err l_t r_t
 
 (* compare arg lists with func formal params *)
 let rec compare_args formals actuals =
@@ -149,6 +173,13 @@ and check_left_value (e:expr) env =
 		(* If left expression is anything else *)
 		| _ -> raise(Failure("Left hand side of assignment operator is improper type"))
 
+and check_attribute (a:attribute) env = 
+	match a with
+	Char_rat(t, v) -> Char_rat_t(t, v)
+	| String_rat(t, v) -> String_rat_t(t, v)
+	| Int_rat(t, v) -> Int_rat_t(t, v)
+	| Bool_rat(t, v) -> Bool_rat_t(t,v)
+
 (* Did not check Array, construct, makeArr, Access*)
 and check_expr (e:expr) env = 
 	match e with 
@@ -171,32 +202,18 @@ and check_expr (e:expr) env =
 	 		let checked_l = check_left_value l env in
 	 			check_assign checked_l checked_r
 	 | Bool_Lit(b) -> Bool_Lit_t(b)
-	 | Assign_Bool_at(e, tag, b) ->
-	 	let l = check_left_value e env in 
-	 		let l_t = type_of_expr l in
-	 			if l_t = Bool_at then Assign_Bool_at_t((l, tag, b))
-	 		else raise(Failure("bool_at type expected for assign, " ^ 
-	 			string_of_valid_type l_t ^ " was given."))
-	| Assign_Char_at(id, tag, c) ->
-	 	let l = check_left_value e env in 
-	 		let l_t = type_of_expr l in
-	 			if l_t = Char_at then Assign_Char_at_t((l, tag, c))
-	 		else raise(Failure("char_at type expected for assign, " ^ 
-	 			string_of_valid_type l_t ^ " was given."))
-	| Assign_String_at(id, tag, s) ->
-	 	let l = check_left_value e env in 
-	 		let l_t = type_of_expr l in
-	 			if l_t = String_at then Assign_String_at_t((l, tag, s))
-	 		else raise(Failure("String_at type expected for assign, " ^ 
-	 			string_of_valid_type l_t ^ " was given."))
-	 | Assign_Int_at(id, tag, i) ->
-	 	let l = check_left_value e env in 
-	 		let l_t = type_of_expr l in
-	 			if l_t = Int_at then Assign_Int_at_t((l, tag, i))
-	 		else raise(Failure("int_at type expected for assign, " ^ 
-	 			string_of_valid_type l_t ^ " was given."))
-	 | Add_at(n, at) -> 
-	 	let (nt, nstr, nid) = check_valid_id n env in
+	 | Assign_at(l, r) ->
+	 	let checked_l = check_left_value l env in 
+	 		let checked_r = check_attribute r env in
+	 			check_assign_attribute checked_l checked_r
+	 | Add_at(l, r) -> 
+	 	let checked_l = check_expr l env in
+	 		let checked_r = check_expr r env in 
+	 			check_add checked_l checked_r
+	 (*| Access(e, t) ->
+	 	let checked_e = check_expr e env in*)
+
+	 	(*let (nt, nstr, nid) = check_valid_id n env in
 	 		let (att, atstr, atid)  = check_valid_id at env in
 	 			if (nt != Node && nt != Edge) then raise(Failure("First argument must " ^ 
 	 				"be of type Node, " ^ string_of_valid_type nt ^ " was given."))
@@ -207,7 +224,7 @@ and check_expr (e:expr) env =
 	 				| Char_at -> Add_at_t((Id_t(nt, nstr, nid), Id_t(att, atstr, atid)))
 	 				| String_at -> Add_at_t((Id_t(nt, nstr, nid), Id_t(att, atstr, atid)))
 	 				| _ -> raise(Failure("Second argument must " ^ 
-	 				"be an attribute type, " ^ string_of_valid_type nt ^ " was given."))
+	 				"be an attribute type, " ^ string_of_valid_type nt ^ " was given."))*)
 
 and check_exprList (eList: expr list) env = 
 	match eList with
@@ -311,15 +328,3 @@ and check_program (p:program) env =
 				let checked_fs = check_function_list fs env in
 					if(check_main_exists checked_fs) then (checked_vs, checked_fs)
 					else raise(Failure("Function main not found."))
-
-
-
-
-
-
-
-
-
-
-
-
