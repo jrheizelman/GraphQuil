@@ -60,7 +60,7 @@ Block_t(t) -> "{\n" ^ String.concat "" (List.map get_java_statement t.statements
 
 (* Returns java declaration of the datatype as a string*)
 (* Not entirely sure that left hand side is valid in this form *)
-(*let get_java_declaration hasID expr = 
+let get_java_declaration hasID expr = 
 	(match hasID with 
 		(*each of these is taken from the ast.ml file with the line "type validtype"*)
 		(*if Int doesn't work, revert back to validtype(int)*)
@@ -74,8 +74,7 @@ Block_t(t) -> "{\n" ^ String.concat "" (List.map get_java_statement t.statements
 				(match hasID with 
 					String-> "= new String(" ^ get_datatype_name expr ^ ");"
 					| _ -> "= " ^ get_datatype_name expr ^ ";")
-			| _ -> get_datatype_name expr ^ ";")*)
-
+			| _ -> get_datatype_name expr ^ ";")
 
 let rec writeToFile fileName pString = 
   let file = open_out (fileName ^ ".java") in

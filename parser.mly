@@ -1,6 +1,6 @@
 /*
 Authors: Gemma Ragozzine
-         John Heizelman
+         John HeizelMan
 */
 
 %{ open Ast 
@@ -35,7 +35,7 @@ let parse_error s = (* Called by the parser function on error *)
 /* goes from least to most important in precedence */
 %nonassoc NOELSE
 %nonassoc ELSE
-%right ASSIGN ADD
+%right ASSIGN
 %left OR
 %left AND 
 %left EQ NEQ
@@ -71,14 +71,16 @@ expr:
 | expr NEQ expr 		                     { Binop ($1, Neq, $3) }
 | expr OR expr 		                       { Binop ($1, Or, $3) }
 | expr AND expr 		                     { Binop ($1, And, $3) }
-| expr ADD expr                          { Add_at($1, $3) }
+| ID ADD ID                              { Add_at($1, $3) }
 | NOT expr		                           { Unop(Not, $2) } 
 | MINUS expr %prec NEG                   { Unop(Neg, $2) }
 | expr ASSIGN expr                       { Assign($1, $3) }
 | ID LPAREN actuals_opt RPAREN           { Call($1, $3) }
 | LPAREN expr RPAREN                     { $2 }
-| expr ASSIGN attribute                  { Assign_at($1, $3) }
-/*| expr LBRACK STRINGLIT RBRACK           { Access($1, $3)}*/
+| expr ASSIGN LBRACK STRINGLIT COLON BOOLLIT RBRACK { Assign_Bool_at($1, $4, $6) }
+| expr ASSIGN LBRACK STRINGLIT COLON STRINGLIT RBRACK { Assign_String_at($1, $4, $6) }
+| expr ASSIGN LBRACK STRINGLIT COLON CHARLIT RBRACK { Assign_Char_at($1, $4, $6) }
+| expr ASSIGN LBRACK STRINGLIT COLON LITERAL RBRACK { Assign_Int_at($1, $4, $6) }
 
 expr_opt:
     /* nothing */ { Noexpr }
@@ -96,12 +98,6 @@ INT        { Int }
 | BOOLAT     { Bool_at }
 | STRINGAT   { String_at }
 | CHARAT     { Char_at }
-
-attribute:
-LBRACK STRINGLIT COLON BOOLLIT RBRACK { Bool_rat($2, $4) }
-| LBRACK STRINGLIT COLON STRINGLIT RBRACK { String_rat($2, $4) }
-| LBRACK STRINGLIT COLON CHARLIT RBRACK { Char_rat($2, $4) }
-| LBRACK STRINGLIT COLON LITERAL RBRACK { Int_rat($2, $4) }
 
 actuals_opt:
   /* nothing */  { [] }

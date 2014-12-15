@@ -66,7 +66,7 @@ rule token = parse
 | "char" { CHAR }
 | "in" { IN }
 | "add" { ADD }
-| '\"' ([^'\"']* as lxm) '\"'   { STRINGLIT(lxm) }
+| '"' [^'"']* '"'  as lxm { STRINGLIT(lxm) }
 | ''' [ ^'''] as ch ''' { CHARLIT(ch) }
 | ['0'-'9']+ as lxm { LITERAL(int_of_string lxm)}
 | ['a'-'z' 'A' - 'Z']['a'-'z' 'A'-'Z' '0'-'9' '_']*"[]" as lxm { ARRID(lxm)}

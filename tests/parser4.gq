@@ -1,9 +1,0 @@
-/*
- *Test node creation
- */
-
-int main(){
-	int_at a;
-	a = ["height":6];
-	
-}
