@@ -31,6 +31,7 @@ let type_of_expr = function
 	| Bool_Lit_t(b) -> Bool
 	| Add_at_t(_, _) -> Node
 	| Assign_at_t(t, _, _) -> t
+	| Access_t(t, _, _) -> t
 
 let type_of_attribute = function
 	Char_rat_t(_, _) -> Char_at
@@ -94,7 +95,7 @@ let assign_err (t1:validtype) (t2:validtype) =
 
 let add_err (t1:validtype) (t2:validtype) = 
 	raise(Failure("Add must be of attribute type " ^ 
-		  	"to Node type, " ^ string_of_valid_type t1 ^ " and " ^ 
+		  	"to Node or Edge type, " ^ string_of_valid_type t1 ^ " to " ^ 
 		  	string_of_valid_type t2 ^ " was given."))
 
 let check_assign (l:expr_t) (r:expr_t) = 
@@ -109,13 +110,21 @@ let check_assign_attribute (l:expr_t) (r:attribute_t) =
 
 let check_add (l:expr_t) (r:expr_t) = 
 	let (l_t, r_t) = (type_of_expr l, type_of_expr r) in
-		  if(l_t = Node) then match r_t with
+		  if(l_t = Node || l_t = Edge) then match r_t with
 		  	String_at -> Add_at_t(l, r)
 		  	| Int_at -> Add_at_t(l, r)
 		  	| Char_at -> Add_at_t(l, r)
 		  	| Bool_at -> Add_at_t(l, r)
 		  	| _ -> add_err l_t r_t
 		  else add_err l_t r_t
+
+let check_access (e:expr_t) (s:string) = 
+	let e_t = type_of_expr e in
+		if(e_t = Node || e_t = Edge) then
+			e
+			(*TODO ACCESS SYMBOL TABLE MAP HERE *)
+		else raise(Failure("Access must be on type Node or " ^ 
+			"Edge, " ^ string_of_valid_type e_t ^ " given."))
 
 (* compare arg lists with func formal params *)
 let rec compare_args formals actuals =
@@ -210,9 +219,9 @@ and check_expr (e:expr) env =
 	 	let checked_l = check_expr l env in
 	 		let checked_r = check_expr r env in 
 	 			check_add checked_l checked_r
-	 (*| Access(e, t) ->
-	 	let checked_e = check_expr e env in*)
-
+	 | Access(e, t) ->
+	 	let checked_e = check_expr e env in
+	 		check_access checked_e t
 	 	(*let (nt, nstr, nid) = check_valid_id n env in
 	 		let (att, atstr, atid)  = check_valid_id at env in
 	 			if (nt != Node && nt != Edge) then raise(Failure("First argument must " ^ 

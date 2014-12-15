@@ -27,7 +27,7 @@ Literal of int
 | Bool_Lit of bool
 | Add_at of expr * expr
 | Assign_at of expr * attribute
-(*| Access of expr * string*)
+| Access of expr * string
 
 type variable = string * validtype
 
@@ -125,7 +125,7 @@ let rec string_of_expr = function
   | Noexpr -> ""
   | Add_at(e1, e2) -> string_of_expr e1 ^ " add " ^ string_of_expr e2
   | Assign_at(e, at) -> string_of_expr e ^ " = " ^ string_of_attribute at
-  (*| Access(e, t) -> string_of_expr e ^ "[" ^ t ^ "]"*)
+  | Access(e, t) -> string_of_expr e ^ "[\"" ^ t ^ "\"]"
  
  and string_of_valid_type = function
     Int -> "int"

@@ -45,7 +45,7 @@ let parse_error s = (* Called by the parser function on error *)
 %right NEW
 %right NOT
 %right NEG
-%left LPAREN RPAREN
+%left LPAREN RPAREN LBRACK RBRACK
 
 %start program
 %type <Ast.program> program
@@ -78,7 +78,7 @@ expr:
 | ID LPAREN actuals_opt RPAREN           { Call($1, $3) }
 | LPAREN expr RPAREN                     { $2 }
 | expr ASSIGN attribute                  { Assign_at($1, $3) }
-/*| expr LBRACK STRINGLIT RBRACK           { Access($1, $3)}*/
+| expr LBRACK STRINGLIT RBRACK           { Access($1, $3) }
 
 expr_opt:
     /* nothing */ { Noexpr }
