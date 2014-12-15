@@ -58,8 +58,7 @@ let _ =
                           let inter = Intermediate.string_of_intermediate checked(*print_string "hello\n"*)*)
         | Compile -> let env = SymbolTable.symbol_table_of_prog program in
                      let checked = Semantic_check.check_program program env in
-                     let (_, x) = checked in
-                     let produced = Javagen.write_code "graphQuil" x in
+                     let produced = Javagen.write_code "graphQuil" checked in
                      ignore produced
                      (*let produced = ProduceJava.createJavaProgram checked in*)
                      (*ignore produced; print_string "compiled"*)
