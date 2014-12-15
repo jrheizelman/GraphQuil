@@ -1,12 +1,18 @@
 (*
-Author: Gemma Ragozzine
+Authors: Gemma Ragozzine
+         John Heizelman
 *)
 
 type bop = Add | Sub | Mult | Div | Equal | And | Neq | Mod | Leq | Geq | Greater | Less | Or
 
 type uop = Neg | Not
 
-type validtype = Int | Char | String | Double | Bool | Arr | Node | Edge | Graph | Void | Int_at | Bool_at | Char_at | String_at
+type validtype = Int | Char | String | Double | Bool | Arr | Node | Edge | Graph | Void | String_at | Int_at | Char_at | Bool_at
+
+type attribute = Char_rat of string * string 
+| String_rat of string * string 
+| Int_rat of string * int 
+| Bool_rat of string * bool 
 
 type expr=
 Literal of int
@@ -19,11 +25,9 @@ Literal of int
 | Char of string
 | Assign of expr * expr
 | Bool_Lit of bool
-| Add_at of string * string
-| Assign_Bool_at of expr * string * bool
-| Assign_Char_at of expr * string * string
-| Assign_String_at of expr * string * string
-| Assign_Int_at of expr * string * int
+| Add_at of expr * expr
+| Assign_at of expr * attribute
+| Access of expr * string
 
 type variable = string * validtype
 
@@ -104,7 +108,7 @@ let rec string_of_expr = function
     Literal(n) -> string_of_int n
   | Char(n) -> "\'" ^ n ^"\'"
   | Id(s) -> s
-  | String_Lit(s) -> s 
+  | String_Lit(s) -> s
   | Bool_Lit(l) -> string_of_bool l
   | Binop(e1, op, e2) ->
       string_of_expr e1 ^ " " ^ 
@@ -119,15 +123,9 @@ let rec string_of_expr = function
   | Call(f, argl) ->
     f ^ "(" ^ String.concat ", " (List.map string_of_expr argl) ^ ")" 
   | Noexpr -> ""
-  | Add_at(n, e) -> n ^ " add " ^ e
-  | Assign_Bool_at(id, tag, b) ->
-      string_of_expr id ^ " \"" ^ tag ^ "\" " ^ string_of_bool b 
-  | Assign_Char_at(id, tag, c) -> 
-      string_of_expr id ^ " \"" ^ tag ^ "\" " ^ c
-  | Assign_String_at(id, tag, s) -> 
-      string_of_expr id ^ " \"" ^ tag ^ "\" " ^ s 
-  | Assign_Int_at(id, tag, i) -> 
-      string_of_expr id ^ " \"" ^ tag ^ "\" " ^ string_of_int i
+  | Add_at(e1, e2) -> string_of_expr e1 ^ " add " ^ string_of_expr e2
+  | Assign_at(e, at) -> string_of_expr e ^ " = " ^ string_of_attribute at
+  | Access(e, t) -> string_of_expr e ^ "[" ^ t ^ "]"
  
  and string_of_valid_type = function
     Int -> "int"
@@ -140,10 +138,16 @@ let rec string_of_expr = function
   | Edge -> "Edge"
   | Graph -> "Graph"
   | Void -> "Void"
-  | Int_at -> "Int_at"
-  | Char_at -> "Char_at"
-  | Bool_at -> "Bool_at"
+  | Int_at -> "int_at"
   | String_at -> "String_at"
+  | Char_at -> "char_at"
+  | Bool_at -> "bool_at"
+
+  and string_of_attribute = function
+  Char_rat(t, v) -> "[\"" ^ t ^ "\": " ^ v ^ "]"
+| String_rat(t, v) -> "[\"" ^ t ^ "\": " ^ v ^ "]"
+| Int_rat(t, v) -> "[\"" ^ t ^ "\": " ^ string_of_int v ^ "]"
+| Bool_rat(t, v) -> "[\"" ^ t ^ "\": " ^ string_of_bool v ^ "]"
 
   let string_of_variable v = fst v ^ " " ^ string_of_valid_type (snd v) 
 

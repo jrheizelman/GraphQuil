@@ -2405,11 +2405,11 @@ and __ocaml_lex_token_rec lexbuf __ocaml_lex_state =
   | 55 ->
 let
 # 69 "scanner.mll"
-                      lxm
+                    lxm
 # 2410 "scanner.ml"
-= Lexing.sub_lexeme lexbuf lexbuf.Lexing.lex_start_pos lexbuf.Lexing.lex_curr_pos in
+= Lexing.sub_lexeme lexbuf (lexbuf.Lexing.lex_start_pos + 1) (lexbuf.Lexing.lex_curr_pos + -1) in
 # 69 "scanner.mll"
-                          ( STRINGLIT(lxm) )
+                                ( STRINGLIT(lxm) )
 # 2414 "scanner.ml"
 
   | 56 ->
