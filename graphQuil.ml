@@ -1,9 +1,3 @@
-(*
-* Authors:
-* Chris D'Angelo
-* Special thanks to Dara Hazeghi's strlang and Stephen Edward's MicroC
-* which provided background knowledge.
-*)
 open Unix
 
 type action = Ast | SymbolTable | Sast | SAnalysis | Intermediate | Compile | Help
@@ -64,8 +58,15 @@ let _ =
                           let inter = Intermediate.string_of_intermediate checked(*print_string "hello\n"*)*)
        (*| Compile -> let env = SymbolTable.symbol_table_of_prog program in
                      let checked = Semantic_check.check_program program env in
+<<<<<<< HEAD
                      let produced = ProduceJava.createJavaProgram checked in
                      ignore produced; print_string "compiled"*)
+=======
+                     let produced = Javagen.write_code "graphQuil" checked in
+                     ignore produced
+                     (*let produced = ProduceJava.createJavaProgram checked in*)
+                     (*ignore produced; print_string "compiled"*)
+>>>>>>> a314ccc67d218836c2fc67b4459bddf3c0e44eef
         | Help -> print_endline (usage Sys.argv.(0))) (* impossible case *)
 (*let action =
 if Array.length Sys.argv > 1 then
