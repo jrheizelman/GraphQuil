@@ -1,4 +1,4 @@
-OBJS = ast.cmo sast.cmo symbolTable.cmo semantic_check.cmo parser.cmo scanner.cmo graphQuil.cmo
+OBJS = ast.cmo sast.cmo symbolTable.cmo semantic_check.cmo parser.cmo scanner.cmo javagen.cmo graphQuil.cmo
 # OBJS = ast.cmo sast.cmo symbolTable.cmo semantic_check.cmo parser.cmo scanner.cmo produceJava.cmo graphQuil.cmo
 
 graphquil : $(OBJS)
@@ -39,9 +39,11 @@ parser.cmx: ast.cmx parser.cmi
 scanner.cmo: parser.cmi 
 scanner.cmx: parser.cmx 
 parser.cmi: ast.cmo 
-produceJava.cmo: scanner.cmo parser.cmi ast.cmo sast.cmo symbolTable.cmo semantic_check.cmo
-produceJava.cmx: scanner.cmx parser.cmx ast.cmx sast.cmx symbolTable.cmx semantic_check.cmx
+# produceJava.cmo: scanner.cmo parser.cmi ast.cmo sast.cmo symbolTable.cmo semantic_check.cmo
+# produceJava.cmx: scanner.cmx parser.cmx ast.cmx sast.cmx symbolTable.cmx semantic_check.cmx
 # graphquil.cmo: scanner.cmo parser.cmi ast.cmo sast.cmo symbolTable.cmo semantic_check.cmo produceJava.cmo
-graphquil.cmo: scanner.cmo parser.cmi ast.cmo sast.cmo symbolTable.cmo semantic_check.cmo 
+javagen.cmo: scanner.cmo parser.cmi ast.cmo sast.cmo symbolTable.cmo semantic_check.cmo
+javagen.cmx: scanner.cmx parser.cmx ast.cmx sast.cmx symbolTable.cmx semantic_check.cmx
+graphquil.cmo: scanner.cmo parser.cmi ast.cmo sast.cmo symbolTable.cmo semantic_check.cmo javagen.cmo
 # graphquil.cmx: scanner.cmx parser.cmx ast.cmx sast.cmx symbolTable.cmx semantic_check.cmx produceJava.cmx
-graphquil.cmx: scanner.cmx parser.cmx ast.cmx sast.cmx symbolTable.cmx semantic_check.cmx 
+graphquil.cmx: scanner.cmx parser.cmx ast.cmx sast.cmx symbolTable.cmx semantic_check.cmx javagen.cmx

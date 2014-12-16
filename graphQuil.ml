@@ -47,7 +47,7 @@ let _ =
       let input = open_in Sys.argv.(2) in
       let lexbuf = Lexing.from_channel input in
       let program = Parser.program Scanner.token lexbuf in
-      (match action with
+      match action with
           Ast -> let listing = Ast.string_of_prog program
                  in print_string listing
         | SymbolTable -> let env = SymbolTable.symbol_table_of_prog program in
@@ -59,14 +59,14 @@ let _ =
                     let checked = Semantic_check.check_program program env (SymbolTable.empty_tag_map) in
                       let listing_t = Sast.string_of_prog_t checked in
                         print_string listing_t
-        (*| Intermediate -> let env = SymbolTable.symbol_table_of_prog program in 
+        (*| Intermediate -> print_string "intermediate" (*let env = SymbolTable.symbol_table_of_prog program in 
                           let checked = Semantic_check.check_program program env in
-                          let inter = Intermediate.string_of_intermediate checked(*print_string "hello\n"*)*)
+                          let inter = Intermediate.string_of_intermediate checked(*print_string "hello\n"*)*)*)
         (*| Compile -> let env = SymbolTable.symbol_table_of_prog program in
-                     let checked = Semantic_check.check_program program env in
-                     let produced = ProduceJava.createJavaProgram checked in
-                     ignore produced; print_string "compiled"*)
-        | Help -> print_endline (usage Sys.argv.(0))) (* impossible case *)
+                     let checked = Semantic_check.check_program program env (SymbolTable.empty_tag_map) in
+                     let (a, b) = checked in
+                     Javagen.write_code "graphQuil.java" b; print_string "compiled"*)
+        | Help -> print_endline (usage Sys.argv.(0)) (* impossible case *)
 (*let action =
 if Array.length Sys.argv > 1 then
 (match Sys.argv.(1) with
