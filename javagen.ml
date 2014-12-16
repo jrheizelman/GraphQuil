@@ -2,7 +2,7 @@ open Sast
 open Printf
 
 let rec writeToFile filename pString = (* writes to file *)
-  let file = open_out ("java/" ^ filename ^ ".java") in
+  let file = open_out (filename ^ ".java") in
     fprintf file "%s" pString
 
 and write_code filename p = (* adds class structure to java file and has the code written *)
@@ -18,7 +18,7 @@ and write_code filename p = (* adds class structure to java file and has the cod
 
 and match_type toType =
   match toType with
-    fname_t -> sprintf "other"
+    fname_t -> sprintf "%s" (string_of_func_t toType)
   | formals_t -> sprintf "other"
   | ret_t -> sprintf "other"
   | body_block_t -> sprintf "other"
