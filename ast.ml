@@ -9,7 +9,8 @@ type uop = Neg | Not
 
 type validtype = Int | Char | String | Double | Bool | Arr | Node | Edge | Graph | Void | String_at | Int_at | Char_at | Bool_at
 
-type attribute = Char_rat of string * string 
+type attribute = 
+Char_rat of string * string 
 | String_rat of string * string 
 | Int_rat of string * int 
 | Bool_rat of string * bool 
@@ -22,7 +23,7 @@ Literal of int
 | Binop of expr * bop * expr
 | Unop of uop * expr
 | Call of string * expr list
-| Char of string
+| Char_e of string
 | Assign of expr * expr
 | Bool_Lit of bool
 | Add_at of expr * expr
@@ -56,6 +57,14 @@ type func_decl = {
 }
 
 type program = variable list * func_decl list 
+
+(*
+To be used to log tags on edges/nodes in symbol table)
+string = name of attribute
+validtype = type
+string = tag
+*)
+type tag_table_entry = string * attribute
 
 (*
 To be used to log the variable in the symbol table. 
@@ -106,7 +115,7 @@ let string_of_unop = function
 
 let rec string_of_expr = function
     Literal(n) -> string_of_int n
-  | Char(n) -> "\'" ^ n ^"\'"
+  | Char_e(n) -> "\'" ^ n ^"\'"
   | Id(s) -> s
   | String_Lit(s) -> s
   | Bool_Lit(l) -> string_of_bool l

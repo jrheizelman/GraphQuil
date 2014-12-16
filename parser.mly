@@ -54,7 +54,7 @@ let parse_error s = (* Called by the parser function on error *)
 
 expr:
  LITERAL                                 { Literal($1) }
-| CHARLIT                                { Char($1) }
+| CHARLIT                                { Char_e($1) }
 | ID                                     { Id($1)}
 | STRINGLIT                              { String_Lit($1) }
 | BOOLLIT                                { Bool_Lit($1)}
