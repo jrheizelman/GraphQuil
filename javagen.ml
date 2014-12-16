@@ -7,7 +7,7 @@ let rec writeToFile filename pString = (* writes to file *)
 
 and write_code filename p = (* adds class structure to java file and has the code written *)
   let stmtString = gen_stmt_list p in
-  let stmtString = match_type p in
+  (*let stmtString = match_type p in*)
   let output = sprintf "
   public class %s {
       %s
@@ -18,7 +18,7 @@ and write_code filename p = (* adds class structure to java file and has the cod
 
 and match_type toType =
   match toType with
-    fname_t -> sprintf "%s" toType
+    fname_t -> sprintf "other"
   | formals_t -> sprintf "other"
   | ret_t -> sprintf "other"
   | body_block_t -> sprintf "other"
