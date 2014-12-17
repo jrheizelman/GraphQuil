@@ -65,10 +65,20 @@ and gen_stmt_list stmts =
   let output = List.fold_left (fun a b -> a ^ (gen_stmt b)) "" stmts in
   sprintf "%s" output
 
-and gen_stmt stmt = 
-  sprintf "hello\n"
+and gen_stmt = function 
+    Block_t(block) -> gen_block block
+  | Expr_t(expr) -> gen_expr expr
+  | Return_t(toreturn) -> gen_return_stmt toreturn
+  | If_t(a,b,c) -> sprintf "if"
+  | For_t(expr1, expr2, expr3, block) -> sprintf "for"
+  | While_t(expr, block) -> sprintf "while"
 
+and gen_expr expr = 
+  sprintf "hello"
 
+and gen_return_stmt expr = 
+  let output = (gen_expr expr) in
+  sprintf "return %s;" output
 
 
 (*
