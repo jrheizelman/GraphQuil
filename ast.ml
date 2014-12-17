@@ -158,7 +158,7 @@ let rec string_of_expr = function
 | Int_rat(t, v) -> "[\"" ^ t ^ "\": " ^ string_of_int v ^ "]"
 | Bool_rat(t, v) -> "[\"" ^ t ^ "\": " ^ string_of_bool v ^ "]"
 
-  let string_of_variable v = fst v ^ " " ^ string_of_valid_type (snd v) 
+  let string_of_variable v = string_of_valid_type (snd v) ^ " " ^  fst v 
 
   let rec string_of_stmt = function
     Block(b) -> string_of_block b

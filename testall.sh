@@ -5,6 +5,7 @@
 #
 
 graphquil="./graphquil"
+java_output="./graphQuil.java"
 
 # Set time limit for all operations
 ulimit -t 30
@@ -165,13 +166,13 @@ Check() {
 
     generatedfiles=""
 
-    generatedfiles="$generatedfiles ${basename}.i.out" &&
-    Run "$graphquil" "-i" "<" $1 ">" ${basename}.i.out &&
-    Compare ${basename}.i.out ${reffile}.out ${basename}.i.diff
+    #generatedfiles="$generatedfiles ${basename}.i.out" &&
+    #Run "$graphquil" "-i" "<" $1 ">" ${basename}.i.out &&
+    #Compare ${basename}.i.out ${reffile}.out ${basename}.i.diff
 
-    generatedfiles="$generatedfiles ${basename}.c.out" &&
-    Run "$graphquil" "-c" "<" $1 ">" ${basename}.c.out &&
-    Compare ${basename}.c.out ${reffile}.out ${basename}.c.diff
+    generatedfiles="$generatedfiles ${basename}.j.out" &&
+    Run "$graphquil" "-c" $1 ">" ${basename}.j.out &&
+    Compare ${basename}.j.out ${reffile}.out ${basename}.j.diff
 
     # Report the status and clean up the generated files
 
@@ -184,6 +185,47 @@ Check() {
     else
 	echo "###### FAILED" 1>&2
 	globalerror=$error
+    fi
+}
+
+TestRunningProgram() {
+    error=0
+    basename=`echo $1 | sed 's/.*\\///
+                             s/.gq//'`
+    reffile=`echo $1 | sed 's/.gq$//'`
+    basedir="`echo $1 | sed 's/\/[^\/]*$//'`/."
+
+    echo -n "$basename..."
+
+    echo 1>&2
+    echo "###### Testing $basename" 1>&2
+
+    generatedfiles=""
+    tmpfiles=""
+
+    # old from microc - interpreter
+    # generatedfiles="$generatedfiles ${basename}.i.out" &&
+    # Run "$lorax" "-i" "<" $1 ">" ${basename}.i.out &&
+    # Compare ${basename}.i.out ${reffile}.out ${basename}.i.diff
+
+    generatedfiles="$generatedfiles ${basename}.j.out" &&
+    Run "$lorax" "-j" $1 &&
+    Run "$java_output" ">" ${basename}.j.out &&
+    Compare ${basename}.j.out ${reffile}.out ${basename}.f.diff
+    
+    rm -f $tmpfiles
+
+    # Report the status and clean up the generated files
+
+    if [ $error -eq 0 ] ; then
+    if [ $keep -eq 0 ] ; then
+        rm -f $generatedfiles
+    fi
+    echo "OK"
+    echo "###### SUCCESS" 1>&2
+    else
+    echo "###### FAILED" 1>&2
+    globalerror=$error
     fi
 }
 
