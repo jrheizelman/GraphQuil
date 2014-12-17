@@ -25,7 +25,7 @@ type expr_t =
   | Bool_Lit_t of bool
   | Add_at_t of validtype * string * attribute (* each expr_t is the id of the node and attr, type checked *)
   (*| Assign_at_t of validtype * expr_t * attribute_t*)
-  | Access_t of validtype * expr_t * string (* validtype is what attr is holding, Char, String, etc, expr_t is node/edge, string is tag*)
+  | Access_t of validtype * string * string (* validtype is what attr is holding, Char, String, etc, expr_t is node/edge, string is tag*)
 
 type stmt_t =  
     Block_t of block_t
@@ -79,7 +79,7 @@ let rec string_of_expr_t = function
   | Noexpr_t -> ""
   | Add_at_t(_,s, e) -> s ^ " add " ^ string_of_attribute e
     (*| Assign_at_t (t, e, a) -> string_of_expr_t e ^ " = " ^ string_of_attribute_t a*)
-  | Access_t (t, e, s) -> string_of_expr_t e ^ "[\"" ^ s ^ "\"]"
+  | Access_t (t, s1, s2) -> s1 ^ "[\"" ^ s2 ^ "\"]"
 
   (*and string_of_attribute_t a = 
     let (s, t, e) = a in 

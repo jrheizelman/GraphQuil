@@ -37,7 +37,7 @@ let type_of_expr = function
 	if type_of_expr e = t then attribute_t(s,t,e)
 	else raise(Failure(string_of_expr_t e ^ " is not of type " ^ string_of_valid_type t))*)
 
-let type_of_attribute (_, t, _) = t
+let type_of_attribute (at:attribute) = match at with Attr(_,t,_) -> t
 
 (* Error raised for improper binary operation *)
 let binop_err (t1:validtype) (t2:validtype) (op:bop) =
@@ -97,6 +97,19 @@ let check_assign (l:expr_t) (r:expr_t) =
 	let (l_t, r_t) = (type_of_expr l, type_of_expr r) in
 		  if(l_t = r_t) then Assign_t(l_t, l, r)
 		  else assign_err l_t r_t 
+
+let check_at_for_tag (tag: string) (a:attribute) = match a with 
+	Attr(s,t,e) -> if s = tag then true else false 
+
+let handle_access (n:string) (tag:string) (ty:validtype) = match ty with 
+	Node(l) -> if List.exists (check_at_for_tag tag) l then let at = List.find (check_at_for_tag tag) l in 
+	 		Access_t(type_of_attribute at, n, tag)
+	 	else raise(Failure("The tag " ^ tag ^ " is not associated with variable " ^ n))
+	 | Edge(l) -> if List.exists (check_at_for_tag tag) l then let at = List.find (check_at_for_tag tag) l in 
+	 		Access_t(type_of_attribute at, n, tag)
+	 	else raise(Failure("The tag " ^ tag ^ " is not associated with variable " ^ n))
+	 | _ -> raise(Failure("Left side of access must be Node or Edge type, " ^ 
+			string_of_valid_type ty ^ " given."))
 
 (*let check_assign_attribute (l:expr_t) (r:attribute_t) = 
 	let(l_t, r_t) = (type_of_expr l, type_of_attribute r) in
@@ -204,16 +217,13 @@ and check_expr (e:expr) env =
 	 	let checkedList = check_exprList eList env  in
 	 		check_func_call n checkedList env
 	 | String_Lit(s) -> String_Lit_t(s)
+	 | Access(n, tag) -> let (ty, st, id) = check_valid_id n env in handle_access n tag ty
 	 | Char_e(c) -> Char_t(c)
 	 | Assign(l, r) -> 
 	 	let checked_r = check_expr r env in
 	 		let checked_l = check_left_value l env in
 	 			check_assign checked_l checked_r
 	 | Bool_Lit(b) -> Bool_Lit_t(b)
-	 (*| Assign_at(l, r) ->
-	 	let checked_l = check_left_value l env in 
-	 		let checked_r = check_attribute r l env in
-	 			check_assign_attribute checked_l checked_r*)
 	 | Add_at(s, a) -> let (t, st, id) = check_valid_id s env in match t with
 	 		Node(l) -> let t = Node(a :: l) in 
 	 			ignore(symbol_table_override_decl st (SymbTable_Var(st,t,id)) (fst env, id));
@@ -223,9 +233,8 @@ and check_expr (e:expr) env =
 	 			Add_at_t(t,s, a)
 	 		| _ -> raise(Failure("Left side of add statement must be Node or Edge type, " ^ 
 				string_of_valid_type t ^ " given."))
-	 (*| Access(e, t) -> (* e is the expression of Node, t is string of the tag name *)
-	 	let checked_e = check_expr e env in
-	 		check_access checked_e t env *)(*check that its a node or an edge, return access_t of (stored type, id name (expr_t), tag name) *)
+
+	 		(*check that its a node or an edge, return access_t of (stored type, id name (expr_t), tag name) *)
 
 	 		
 	 		(*check_att_type stored type == attribute type? gotten from tag name*)
