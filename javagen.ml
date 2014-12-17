@@ -43,19 +43,19 @@ and gen_func func =
       funcname = func.fname_t and
       params = func.formals_t and
       internals = func.body_block_t in
-      let helper = function
-        "main" -> sprintf "public static void main(String[] args) {"
-      | _ -> (
-        let paramshelper para = 
-          let paraams = List.fold_left (fun a b -> a ^ ((gen_var b) ^ ", ")) "" para in
-          String.sub paraams 0 (String.length paraams - 2) in
-        let helper2 rt fn para = 
-          let t = gen_type rt in
-          sprintf "public %s %s (%s) {\n" t fn (paramshelper para)
-        in helper2 returntype funcname params
-      ) in
-      let output = (helper funcname) ^ (gen_block internals) ^ "\n}\n"
-      in sprintf "%s\n" output
+  let helper = function
+    "main" -> sprintf "public static void main(String[] args) {"
+  | _ -> (
+    let paramshelper para = 
+      let paraams = List.fold_left (fun a b -> a ^ ((gen_var b) ^ ", ")) "" para in
+      String.sub paraams 0 (String.length paraams - 2) in
+    let helper2 rt fn para = 
+      let t = gen_type rt in
+      sprintf "public %s %s (%s) {\n" t fn (paramshelper para)
+    in helper2 returntype funcname params
+  ) in
+  let output = (helper funcname) ^ (gen_block internals) ^ "\n}\n"
+  in sprintf "%s\n" output
 
 and gen_block block = 
   let vars = block.locals_t and
@@ -109,11 +109,11 @@ and gen_assign t expr1 expr2 =
 
 and gen_binop datatype e1 op e2 = 
   match op with
-    Add -> gen_expr e1 ^ " + " ^ gen_expr e2 ^ ";\n"
-  | Sub -> gen_expr e1 ^ " - " ^ gen_expr e2 ^ ";\n"
-  | Mult -> gen_expr e1 ^ " * " ^ gen_expr e2 ^ ";\n"
-  | Div -> gen_expr e1 ^ " / " ^ gen_expr e2 ^ ";\n"
-  | Mod -> gen_expr e1 ^ " mod " ^ gen_expr e2 ^ ";\n"
+    Add -> gen_expr e1 ^ " + " ^ gen_expr e2
+  | Sub -> gen_expr e1 ^ " - " ^ gen_expr e2
+  | Mult -> gen_expr e1 ^ " * " ^ gen_expr e2
+  | Div -> gen_expr e1 ^ " / " ^ gen_expr e2
+  | Mod -> gen_expr e1 ^ " mod " ^ gen_expr e2
   | Equal -> gen_expr e1 ^ " == " ^ gen_expr e2
   | Neq -> gen_expr e1 ^ " != " ^ gen_expr e2
   | Less -> gen_expr e1 ^ " < " ^ gen_expr e2
