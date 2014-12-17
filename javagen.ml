@@ -26,35 +26,36 @@ and gen_var var =
   let (name, t, scope) = var in
   sprintf "%s" name
 
+and gen_type = function
+    Int -> " int "
+  | Char -> " char "
+  | String -> " String "
+  | Bool -> " boolean "
+  | Void -> " void "
+  | _ -> " other "
+
 and gen_function_list functionlist = 
   let output = List.fold_left (fun a b -> a ^ (gen_func b)) "" functionlist in
   sprintf "%s" output
 
-and gen_func_dt_name func= 
-  let datatype= func.ret_t 
-  match datatype with
-  Int -> "int "
-    | Char -> "char "
-    | String -> "String "
-    | Bool -> "boolean "
-    | Void -> "void " 
-    | _ -> "other "
-
 and gen_func func = 
-<<<<<<< HEAD
-  let funcname = func.fname_t in ignore func;
-  sprintf "hello2"
-=======
   let returntype = func.ret_t and
       funcname = func.fname_t and
       params = func.formals_t and
       internals = func.body_block_t in
+      let paramshelper param = 
+        sprintf "hello" in
       let helper = function
-        "main" -> sprintf "public static void main(String[] args)"
-      | _ -> sprintf "hello there!" in
-      let output = helper funcname
+        "main" -> sprintf "public static void main(String[] args) {"
+      | _ -> (
+        let helper2 rt fn para = 
+          let t = gen_type rt and
+          p = "hello" in
+          sprintf "public %s %s (%s) {" t fn p
+        in helper2 returntype funcname params
+      ) in
+      let output = (helper funcname) ^ "}"
       in sprintf "%s" output
->>>>>>> 550c24fbcb20ffb8c9f17b65f5411e88e60a8764
 (*
 and gen_stmt stmt = (* generates statements in java *)
   let (a,b,c) = stmt in
