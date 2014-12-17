@@ -34,10 +34,10 @@ let type_of_expr = function
 	| Access_t(t, _, _) -> t
 
 let type_of_attribute = function
-	Char_rat_t(_, _) -> Char_at
-	| String_rat_t(_,_) -> String_at
-	| Int_rat_t(_, _) -> Int_at
-	| Bool_rat_t(_, _) -> Bool_at
+	Char_rat_t(_, _, _) -> Char_at
+	| String_rat_t(_,_, _) -> String_at
+	| Int_rat_t(_, _, _) -> Int_at
+	| Bool_rat_t(_, _, _) -> Bool_at
 
 (* Error raised for improper binary operation *)
 let binop_err (t1:validtype) (t2:validtype) (op:bop) =
@@ -118,7 +118,7 @@ let check_add (l:expr_t) (r:expr_t) =
 		  	| _ -> add_err l_t r_t
 		  else add_err l_t r_t
 
-let check_access (e:expr_t) (s:string) = 
+let check_access (e:expr_t) (s:string) (*pass in attribute, check name of expr of what it belongs to to e*) = (* e is the node/edge, s is the tag *)
 	let e_t = type_of_expr e in
 		if(e_t = Node || e_t = Edge) then
 			e
@@ -184,10 +184,10 @@ and check_left_value (e:expr) env =
 
 and check_attribute (a:attribute) env = 
 	match a with
-	Char_rat(t, v) -> Char_rat_t(t, v)
-	| String_rat(t, v) -> String_rat_t(t, v)
-	| Int_rat(t, v) -> Int_rat_t(t, v)
-	| Bool_rat(t, v) -> Bool_rat_t(t,v)
+	Char_rat(t, v, _) -> Char_rat_t(t, v, Noexpr_t)
+	| String_rat(t, v, _) -> String_rat_t(t, v, Noexpr_t)
+	| Int_rat(t, v, _) -> Int_rat_t(t, v, Noexpr_t)
+	| Bool_rat(t, v, _) -> Bool_rat_t(t,v, Noexpr_t)
 
 (* Did not check Array, construct, makeArr, Access*)
 and check_expr (e:expr) env = 
@@ -202,7 +202,7 @@ and check_expr (e:expr) env =
 	 	let ce = check_expr e env in
 	 		check_unop ce op
 	 | Call(n, eList) -> 
-	 	let checkedList = check_exprList eList env in
+	 	let checkedList = check_exprList eList env  in
 	 		check_func_call n checkedList env
 	 | String_Lit(s) -> String_Lit_t(s)
 	 | Char(c) -> Char_t(c)
@@ -219,9 +219,15 @@ and check_expr (e:expr) env =
 	 	let checked_l = check_expr l env in
 	 		let checked_r = check_expr r env in 
 	 			check_add checked_l checked_r
-	 | Access(e, t) ->
+	 | Access(e, t) -> (* e is the expression of Node, t is string of the tag name *)
 	 	let checked_e = check_expr e env in
-	 		check_access checked_e t
+	 		check_access checked_e t (*check that its a node or an edge, return access_t of (stored type, id name (expr_t), tag name) *)
+
+	 		
+	 		(*check_att_type stored type == attribute type? gotten from tag name*)
+
+
+
 	 	(*let (nt, nstr, nid) = check_valid_id n env in
 	 		let (att, atstr, atid)  = check_valid_id at env in
 	 			if (nt != Node && nt != Edge) then raise(Failure("First argument must " ^ 

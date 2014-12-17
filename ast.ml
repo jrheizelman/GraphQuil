@@ -9,12 +9,12 @@ type uop = Neg | Not
 
 type validtype = Int | Char | String | Double | Bool | Arr | Node | Edge | Graph | Void | String_at | Int_at | Char_at | Bool_at
 
-type attribute = Char_rat of string * string 
-| String_rat of string * string 
-| Int_rat of string * int 
-| Bool_rat of string * bool 
+type attribute = Char_rat of string * string * expr
+| String_rat of string * string * expr
+| Int_rat of string * int * expr
+| Bool_rat of string * bool * expr
 
-type expr=
+and expr=
 Literal of int
 | Noexpr
 | Id of string
@@ -64,6 +64,8 @@ validtype = type
 int = block number (scope)
 *)
 type symbol_table_var = string * validtype * int
+
+type symbol_table_attr = string * string * validtype * int
 
 (*
 To be used to log the variable in the symbol table. 
@@ -144,10 +146,10 @@ let rec string_of_expr = function
   | Bool_at -> "bool_at"
 
   and string_of_attribute = function
-  Char_rat(t, v) -> "[\"" ^ t ^ "\": " ^ v ^ "]"
-| String_rat(t, v) -> "[\"" ^ t ^ "\": " ^ v ^ "]"
-| Int_rat(t, v) -> "[\"" ^ t ^ "\": " ^ string_of_int v ^ "]"
-| Bool_rat(t, v) -> "[\"" ^ t ^ "\": " ^ string_of_bool v ^ "]"
+  Char_rat(t, v, _) -> "[\"" ^ t ^ "\": " ^ v ^ "]"
+| String_rat(t, v, _) -> "[\"" ^ t ^ "\": " ^ v ^ "]"
+| Int_rat(t, v, _) -> "[\"" ^ t ^ "\": " ^ string_of_int v ^ "]"
+| Bool_rat(t, v, _) -> "[\"" ^ t ^ "\": " ^ string_of_bool v ^ "]"
 
   let string_of_variable v = fst v ^ " " ^ string_of_valid_type (snd v) 
 

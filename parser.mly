@@ -98,10 +98,10 @@ INT        { Int }
 | CHARAT     { Char_at }
 
 attribute:
-LBRACK STRINGLIT COLON BOOLLIT RBRACK { Bool_rat($2, $4) }
-| LBRACK STRINGLIT COLON STRINGLIT RBRACK { String_rat($2, $4) }
-| LBRACK STRINGLIT COLON CHARLIT RBRACK { Char_rat($2, $4) }
-| LBRACK STRINGLIT COLON LITERAL RBRACK { Int_rat($2, $4) }
+LBRACK STRINGLIT COLON BOOLLIT RBRACK { Bool_rat($2, $4, Noexpr) }
+| LBRACK STRINGLIT COLON STRINGLIT RBRACK { String_rat($2, $4, Noexpr) }
+| LBRACK STRINGLIT COLON CHARLIT RBRACK { Char_rat($2, $4, Noexpr) }
+| LBRACK STRINGLIT COLON LITERAL RBRACK { Int_rat($2, $4, Noexpr) }
 
 actuals_opt:
   /* nothing */  { [] }

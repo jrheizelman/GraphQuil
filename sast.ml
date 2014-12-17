@@ -13,12 +13,12 @@ let snd_of_three (_, t, _) = t
 let fst_of_four (t, _, _, _) = t
 
 type attribute_t = 
-  Char_rat_t of string * string 
-| String_rat_t of string * string 
-| Int_rat_t of string * int 
-| Bool_rat_t of string * bool 
+  Char_rat_t of string * string * expr_t
+| String_rat_t of string * string * expr_t
+| Int_rat_t of string * int * expr_t
+| Bool_rat_t of string * bool * expr_t
 
-type expr_t = 
+and expr_t = 
     Literal_t of int
   | Noexpr_t
   | Id_t of validtype * string * int
@@ -31,7 +31,7 @@ type expr_t =
   | Bool_Lit_t of bool
   | Add_at_t of expr_t * expr_t (* each expr_t is the id of the node and attr, type checked *)
   | Assign_at_t of validtype * expr_t * attribute_t
-  | Access_t of validtype * expr_t * string
+  | Access_t of validtype * expr_t * string (* validtype is what attr is holding, Char, String, etc, expr_t is node/edge, string is tag*)
 
 type stmt_t =  
     Block_t of block_t
@@ -88,10 +88,10 @@ let rec string_of_expr_t = function
   | Access_t (t, e, s) -> string_of_expr_t e ^ "[\"" ^ s ^ "\"]"
 
   and string_of_attribute_t = function
-  Char_rat_t(t, v) -> "[\"" ^ t ^ "\":\'" ^ v ^ "\']" 
-| String_rat_t(t, v) -> "[\"" ^ t ^ "\":\"" ^ v ^ "\"]" 
-| Int_rat_t(t, v) -> "[\"" ^ t ^ "\":" ^ string_of_int v ^ "]" 
-| Bool_rat_t(t, v) -> "[\"" ^ t ^ "\":" ^ string_of_bool v ^ "]" 
+  Char_rat_t(t, v, _) -> "[\"" ^ t ^ "\":\'" ^ v ^ "\']" 
+| String_rat_t(t, v, _) -> "[\"" ^ t ^ "\":\"" ^ v ^ "\"]" 
+| Int_rat_t(t, v, _) -> "[\"" ^ t ^ "\":" ^ string_of_int v ^ "]" 
+| Bool_rat_t(t, v, _) -> "[\"" ^ t ^ "\":" ^ string_of_bool v ^ "]" 
   
   let string_of_symb_table_var v = string_of_valid_type (snd_of_three v) ^ " " ^ fst_of_three v
 

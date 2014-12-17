@@ -801,7 +801,7 @@ let yyact = [|
     let _4 = (Parsing.peek_val __caml_parser_env 1 : bool) in
     Obj.repr(
 # 101 "parser.mly"
-                                      ( Bool_rat(_2, _4) )
+                                      ( Bool_rat(_2, _4, Noexpr) )
 # 806 "parser.ml"
                : 'attribute))
 ; (fun __caml_parser_env ->
@@ -809,7 +809,7 @@ let yyact = [|
     let _4 = (Parsing.peek_val __caml_parser_env 1 : string) in
     Obj.repr(
 # 102 "parser.mly"
-                                          ( String_rat(_2, _4) )
+                                          ( String_rat(_2, _4, Noexpr) )
 # 814 "parser.ml"
                : 'attribute))
 ; (fun __caml_parser_env ->
@@ -817,7 +817,7 @@ let yyact = [|
     let _4 = (Parsing.peek_val __caml_parser_env 1 : string) in
     Obj.repr(
 # 103 "parser.mly"
-                                        ( Char_rat(_2, _4) )
+                                        ( Char_rat(_2, _4, Noexpr) )
 # 822 "parser.ml"
                : 'attribute))
 ; (fun __caml_parser_env ->
@@ -825,7 +825,7 @@ let yyact = [|
     let _4 = (Parsing.peek_val __caml_parser_env 1 : int) in
     Obj.repr(
 # 104 "parser.mly"
-                                        ( Int_rat(_2, _4) )
+                                        ( Int_rat(_2, _4, Noexpr) )
 # 830 "parser.ml"
                : 'attribute))
 ; (fun __caml_parser_env ->
