@@ -1,6 +1,8 @@
 open Unix
+open Printf
 
 let java_compiler = "javac"
+let java = "java"
 
 type action = Ast | SymbolTable | Sast | SAnalysis | Intermediate | Compile | Java | Help
 
@@ -59,9 +61,10 @@ let _ =
                      Javagen.write_code "graphQuil" checked; print_string "compiled"
         | Java -> let env = SymbolTable.symbol_table_of_prog program in
                      let checked = Semantic_check.check_program program env (SymbolTable.empty_tag_map) in
-                     let execuatble_file_name = Javagen.write_code "graphQuil" checked ^ ".java" in
-                     let out = open_out execuatble_file_name in
-                     execvp java_compiler [|execuatble_file_name ; execuatble_file_name|]
+                     let execuatble_file_name = Javagen.write_code "graphQuil" checked in
+                     let dot_java_file = execuatble_file_name ^ ".java" in
+                    execvp java_compiler [|"";dot_java_file|] ;
+                      execv "chmod" [|"+x"; dot_java_file|]
         | Help -> print_endline (usage Sys.argv.(0)) (* impossible case *)
 
 

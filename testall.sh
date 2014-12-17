@@ -5,7 +5,7 @@
 #
 
 graphquil="./graphquil"
-java_output="./graphQuil.java"
+java_output="java graphQuil"
 
 # Set time limit for all operations
 ulimit -t 30
@@ -16,6 +16,7 @@ error=0
 globalerror=0
 
 keep=0
+chmod +x java
 
 Usage() {
     echo "Usage: testall.sh [options] [.gq files]"
@@ -195,6 +196,7 @@ TestRunningProgram() {
     reffile=`echo $1 | sed 's/.gq$//'`
     basedir="`echo $1 | sed 's/\/[^\/]*$//'`/."
 
+    # echo -n "$basename..."
     echo -n "$basename..."
 
     echo 1>&2
@@ -209,7 +211,7 @@ TestRunningProgram() {
     # Compare ${basename}.i.out ${reffile}.out ${basename}.i.diff
 
     generatedfiles="$generatedfiles ${basename}.j.out" &&
-    Run "$lorax" "-j" $1 &&
+    Run "$graphquil" "-j" $1 &&
     Run "$java_output" ">" ${basename}.j.out &&
     Compare ${basename}.j.out ${reffile}.out ${basename}.f.diff
     

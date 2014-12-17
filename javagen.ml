@@ -16,7 +16,7 @@ public class %s {
   %s
 }
   " filename symbolString stmtString in
-  writeToFile filename output
+  writeToFile filename output ; filename
 
 and gen_var_list varlist = 
   let output = List.fold_left (fun a b -> a ^ ((gen_var b)) ^ ";") "" varlist in
