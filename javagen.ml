@@ -30,9 +30,18 @@ and gen_function_list functionlist =
   let output = List.fold_left (fun a b -> a ^ (gen_func b)) "" functionlist in
   sprintf "%s" output
 
+and gen_func_dt_name func= 
+  let datatype= func.ret_t 
+  match datatype with
+  Int -> "int "
+    | Char -> "char "
+    | String -> "String "
+    | Bool -> "boolean "
+    | Void -> "void " 
+    | _ -> "other "
+
 and gen_func func = 
   let funcname = func.fname_t in ignore func;
-
   sprintf "hello2"
 (*
 and gen_stmt_list stmts =
