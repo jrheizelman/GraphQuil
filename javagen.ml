@@ -73,12 +73,26 @@ and gen_stmt = function
   | For_t(expr1, expr2, expr3, block) -> sprintf "for"
   | While_t(expr, block) -> sprintf "while"
 
-and gen_expr expr = 
-  sprintf "hello"
+and gen_expr = function
+    Literal_t(lit) -> sprintf "hello"
+  | Noexpr_t -> sprintf "hello"
+  | Id_t(t, name, scope) -> sprintf "hello"
+  | Binop_t(t, expr1, op, expr2) -> sprintf "hello"
+  | Unop_t(t, op, expr) -> sprintf "hello"
+  | Call_t(symtablefunc, exprlist) -> sprintf "hello"
+  | String_Lit_t(str) -> sprintf "hello"
+  | Char_t(str) -> sprintf "hello"
+  | Assign_t(t, expr1, expr2) -> sprintf "hello"
+  | Bool_Lit_t(b) -> sprintf "hello"
+  | Add_at_t(expr1, expr2) -> sprintf "hello"
+
 
 and gen_return_stmt expr = 
   let output = (gen_expr expr) in
   sprintf "return %s;" output
+
+and gen_if_stmt condition block1 block2 = 
+  sprintf "if(%s) {\n%s\n}\nelse {\n%s\n}" (gen_expr condition) (gen_block block1) (gen_block block2)
 
 
 (*
