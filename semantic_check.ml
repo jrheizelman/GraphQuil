@@ -29,15 +29,15 @@ let type_of_expr = function
 	| Char_t(c) -> Char
 	| Assign_t(t, _, _) -> t
 	| Bool_Lit_t(b) -> Bool
-	| Add_at_t(_, _) -> Node
-	| Assign_at_t(t, _, _) -> t
+	| Add_at_t(t,s, at) -> t
+	(*| Assign_at_t(t, _, _) -> t*)
 	| Access_t(t, _, _) -> t
 
-let type_of_attribute = function
-	Char_rat_t(_, _, _) -> Char_at
-	| String_rat_t(_,_, _) -> String_at
-	| Int_rat_t(_, _, _) -> Int_at
-	| Bool_rat_t(_, _, _) -> Bool_at
+(*let type_check_attr (s, t, e) = 
+	if type_of_expr e = t then attribute_t(s,t,e)
+	else raise(Failure(string_of_expr_t e ^ " is not of type " ^ string_of_valid_type t))*)
+
+let type_of_attribute (_, t, _) = t
 
 (* Error raised for improper binary operation *)
 let binop_err (t1:validtype) (t2:validtype) (op:bop) =
@@ -93,38 +93,44 @@ let assign_err (t1:validtype) (t2:validtype) =
 		string_of_valid_type t2 ^ " to expression of type " ^
 		string_of_valid_type t1 ^ "."))
 
-let add_err (t1:validtype) (t2:validtype) = 
-	raise(Failure("Add must be of attribute type " ^ 
-		  	"to Node or Edge type, " ^ string_of_valid_type t1 ^ " to " ^ 
-		  	string_of_valid_type t2 ^ " was given."))
-
 let check_assign (l:expr_t) (r:expr_t) = 
 	let (l_t, r_t) = (type_of_expr l, type_of_expr r) in
 		  if(l_t = r_t) then Assign_t(l_t, l, r)
 		  else assign_err l_t r_t 
 
-let check_assign_attribute (l:expr_t) (r:attribute_t) = 
+(*let check_assign_attribute (l:expr_t) (r:attribute_t) = 
 	let(l_t, r_t) = (type_of_expr l, type_of_attribute r) in
 		if(l_t = r_t) then Assign_at_t(l_t, l, r)
-		else assign_err l_t r_t 
+		else assign_err l_t r_t *)
 
-let check_add (l:expr_t) (r:expr_t) = 
-	let (l_t, r_t) = (type_of_expr l, type_of_expr r) in
-		  if(l_t = Node || l_t = Edge) then match r_t with
-		  	String_at -> Add_at_t(l, r)
-		  	| Int_at -> Add_at_t(l, r)
-		  	| Char_at -> Add_at_t(l, r)
-		  	| Bool_at -> Add_at_t(l, r)
-		  	| _ -> add_err l_t r_t
-		  else add_err l_t r_t
+(*let check_add (e1:expr_t) (e2:expr_t) env = 
+	let (e1_t, e2_t) = (type_of_expr e1, type_of_expr) in match e1_t with
+		Node(l) -> ();
+		| Edge(l) -> ();
+		| _ -> raise(Failure("Left side of add statement must be Node or Edge type, " ^ 
+			string_of_valid_type e1_t ^ " given."))
+		match e2_t with 
+		Attr(a) -> Add_at_t(Node(a :: l))
+		| _ -> -> raise(Failure("Right side of add statement must be Attribute type, " ^ 
+			string_of_valid_type e1_t ^ " given."))*)
 
-let check_access (e:expr_t) (s:string) (*pass in attribute, check name of expr of what it belongs to to e*) = (* e is the node/edge, s is the tag *)
+(*let check_right_add type_l checked_r checked_l = 
+	let type_r = type_of_expr checked_r in match type_r with
+		Attr(l) -> Add_at_t(type_l, checked_l, checked_r)
+		| _ -> raise(Failure("Right side of add statement must be Attribute type, " ^ 
+			string_of_valid_type type_r ^ " given."))*)
+
+(*let check_access (e:expr_t) (s:string) env 
+	(*pass in attribute, check name of expr of what it belongs to to e*) = (* e is the node/edge, s is the tag *)
 	let e_t = type_of_expr e in
 		if(e_t = Node || e_t = Edge) then
-			e
-			(*TODO ACCESS SYMBOL TABLE MAP HERE *)
+			let ((_, _, l), f) = (env, fun (at:attribute_t) -> let (t,_,e1) = tuple_of_attr_t at in t = s && e = e1) in
+				if List.exists f l then
+					let at = List.find f l in
+						Access_t(type_of_attribute at, e, s)
+				else raise(Failure("The tag " ^ s ^ " is not associated with " ^ string_of_expr_t e))
 		else raise(Failure("Access must be on type Node or " ^ 
-			"Edge, " ^ string_of_valid_type e_t ^ " given."))
+			"Edge, " ^ string_of_valid_type e_t ^ " given."))*)
 
 (* compare arg lists with func formal params *)
 let rec compare_args formals actuals =
@@ -182,13 +188,6 @@ and check_left_value (e:expr) env =
 		(* If left expression is anything else *)
 		| _ -> raise(Failure("Left hand side of assignment operator is improper type"))
 
-and check_attribute (a:attribute) env = 
-	match a with
-	Char_rat(t, v, _) -> Char_rat_t(t, v, Noexpr_t)
-	| String_rat(t, v, _) -> String_rat_t(t, v, Noexpr_t)
-	| Int_rat(t, v, _) -> Int_rat_t(t, v, Noexpr_t)
-	| Bool_rat(t, v, _) -> Bool_rat_t(t,v, Noexpr_t)
-
 (* Did not check Array, construct, makeArr, Access*)
 and check_expr (e:expr) env = 
 	match e with 
@@ -205,23 +204,28 @@ and check_expr (e:expr) env =
 	 	let checkedList = check_exprList eList env  in
 	 		check_func_call n checkedList env
 	 | String_Lit(s) -> String_Lit_t(s)
-	 | Char(c) -> Char_t(c)
+	 | Char_e(c) -> Char_t(c)
 	 | Assign(l, r) -> 
 	 	let checked_r = check_expr r env in
 	 		let checked_l = check_left_value l env in
 	 			check_assign checked_l checked_r
 	 | Bool_Lit(b) -> Bool_Lit_t(b)
-	 | Assign_at(l, r) ->
+	 (*| Assign_at(l, r) ->
 	 	let checked_l = check_left_value l env in 
-	 		let checked_r = check_attribute r env in
-	 			check_assign_attribute checked_l checked_r
-	 | Add_at(l, r) -> 
-	 	let checked_l = check_expr l env in
-	 		let checked_r = check_expr r env in 
-	 			check_add checked_l checked_r
-	 | Access(e, t) -> (* e is the expression of Node, t is string of the tag name *)
+	 		let checked_r = check_attribute r l env in
+	 			check_assign_attribute checked_l checked_r*)
+	 | Add_at(s, a) -> let (t, st, id) = check_valid_id s env in match t with
+	 		Node(l) -> let t = Node(a :: l) in 
+	 			ignore(symbol_table_override_decl st (SymbTable_Var(st,t,id)) (fst env, id));
+	 			Add_at_t(t,s, a)
+	 		| Edge(l) -> let t = Edge(a :: l) in 
+	 			ignore(symbol_table_override_decl st (SymbTable_Var(st,t,id)) (fst env, id));
+	 			Add_at_t(t,s, a)
+	 		| _ -> raise(Failure("Left side of add statement must be Node or Edge type, " ^ 
+				string_of_valid_type t ^ " given."))
+	 (*| Access(e, t) -> (* e is the expression of Node, t is string of the tag name *)
 	 	let checked_e = check_expr e env in
-	 		check_access checked_e t (*check that its a node or an edge, return access_t of (stored type, id name (expr_t), tag name) *)
+	 		check_access checked_e t env *)(*check that its a node or an edge, return access_t of (stored type, id name (expr_t), tag name) *)
 
 	 		
 	 		(*check_att_type stored type == attribute type? gotten from tag name*)
@@ -290,9 +294,10 @@ let rec check_statement (s:stmt) ret_type env (scope:int) =
 							(string_of_valid_type type_r) ^ "."))*)
 
 and check_block (b:block) (ret_type:validtype) env (scope:int) = 
-	let variables = check_is_vdecl_list b.locals (fst env, b.block_num) in
-		let stmts = check_stmt_list b.statements ret_type (fst env, b.block_num) scope in
-			{locals_t = variables; statements_t = stmts; block_num_t = b.block_num}
+	let (table, _) = env in 
+		let variables = check_is_vdecl_list b.locals (table, b.block_num) in
+			let stmts = check_stmt_list b.statements ret_type (table, b.block_num) scope in
+				{locals_t = variables; statements_t = stmts; block_num_t = b.block_num}
 
 
 and check_stmt_list (s:stmt list) (ret_type:validtype) env (scope:int) =
@@ -324,9 +329,10 @@ let rec check_is_fdecl (func:string) env =
 
 and check_function (f:func_decl) env = 
 	let checked_block = check_block f.body_block f.ret env 0 in
-		let checked_formals = check_is_vdecl_list f.formals (fst env, f.body_block.block_num) in
-			let checked_scope = check_is_fdecl f.fname env in
-				{fname_t = fst_of_four checked_scope; ret_t = f.ret; formals_t = checked_formals; body_block_t = checked_block }
+		let (table, _) = env in 
+			let checked_formals = check_is_vdecl_list f.formals (table, f.body_block.block_num) in
+				let checked_scope = check_is_fdecl f.fname env in
+					{fname_t = fst_of_four checked_scope; ret_t = f.ret; formals_t = checked_formals; body_block_t = checked_block }
 
 and check_function_list (funcs:func_decl list) env = 
 	match funcs with 

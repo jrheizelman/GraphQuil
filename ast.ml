@@ -7,14 +7,9 @@ type bop = Add | Sub | Mult | Div | Equal | And | Neq | Mod | Leq | Geq | Greate
 
 type uop = Neg | Not
 
-type validtype = Int | Char | String | Double | Bool | Arr | Node | Edge | Graph | Void | String_at | Int_at | Char_at | Bool_at
+type attribute = Attr of string * validtype * expr
 
-type attribute = Char_rat of string * string * expr
-| String_rat of string * string * expr
-| Int_rat of string * int * expr
-| Bool_rat of string * bool * expr
-
-and expr=
+and expr =
 Literal of int
 | Noexpr
 | Id of string
@@ -22,12 +17,14 @@ Literal of int
 | Binop of expr * bop * expr
 | Unop of uop * expr
 | Call of string * expr list
-| Char of string
+| Char_e of string
 | Assign of expr * expr
 | Bool_Lit of bool
-| Add_at of expr * expr
-| Assign_at of expr * attribute
+| Add_at of string * attribute
+(*| Assign_at of expr * attribute*)
 | Access of expr * string
+
+and validtype = Int | Char | String | Double | Bool | Arr | Node of attribute list | Edge of attribute list | Graph | Void
 
 type variable = string * validtype
 
@@ -64,8 +61,6 @@ validtype = type
 int = block number (scope)
 *)
 type symbol_table_var = string * validtype * int
-
-type symbol_table_attr = string * string * validtype * int
 
 (*
 To be used to log the variable in the symbol table. 
@@ -108,7 +103,7 @@ let string_of_unop = function
 
 let rec string_of_expr = function
     Literal(n) -> string_of_int n
-  | Char(n) -> "\'" ^ n ^"\'"
+  | Char_e(n) -> "\'" ^ n ^"\'"
   | Id(s) -> s
   | String_Lit(s) -> s
   | Bool_Lit(l) -> string_of_bool l
@@ -125,8 +120,8 @@ let rec string_of_expr = function
   | Call(f, argl) ->
     f ^ "(" ^ String.concat ", " (List.map string_of_expr argl) ^ ")" 
   | Noexpr -> ""
-  | Add_at(e1, e2) -> string_of_expr e1 ^ " add " ^ string_of_expr e2
-  | Assign_at(e, at) -> string_of_expr e ^ " = " ^ string_of_attribute at
+  | Add_at(s, a) -> s ^ " add " ^ string_of_attribute a
+  (*| Assign_at(e, at) -> string_of_expr e ^ " = " ^ string_of_attribute at*)
   | Access(e, t) -> string_of_expr e ^ "[\"" ^ t ^ "\"]"
  
  and string_of_valid_type = function
@@ -136,20 +131,14 @@ let rec string_of_expr = function
   | Double -> "double"
   | Bool -> "bool"
   | Arr -> "array"
-  | Node -> "Node"
-  | Edge -> "Edge"
+  | Node(_) -> "Node"
+  | Edge(_) -> "Edge"
   | Graph -> "Graph"
   | Void -> "Void"
-  | Int_at -> "int_at"
-  | String_at -> "String_at"
-  | Char_at -> "char_at"
-  | Bool_at -> "bool_at"
 
-  and string_of_attribute = function
-  Char_rat(t, v, _) -> "[\"" ^ t ^ "\": " ^ v ^ "]"
-| String_rat(t, v, _) -> "[\"" ^ t ^ "\": " ^ v ^ "]"
-| Int_rat(t, v, _) -> "[\"" ^ t ^ "\": " ^ string_of_int v ^ "]"
-| Bool_rat(t, v, _) -> "[\"" ^ t ^ "\": " ^ string_of_bool v ^ "]"
+  and string_of_attribute a = match a with
+    Attr(s,t,e) -> 
+      "[\"" ^ s ^ "\" " ^ string_of_valid_type t ^ " " ^ string_of_expr e ^ "]"
 
   let string_of_variable v = fst v ^ " " ^ string_of_valid_type (snd v) 
 

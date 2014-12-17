@@ -12,13 +12,7 @@ let fst_of_three (t, _, _) = t
 let snd_of_three (_, t, _) = t
 let fst_of_four (t, _, _, _) = t
 
-type attribute_t = 
-  Char_rat_t of string * string * expr_t
-| String_rat_t of string * string * expr_t
-| Int_rat_t of string * int * expr_t
-| Bool_rat_t of string * bool * expr_t
-
-and expr_t = 
+type expr_t = 
     Literal_t of int
   | Noexpr_t
   | Id_t of validtype * string * int
@@ -29,8 +23,8 @@ and expr_t =
   | Char_t of string 
   | Assign_t of validtype * expr_t * expr_t
   | Bool_Lit_t of bool
-  | Add_at_t of expr_t * expr_t (* each expr_t is the id of the node and attr, type checked *)
-  | Assign_at_t of validtype * expr_t * attribute_t
+  | Add_at_t of validtype * string * attribute (* each expr_t is the id of the node and attr, type checked *)
+  (*| Assign_at_t of validtype * expr_t * attribute_t*)
   | Access_t of validtype * expr_t * string (* validtype is what attr is holding, Char, String, etc, expr_t is node/edge, string is tag*)
 
 type stmt_t =  
@@ -83,15 +77,13 @@ let rec string_of_expr_t = function
   | Call_t(f, argl) ->
     fst_of_four f ^ "(" ^ String.concat ", " (List.map string_of_expr_t argl) ^ ")" 
   | Noexpr_t -> ""
-  | Add_at_t(n, e) -> string_of_expr_t n ^ " add " ^ string_of_expr_t e
-  | Assign_at_t (t, e, a) -> string_of_expr_t e ^ " = " ^ string_of_attribute_t a
+  | Add_at_t(_,s, e) -> s ^ " add " ^ string_of_attribute e
+    (*| Assign_at_t (t, e, a) -> string_of_expr_t e ^ " = " ^ string_of_attribute_t a*)
   | Access_t (t, e, s) -> string_of_expr_t e ^ "[\"" ^ s ^ "\"]"
 
-  and string_of_attribute_t = function
-  Char_rat_t(t, v, _) -> "[\"" ^ t ^ "\":\'" ^ v ^ "\']" 
-| String_rat_t(t, v, _) -> "[\"" ^ t ^ "\":\"" ^ v ^ "\"]" 
-| Int_rat_t(t, v, _) -> "[\"" ^ t ^ "\":" ^ string_of_int v ^ "]" 
-| Bool_rat_t(t, v, _) -> "[\"" ^ t ^ "\":" ^ string_of_bool v ^ "]" 
+  (*and string_of_attribute_t a = 
+    let (s, t, e) = a in 
+      "[\"" ^ s ^ "\" " ^ string_of_valid_type t ^ " " ^ string_of_expr_t e ^ "]"*)
   
   let string_of_symb_table_var v = string_of_valid_type (snd_of_three v) ^ " " ^ fst_of_three v
 
