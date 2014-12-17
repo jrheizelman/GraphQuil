@@ -1,22 +1,19 @@
 open Unix
 
-type action = Ast | SymbolTable | Sast | SAnalysis | Intermediate | Compile | Help
+let java_compiler = "javac"
+
+type action = Ast | SymbolTable | Sast | SAnalysis | Intermediate | Compile | Java | Help
 
 let usage (name:string) =
   "usage:\n" ^ name ^ "\n" ^
-    "        -a source.lrx              (Print AST of source)\n" ^
-    "        -sa source.lrx             (Print SAST of source)\n" ^
-    "        -t source.lrx              (Print Symbol Table of source)\n" ^
-    "        -s source.lrx              (Run Semantic Analysis over source)\n" ^
-    "        -i source.lrx              (Print intermediate representation of source)\n" ^
-    "        -c source.lrx              (Compile source)\n"
+    "        -a source.gq                 (Print AST of source)\n" ^
+    "        -sa source.gq                (Print SAST of source)\n" ^
+    "        -t source.gq                 (Print Symbol Table of source)\n" ^
+    "        -s source.gq                 (Run Semantic Analysis over source)\n" ^
+    "        -i source.gq                 (Print intermediate representation of source)\n" ^
+    "        -j source.gq [target.java]   (Compile to Java executable)\n" ^
+    "        -c source.gq                 (Compile source)\n"
  
-let usage (name:string) =
-"usage:\n" ^ name ^ "\n" ^
-" -a source.lrx (Print AST of source)\n" ^
-" -t source.lrx (Print Symbol Table of source)\n" ^
-" -s source.lrx (Run Semantic Analysis over source)\n"
-
 let get_compiler_path (path:string) =
 try
 let i = String.rindex path '/' in
@@ -31,13 +28,14 @@ let _ =
       | "-t" -> if Array.length Sys.argv == 3 then SymbolTable else Help
       | "-s" -> if Array.length Sys.argv == 3 then SAnalysis else Help
       | "-i" -> if Array.length Sys.argv == 3 then Intermediate else Help
+      | "-j" -> if Array.length Sys.argv == 3 then Java else Help
       | "-c" -> if Array.length Sys.argv == 3 then Compile else Help
       | _ -> Help)
   else Help in   
 
   match action with
       Help -> print_endline (usage Sys.argv.(0)) 
-    | (Ast | SymbolTable | Sast| SAnalysis | Intermediate | Compile ) ->
+    | (Ast | SymbolTable | Sast| SAnalysis | Intermediate | Compile | Java ) ->
       let input = open_in Sys.argv.(2) in
       let lexbuf = Lexing.from_channel input in
       let program = Parser.program Scanner.token lexbuf in
@@ -59,4 +57,17 @@ let _ =
         | Compile -> let env = SymbolTable.symbol_table_of_prog program in
                      let checked = Semantic_check.check_program program env (SymbolTable.empty_tag_map) in
                      Javagen.write_code "graphQuil" checked; print_string "compiled"
+        | Java -> let env = SymbolTable.symbol_table_of_prog program in
+                     let checked = Semantic_check.check_program program env (SymbolTable.empty_tag_map) in
+                     let execuatble_file_name = Javagen.write_code "graphQuil" checked ^ ".java" in
+                     let out = open_out execuatble_file_name in
+                     execvp java_compiler [|execuatble_file_name ; execuatble_file_name|]
         | Help -> print_endline (usage Sys.argv.(0)) (* impossible case *)
+
+
+
+
+
+
+
+
