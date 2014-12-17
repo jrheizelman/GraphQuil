@@ -1,9 +1,16 @@
-
-  public class graphQuil {
-      Void main()
+
+public class graphQuil {
+  
+   void  
 {
-print(4);
+int out;
+out = 7;
+if (out == 7)
+{
+out = 8;
 }
-
-  }
+}
+
+
+}
   
