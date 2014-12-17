@@ -1,0 +1,14 @@
+int func1() {
+ bool be;
+ be = false;
+}
+
+int func2() {
+print("hi");
+}
+
+int main()
+{
+func1();
+func2();
+}
