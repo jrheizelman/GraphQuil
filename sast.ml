@@ -12,6 +12,12 @@ let fst_of_three (t, _, _) = t
 let snd_of_three (_, t, _) = t
 let fst_of_four (t, _, _, _) = t
 
+type attribute_t = 
+  Char_rat_t of string * string 
+| String_rat_t of string * string 
+| Int_rat_t of string * int 
+| Bool_rat_t of string * bool 
+
 type expr_t = 
     Literal_t of int
   | Noexpr_t
@@ -24,7 +30,7 @@ type expr_t =
   | Assign_t of validtype * expr_t * expr_t
   | Bool_Lit_t of bool
   | Add_at_t of expr_t * expr_t (* each expr_t is the id of the node and attr, type checked *)
-  | Assign_at_t of validtype * expr_t * attribute
+  | Assign_at_t of validtype * expr_t * attribute_t
   | Access_t of validtype * expr_t * string
 
 type stmt_t =  
@@ -78,8 +84,14 @@ let rec string_of_expr_t = function
     fst_of_four f ^ "(" ^ String.concat ", " (List.map string_of_expr_t argl) ^ ")" 
   | Noexpr_t -> ""
   | Add_at_t(n, e) -> string_of_expr_t n ^ " add " ^ string_of_expr_t e
-  | Assign_at_t (t, e, a) -> string_of_expr_t e ^ " = " ^ string_of_attribute a
+  | Assign_at_t (t, e, a) -> string_of_expr_t e ^ " = " ^ string_of_attribute_t a
   | Access_t (t, e, s) -> string_of_expr_t e ^ "[\"" ^ s ^ "\"]"
+
+  and string_of_attribute_t = function
+  Char_rat_t(t, v) -> "[\"" ^ t ^ "\":\'" ^ v ^ "\']" 
+| String_rat_t(t, v) -> "[\"" ^ t ^ "\":\"" ^ v ^ "\"]" 
+| Int_rat_t(t, v) -> "[\"" ^ t ^ "\":" ^ string_of_int v ^ "]" 
+| Bool_rat_t(t, v) -> "[\"" ^ t ^ "\":" ^ string_of_bool v ^ "]" 
   
   let string_of_symb_table_var v = string_of_valid_type (snd_of_three v) ^ " " ^ fst_of_three v
 

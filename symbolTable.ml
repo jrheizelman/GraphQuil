@@ -3,7 +3,6 @@ Authors: Gemma Ragozzine
 		John Heizelman
 *)
 open Ast
-open Printf
 
 (* Symbol table made of a map containing pairs of String: ast.decl pairs *)
 (* fst of each pair is the string of decl, snd of each pair is the decl type *)
@@ -46,27 +45,6 @@ let rec symbol_table_find (name:string) env =
 				if id = 0 then raise (Failure("Find name - Symbol " ^ name ^ " not declared in current scope! (Scope: " ^ string_of_int id ^ ")"))
 				else symbol_table_find name (table, ancestor_scope.(id))
 
-let tag_table_find (var:string) (tag:string) table = 
-	if TagMap.mem var table then 
-		let l = TagMap.find var table in 
-			let check_for_tag = (fun (s,at) -> s = tag) in
-				if List.exists check_for_tag l then List.find check_for_tag l
-			else raise(Failure(var ^ " does not have that tag associated with it."))
-	else
-		raise(Failure(var ^ " does not have any tags associated with it."))
-
-let tag_table_add (s1:string) (s2:string) table = 
-	let add = TagMap.find s2 table in
-		ignore(TagMap.remove s2 table);
-		if TagMap.mem s1 table then
-			let l = TagMap.find s1 table in
-				TagMap.add s1 (List.append l add) table
-		else
-			TagMap.add s1 add table
-
-let tag_table_assign_at (name:string) (at:tag_table_entry) table =	
-	TagMap.add name (at :: []) table
-
 let rec symbol_table_add_decl (name:string) (decl:declaration) env =
 	let (table, id) = env in
 		let to_find = name ^ "_" ^ (string_of_int id) in
@@ -105,6 +83,7 @@ let symbol_table_add_func (f:func_decl) env =
 			let env = symbol_table_add_var_list f.formals ((fst env), f.body_block.block_num) in
 				symbol_table_add_block f.body_block ((fst env), id)
 
+
 let rec symbol_table_add_func_list (funcs:func_decl list) env = 
 	match funcs with
 		  [] -> env
@@ -119,5 +98,11 @@ let symbol_table_of_prog (p:Ast.program) =
 		let env = symbol_table_add_var_list (fst p) env in
 			symbol_table_add_func_list (snd p) env
 
-let empty_tag_map = 
-	TagMap.empty
+
+
+
+
+
+
+
+

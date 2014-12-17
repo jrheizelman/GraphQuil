@@ -53,10 +53,10 @@ let _ =
         | SymbolTable -> let env = SymbolTable.symbol_table_of_prog program in
                     print_string (SymbolTable.string_of_symbol_table env ^ "\n")
         | SAnalysis -> let env = SymbolTable.symbol_table_of_prog program in
-                    let checked = Semantic_check.check_program program env (SymbolTable.empty_tag_map) in
+                    let checked = Semantic_check.check_program program env in
                     ignore checked; print_string "Passed Semantic Analysis.\n"
         | Sast -> let env = SymbolTable.symbol_table_of_prog program in
-                    let checked = Semantic_check.check_program program env (SymbolTable.empty_tag_map) in
+                    let checked = Semantic_check.check_program program env in
                       let listing_t = Sast.string_of_prog_t checked in
                         print_string listing_t
         (*| Intermediate -> let env = SymbolTable.symbol_table_of_prog program in 
