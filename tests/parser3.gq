@@ -3,6 +3,7 @@ int main()
 	int a;
 	String b;
 	while(true) {
+		int h;
 		a = 1;
 		b = "gemma";
 		print(a);

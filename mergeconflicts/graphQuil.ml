@@ -1,9 +1,3 @@
-(*
-* Authors:
-* Chris D'Angelo
-* Special thanks to Dara Hazeghi's strlang and Stephen Edward's MicroC
-* which provided background knowledge.
-*)
 open Unix
 
 type action = Ast | SymbolTable | Sast | SAnalysis | Intermediate | Compile | Help
@@ -63,9 +57,16 @@ let _ =
                           let checked = Semantic_check.check_program program env in
                           let inter = Intermediate.string_of_intermediate checked(*print_string "hello\n"*)*)*)
         | Compile -> let env = SymbolTable.symbol_table_of_prog program in
+<<<<<<< HEAD
                      let checked = Semantic_check.check_program program env (SymbolTable.empty_tag_map) in
                      let (a, b) = checked in
                      Javagen.write_code "graphQuil" checked; print_string "compiled"
+=======
+<<<<<<< HEAD
+                      let checked = Semantic_check.check_program program env (SymbolTable.empty_tag_map) in
+                        let (a, b) = checked in
+                          Javagen.write_code "graphQuil" b; print_string "compiled"
+>>>>>>> 85ef9c1fc321b61fe539635e97f70248a9e3fb6e
         | Help -> print_endline (usage Sys.argv.(0)) (* impossible case *)
 (*let action =
 if Array.length Sys.argv > 1 then
@@ -90,3 +91,8 @@ print_string (SymbolTable.string_of_symbol_table env ^ "\n")
 let checked = Semantic_check.check_program program env in
 ignore checked; print_string "Passed Semantic Analysis.\n"
 | Help -> print_endline (usage Sys.argv.(0))) (* impossible case *)*)
+=======
+                     let checked = Semantic_check.check_program program env (SymbolTable.empty_tag_map) in
+                     Javagen.write_code "graphQuil" checked; print_string "compiled"
+        | Help -> print_endline (usage Sys.argv.(0)) (* impossible case *)
+>>>>>>> a94973ef4fa79aff2aa14e6d4067029a1b50c271

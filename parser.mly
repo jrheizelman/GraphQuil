@@ -71,13 +71,13 @@ expr:
 | expr NEQ expr 		                     { Binop ($1, Neq, $3) }
 | expr OR expr 		                       { Binop ($1, Or, $3) }
 | expr AND expr 		                     { Binop ($1, And, $3) }
-| expr ADD expr                          { Add_at($1, $3) }
+| ID ADD attribute                       { Add_at($1, $3) }
 | NOT expr		                           { Unop(Not, $2) } 
 | MINUS expr %prec NEG                   { Unop(Neg, $2) }
 | expr ASSIGN expr                       { Assign($1, $3) }
 | ID LPAREN actuals_opt RPAREN           { Call($1, $3) }
 | LPAREN expr RPAREN                     { $2 }
-| expr ASSIGN attribute                  { Assign_at($1, $3) }
+/*| expr ASSIGN attribute                  { Assign_at($1, $3) }*/
 | expr LBRACK STRINGLIT RBRACK           { Access($1, $3) }
 
 expr_opt:
@@ -89,19 +89,12 @@ INT        { Int }
 | CHAR     { Char }
 | STRING   { String }
 | BOOL     { Bool }
-| NODE     { Node }
-| EDGE     { Edge }
+| NODE     { Node([]) }
+| EDGE     { Edge([]) }
 | GRAPH    { Graph }
-| INTAT     { Int_at }
-| BOOLAT     { Bool_at }
-| STRINGAT   { String_at }
-| CHARAT     { Char_at }
 
 attribute:
-LBRACK STRINGLIT COLON BOOLLIT RBRACK { Bool_rat($2, $4) }
-| LBRACK STRINGLIT COLON STRINGLIT RBRACK { String_rat($2, $4) }
-| LBRACK STRINGLIT COLON CHARLIT RBRACK { Char_rat($2, $4) }
-| LBRACK STRINGLIT COLON LITERAL RBRACK { Int_rat($2, $4) }
+LBRACK STRINGLIT COLON any_type expr RBRACK { Attr($2, $4, $5) }
 
 actuals_opt:
   /* nothing */  { [] }
