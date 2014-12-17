@@ -1,0 +1,22 @@
+
+/*
+ * Author: Gemma Ragozzine
+ * Checks if/else loops and print arguments
+ */ 
+int foo(bool a, int b) {
+  int i;
+  if (a){
+    return b;
+   }
+   else{
+    for (i = 0 ; i < 5 ; i = i+1){
+       b = b + 5;
+       return b;
+    }  
+  }
+}
+
+void main(){
+	print(foo(true,45));
+	print(foo(false,45));
+}

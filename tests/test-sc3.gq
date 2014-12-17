@@ -1,0 +1,15 @@
+/*
+ * Author: Gemma
+ * Testing valid semantic analysis
+ */
+
+void main()
+{
+	bool testbool;
+	{
+		if(testbool)
+		{
+
+		}
+	}
+}

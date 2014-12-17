@@ -5,10 +5,22 @@
 
 void main(){
 	int out;
+	int_at h;
+	String_at h2;
+	Node j;
 	Node g;
-	out = 5;
 
+	out = 7;
+	if(out == 7){
+		int g;
+		out = 8;
+	}
 
-	g add ["height": int 8];
-	g["height"];
+	h = ["height":7];
+	h2 = ["height":"10"];
+
+	j add h;
+	j[h] 
+
+	g add h2;
 }

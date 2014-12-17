@@ -1,0 +1,28 @@
+/*
+ *Test node creation
+ */
+
+void main(){
+	int g;
+	int out;
+	out = 7;
+
+	if(out == 7)	{
+		int a;
+		out = 8;
+	}
+	
+	
+	
+	
+
+	testfunc();
+}
+
+int testfunc(){
+		int k;
+		k = 4;
+		
+		k = g;
+		return k;
+}

@@ -1,0 +1,11 @@
+/*
+ * Author: Gemma Ragozzine
+ * Tests valid semantic analysis on operators
+ */
+
+void main(){
+	21 + 64;
+	'g' + 'a';
+	true && false;
+
+}

@@ -23,6 +23,8 @@ Literal of int
 | Add_at of string * attribute
 (*| Assign_at of expr * attribute*)
 | Access of string * string
+| Link of expr * expr 
+| Bilink of expr * expr 
 
 and validtype = Int | Char | String | Double | Bool | Arr | Node of attribute list | Edge of attribute list | Graph | Void
 
@@ -123,6 +125,10 @@ let rec string_of_expr = function
   | Add_at(s, a) -> s ^ " add " ^ string_of_attribute a
   (*| Assign_at(e, at) -> string_of_expr e ^ " = " ^ string_of_attribute at*)
   | Access(n, t) -> n ^ "[\"" ^ t ^ "\"]"
+  | Link(e1, e2) -> string_of_expr e1  ^ " -> " ^
+      string_of_expr e2
+  | Bilink(e1, e2) -> string_of_expr e1  ^ " -> " ^
+      string_of_expr e2
  
  and string_of_valid_type = function
     Int -> "int"
@@ -140,7 +146,7 @@ let rec string_of_expr = function
     Attr(s,t,e) -> 
       "[\"" ^ s ^ "\" " ^ string_of_valid_type t ^ " " ^ string_of_expr e ^ "]"
 
-  let string_of_variable v = fst v ^ " " ^ string_of_valid_type (snd v) 
+  let string_of_variable v = string_of_valid_type (snd v) ^ " " ^ fst v 
 
   let rec string_of_stmt = function
     Block(b) -> string_of_block b

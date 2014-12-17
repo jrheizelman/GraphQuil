@@ -1,11 +1,11 @@
 int main()
 {
-a int;
-b String;
+int a;
+String b;
 while (true) {
 {
 a = 1;
-b = "gemma";
+b = gemma;
 print(a);
 print(b);
 }

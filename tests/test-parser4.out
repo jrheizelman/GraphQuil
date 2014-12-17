@@ -1,0 +1,7 @@
+Void main()
+{
+int out;
+Edge b;
+b add ["height" int 6];
+out = b["height"];
+}

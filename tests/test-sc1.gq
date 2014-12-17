@@ -1,0 +1,26 @@
+String carName;
+
+
+void main(){
+ 	carName = "Toyota";
+	startCar(carName);
+}
+
+void startCar(String car_name){
+	bool on;
+	on = false;
+	drive(car_name, on);
+}
+
+void drive(String car, bool on_off){
+	while(on_off){
+
+	}
+}
+
+
+
+
+
+
+

@@ -1,0 +1,15 @@
+/*
+ * Author: Gemma Ragozzine
+ * Tests while loops and print
+ */ 
+
+void main()
+{
+  int g;
+  g = 5;
+  while (g > 0) {
+    print(g);
+    g = g - 1;
+  }
+  print(42);
+}
