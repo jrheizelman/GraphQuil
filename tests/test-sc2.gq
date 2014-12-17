@@ -1,0 +1,17 @@
+/*
+ * Author: Gemma
+ * Testing valid semantic analysis
+ */
+
+void main()
+{
+	bool testbool;
+	int g;
+	while(testbool)
+	{
+		for(g = 0; g < 4; g = g + 1)
+		{
+
+		}
+	}
+}

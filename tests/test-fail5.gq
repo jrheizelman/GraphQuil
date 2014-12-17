@@ -1,0 +1,13 @@
+/*
+ * Will it catch no main method?
+ * Author: Gemma
+ */
+
+void func1(){
+	int a;
+	int b;
+}
+
+int func2(int c, String k){
+	return c;
+}

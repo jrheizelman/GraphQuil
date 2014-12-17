@@ -1,0 +1,12 @@
+/*
+ * Author: Gemma Ragozzine
+ * Testing valid semantic analysis
+ */
+
+int g; /* global scope */
+
+void main(){
+	int k;
+	int g; /* scope of main function */
+
+}

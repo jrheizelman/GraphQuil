@@ -3,8 +3,7 @@
  * Tests wrong types
  */
 
-int t;
 int main () {
-	bool t;
+	String t;
 	1 + t;
 }

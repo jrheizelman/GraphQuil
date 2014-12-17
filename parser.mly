@@ -124,14 +124,15 @@ stmt_list:
   | stmt_list stmt { $2 :: $1 }
 
 block:
-  LBRACE stmt_list RBRACE { {locals = []; statements = List.rev $2; block_num = inc_block_num ()} }
+  /* added vdecl_list*/
+  LBRACE vdecl_list stmt_list RBRACE { {locals = List.rev $2; statements = List.rev $3; block_num = inc_block_num ()} }
 
 stmt:
   block                                                           { Block($1)}
-  /*| vdecl SEMI                                                    { Vdecl(snd $1, fst $1)}*/
   | expr SEMI                                                     { Expr($1) }
   | RETURN expr SEMI                                              { Return($2) }
-  | IF LPAREN expr RPAREN block %prec NOELSE                      { If($3, $5, {locals = []; statements = []; block_num = inc_block_num ()}) }
+  /*| IF LPAREN expr RPAREN block %prec NOELSE                      { If($3, $5, {locals = []; statements = []; block_num = inc_block_num ()}) }*/
+    | IF LPAREN expr RPAREN block %prec NOELSE                      { If($3, $5, {locals = []; statements = []; block_num = scope.contents}) }
   | IF LPAREN expr RPAREN block ELSE block                        { If ($3, $5, $7) }
   | FOR LPAREN expr_opt SEMI expr_opt SEMI expr_opt RPAREN block  { For($3, $5, $7, $9) }
   | WHILE LPAREN expr RPAREN block                                { While($3, $5) }
@@ -151,12 +152,12 @@ fdecl:
    any_type ID LPAREN formals_opt RPAREN LBRACE vdecl_list stmt_list RBRACE
      { { fname = $2;
          formals = $4; 
-         body_block = {locals = List.rev $7; statements = List.rev $8; block_num = inc_block_num()} ;
+         body_block = {locals = List.rev $7; statements = List.rev $8; block_num = scope.contents} ;
          ret = $1 } }
   | VOID ID LPAREN formals_opt RPAREN LBRACE vdecl_list stmt_list RBRACE
      { { fname = $2;
          formals = $4; 
-         body_block = {locals = List.rev $7; statements = List.rev $8; block_num = inc_block_num()} ;
+         body_block = {locals = List.rev $7; statements = List.rev $8; block_num = scope.contents} ;
          ret = Void } }
 
 program:

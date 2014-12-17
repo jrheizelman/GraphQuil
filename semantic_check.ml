@@ -266,12 +266,12 @@ let rec check_statement (s:stmt) ret_type env tagtab (scope:int) =
 			let(c1, c2, c3) = (check_expr e1 env tagtab, check_expr e2 env tagtab, check_expr e3 env tagtab) in 
 				if (type_of_expr c2 = Bool) then
 					(* Increment scope, check block to be valid block *)
-					For_t(c1, c2, c3, check_block b ret_type env tagtab (scope + 1))
+					For_t(c1, c2, c3, check_block b ret_type env tagtab (scope))
 				else raise(Failure("For loop condition must evaluate to a boolean expression"))
 		| While(e, b) ->
 			let ce = check_expr e env tagtab in
 				if (type_of_expr ce = Bool)
-					then While_t(ce, check_block b ret_type env tagtab (scope + 1))
+					then While_t(ce, check_block b ret_type env tagtab (scope))
 				else raise(Failure("While loop must evaluate on a boolean expression"))
 		(*| Vdecl(t, id) ->
 			symbol_table_add_var_list *)
