@@ -49,18 +49,35 @@ and gen_func func =
         let paramshelper para = List.fold_left (fun a b -> a ^ ((gen_var b) ^ ", ")) "" para in
         let helper2 rt fn para = 
           let t = gen_type rt in
-          sprintf "public %s %s (%s) {" t fn (paramshelper para)
+          sprintf "public %s %s (%s) {\n" t fn (paramshelper para)
         in helper2 returntype funcname params
       ) in
-      let output = (helper funcname) ^ "}\n"
+      let output = (helper funcname) ^ (gen_block internals) ^ "\n}\n"
       in sprintf "%s" output
+
+and gen_block block = 
+  let vars = block.locals_t and
+      stmts = block.statements_t in
+  let output = gen_stmt_list stmts in
+  sprintf "%s" output
+
+and gen_stmt_list stmts = 
+  let output = List.fold_left (fun a b -> a ^ (gen_stmt b)) "" stmts in
+  sprintf "%s" output
+
+and gen_stmt stmt = 
+  sprintf "hello\n"
+
+
+
+
 (*
 and gen_stmt stmt = (* generates statements in java *)
   let (a,b,c) = stmt in
   match b with
     Return_t(exp) -> gen_return_stmt exp
   | _ -> sprintf "other"
-
+(*
 and gen_expr expr = 
   match expr with (* generates expressions in java *)
     string -> sprintf "%s" (string_of_expr_t expr)
@@ -68,4 +85,4 @@ and gen_expr expr =
 
 and gen_return_stmt exp = (* generates return statement in java *)
   (*let output = (gen_expr exp) in*)
-  sprintf "return %s;" (string_of_expr_t exp)*)
+  sprintf "return %s;" (string_of_expr_t exp)*)*)
