@@ -1,9 +1,15 @@
 
-  public class graphQuil {
-      Void main()
-{
-print(4);
-}
+public class graphQuil {
+  
 
-  }
+  public static void main(String[] args) {
+System.out.print(4);
+
+
+
+}
+
+
+
+}
   
