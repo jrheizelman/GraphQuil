@@ -8,8 +8,8 @@ let rec writeToFile filename pString = (* writes to file *)
 
 and write_code filename p = (* adds class structure to java file and has the code written *)
   let (symbolvarlist, functionlist) = p in
-  let stmtString = gen_function_list functionlist
-  and symbolString = gen_var_list symbolvarlist in
+  let stmtString = gen_function_list functionlist and
+      symbolString = gen_var_list symbolvarlist in
   let output = sprintf "
 public class %s {
   %s
@@ -31,14 +31,16 @@ and gen_function_list functionlist =
   sprintf "%s" output
 
 and gen_func func = 
-  let funcname = func.fname_t in ignore func;
-
-  sprintf "hello2"
+  let returntype = func.ret_t and
+      funcname = func.fname_t and
+      params = func.formals_t and
+      internals = func.body_block_t in
+      let helper = function
+        "main" -> sprintf "public static void main(String[] args)"
+      | _ -> sprintf "hello there!" in
+      let output = helper funcname
+      in sprintf "%s" output
 (*
-and gen_stmt_list stmts =
-  let output = List.fold_left (fun a b -> a ^ (gen_stmt b)) "" stmts in
-  sprintf "%s" output
-
 and gen_stmt stmt = (* generates statements in java *)
   let (a,b,c) = stmt in
   match b with
