@@ -1,12 +1,11 @@
-(* 
-Written by Jon Paul
-*)
+open Sast
 
-open ast
-open sast
-open semantic_check
+let match_initial_type = function
+    fname_t -> sprintf "other"
+  | formals_t -> sprintf "other"
+  | ret_t -> sprintf "other"
+  | body_block_t -> sprintf "other"
 
-(* Returns the string name for the date type*)
 let rec get_datatype_name = function
  
 Literal_t (t) -> string_of_int t
@@ -41,44 +40,3 @@ Literal_t (t) -> string_of_int t
  | Access_t (t, _, _) -> t
  | Bool_Literal_t (b) -> string_of_bool b
  | Noexpr_t -> "" (*don't see Noexpr in our ast*)
-
-
-(* Returns the statement in java form as a string*)
-let rec get_java_statement = function
-
-Block_t (stmts) -> "{\n" ^ String.concat "" (List.map get_java_statement stmts) ^ "}\n" (*maps the recursive function to each element in the statement list provided as a function argument*)
-
-| Expr_t (expr) -> get_datatype_name expr^ ";\n";
-
-| Return_t (expr) -> "return " ^ get_datatype_name expr ^ ";\n"; 
-
-| If_t (expr, stmts, Block_t([])) -> "if (" ^ get_datatype_name expr ^ ")\n" ^ get_java_statement stmts 
-
-| If_t (expr, stmts, stmts2) -> "if (" ^ get_datatype_name expr ^ ")\n" ^ get_java_statement stmts ^ "else\n" ^ get_java_statement stmts2
-
-| For_t (expr1, expr2, expr3, stmts) -> "for ( int " ^ get_datatype_name expr1 ^ "=" get_datatype_name expr2 "; i<=" ^ get_datatype_name expr3 ^ ";" ^get_datatype_name expr1^"++)" ^ get_java_statement stmts
-
-| While_t (expr, stmts) -> "while (" ^ get_datatype_name expr ^ ") " ^ get_java_statement stmts
-
-
-(* Returns java declaration of the datatype as a string*)
-(* Not entire sure of left hand side construction *)
-let get_java_declaration hasID expr =
-	(match hasID with 
-		(*each of these is taken from the ast.ml file with the line "type validtype"*)
-		Int-> "int "
-		| Char-> "char "
-		| String-> "String "
-		| Bool-> "boolean "
-		| Void-> "void " ^ " " ^
- 		(match expr with
-			Assign_t (t, l, _)->  t in 
-			(match hasID with 
-				String-> "= new String(" ^ get_datatype_name expr ^ ");"
-				| _ -> "= " ^ get_datatype_name expr ^ ";")
-		| _ -> get_datatype_name expr ^ ";")
-
-and get_java_expression e = match e with
-Assign_t (t, l, _)->  t in 
-
-(*in let rec get_datatype_as_string hasName = function *)
