@@ -24,7 +24,7 @@ and gen_var_list varlist =
 
 and gen_var var = 
   let (name, t, scope) = var in
-  sprintf "%s" name
+  sprintf "%s %s" (gen_type t) name
 
 and gen_type = function
     Int -> " int "
@@ -43,18 +43,16 @@ and gen_func func =
       funcname = func.fname_t and
       params = func.formals_t and
       internals = func.body_block_t in
-      let paramshelper param = 
-        sprintf "hello" in
       let helper = function
         "main" -> sprintf "public static void main(String[] args) {"
       | _ -> (
+        let paramshelper para = List.fold_left (fun a b -> a ^ ((gen_var b) ^ ", ")) "" para in
         let helper2 rt fn para = 
-          let t = gen_type rt and
-          p = "hello" in
-          sprintf "public %s %s (%s) {" t fn p
+          let t = gen_type rt in
+          sprintf "public %s %s (%s) {" t fn (paramshelper para)
         in helper2 returntype funcname params
       ) in
-      let output = (helper funcname) ^ "}"
+      let output = (helper funcname) ^ "}\n"
       in sprintf "%s" output
 (*
 and gen_stmt stmt = (* generates statements in java *)
