@@ -15,7 +15,7 @@ let ancestor_scope = Array.make 1000 0
 
 
 let string_of_decl = function
-	  SymbTable_Var(n, t, id) -> string_of_variable (n,t) ^ " scope: " ^string_of_int id
+	  SymbTable_Var(n, t, id) -> string_of_variable (n,t) ^ " scope: " ^string_of_int id ^ " ancestor scope: " ^ string_of_int ancestor_scope.(id)
 	| SymbTable_Func(n, t, f, id) -> (string_of_valid_type t) ^ " " ^
 										n ^ "(" ^
 										String.concat ", " (List.map string_of_valid_type f) ^ ") scope: " ^ string_of_int id
@@ -34,7 +34,7 @@ let rec symbol_table_get_id (name:string) env =
 		let to_find = name ^ "_" ^ (string_of_int id) in
 			if Hashtbl.mem table to_find then id
 			else 
-				if id = 0 then raise (Failure("Get id - Symbol " ^ name ^ " not declared in current scope! (Scope: " ^ string_of_int id ^ ")"))
+				if id <= 0 then raise (Failure("Get id - Symbol " ^ name ^ " not declared in current scope! (Scope: " ^ string_of_int id ^ ")"))
 				else symbol_table_get_id name (table, ancestor_scope.(id))
 
 (* Look for symbol in given scope (block id) and if not found, recursively check all ancestor scopes*)
@@ -43,7 +43,7 @@ let rec symbol_table_find (name:string) env =
 		let to_find = name ^ "_" ^ (string_of_int id) in
 			if Hashtbl.mem table to_find then Hashtbl.find table to_find
 			else 
-				if id = 0 then raise (Failure("Find name - Symbol " ^ name ^ " not declared in current scope! (Scope: " ^ string_of_int id ^ ")"))
+				if id <= 0 then raise (Failure("Find name - Symbol " ^ name ^ " not declared in current scope! (Scope: " ^ string_of_int id ^ ")"))
 				else symbol_table_find name (table, ancestor_scope.(id))
 
 let rec symbol_table_add_decl (name:string) (decl:declaration) env =
@@ -82,13 +82,13 @@ and symbol_table_add_block (b:block) env =
 	let (table, id) = env in
 		let (table, id) = symbol_table_add_var_list b.locals (table, b.block_num) in
 			let (table, id) = symbol_table_add_stmt_list b.statements (table, id) in 
-					ancestor_scope.(b.block_num) <- id;(* Note which scope we are putting this block into *)
+					ancestor_scope.(b.block_num) <- id - 1;(* Note which scope we are putting this block into *)
 				(table, id) (* Return old scope we started int(block id) and name of last statement we added*)
 
 let symbol_table_add_func (f:func_decl) env = 
 	let (table, id) = env in 
 		let args = List.map snd f.formals in (* Get the name of each formal *)
-			let (table, _) = symbol_table_add_decl f.fname (SymbTable_Func(f.fname, f.ret, args, id)) env in
+			let (table, id) = symbol_table_add_decl f.fname (SymbTable_Func(f.fname, f.ret, args, id)) env in
 			let (table, id) = symbol_table_add_var_list f.formals (table, f.body_block.block_num) in
 				symbol_table_add_block f.body_block (table, id)
 

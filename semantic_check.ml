@@ -30,12 +30,7 @@ let type_of_expr = function
 	| Assign_t(t, _, _) -> t
 	| Bool_Lit_t(b) -> Bool
 	| Add_at_t(t,s, at) -> t
-	(*| Assign_at_t(t, _, _) -> t*)
 	| Access_t(t, _, _) -> t
-
-(*let type_check_attr (s, t, e) = 
-	if type_of_expr e = t then attribute_t(s,t,e)
-	else raise(Failure(string_of_expr_t e ^ " is not of type " ^ string_of_valid_type t))*)
 
 let type_of_attribute (at:attribute) = match at with Attr(_,t,_) -> t
 
@@ -101,6 +96,10 @@ let check_assign (l:expr_t) (r:expr_t) =
 let check_at_for_tag (tag: string) (a:attribute) = match a with 
 	Attr(s,t,e) -> if s = tag then true else false 
 
+let rec print_vt_list l = match l with 
+	[] -> ""
+	| head :: tail -> string_of_attribute head ^ " " ^ print_vt_list tail
+
 let handle_access (n:string) (tag:string) (ty:validtype) = match ty with 
 	Node(l) -> if List.exists (check_at_for_tag tag) l then let at = List.find (check_at_for_tag tag) l in 
 	 		Access_t(type_of_attribute at, n, tag)
@@ -110,40 +109,6 @@ let handle_access (n:string) (tag:string) (ty:validtype) = match ty with
 	 	else raise(Failure("The tag " ^ tag ^ " is not associated with variable " ^ n))
 	 | _ -> raise(Failure("Left side of access must be Node or Edge type, " ^ 
 			string_of_valid_type ty ^ " given."))
-
-(*let check_assign_attribute (l:expr_t) (r:attribute_t) = 
-	let(l_t, r_t) = (type_of_expr l, type_of_attribute r) in
-		if(l_t = r_t) then Assign_at_t(l_t, l, r)
-		else assign_err l_t r_t *)
-
-(*let check_add (e1:expr_t) (e2:expr_t) env = 
-	let (e1_t, e2_t) = (type_of_expr e1, type_of_expr) in match e1_t with
-		Node(l) -> ();
-		| Edge(l) -> ();
-		| _ -> raise(Failure("Left side of add statement must be Node or Edge type, " ^ 
-			string_of_valid_type e1_t ^ " given."))
-		match e2_t with 
-		Attr(a) -> Add_at_t(Node(a :: l))
-		| _ -> -> raise(Failure("Right side of add statement must be Attribute type, " ^ 
-			string_of_valid_type e1_t ^ " given."))*)
-
-(*let check_right_add type_l checked_r checked_l = 
-	let type_r = type_of_expr checked_r in match type_r with
-		Attr(l) -> Add_at_t(type_l, checked_l, checked_r)
-		| _ -> raise(Failure("Right side of add statement must be Attribute type, " ^ 
-			string_of_valid_type type_r ^ " given."))*)
-
-(*let check_access (e:expr_t) (s:string) env 
-	(*pass in attribute, check name of expr of what it belongs to to e*) = (* e is the node/edge, s is the tag *)
-	let e_t = type_of_expr e in
-		if(e_t = Node || e_t = Edge) then
-			let ((_, _, l), f) = (env, fun (at:attribute_t) -> let (t,_,e1) = tuple_of_attr_t at in t = s && e = e1) in
-				if List.exists f l then
-					let at = List.find f l in
-						Access_t(type_of_attribute at, e, s)
-				else raise(Failure("The tag " ^ s ^ " is not associated with " ^ string_of_expr_t e))
-		else raise(Failure("Access must be on type Node or " ^ 
-			"Edge, " ^ string_of_valid_type e_t ^ " given."))*)
 
 (* compare arg lists with func formal params *)
 let rec compare_args formals actuals =
@@ -234,26 +199,6 @@ and check_expr (e:expr) env =
 	 		| _ -> raise(Failure("Left side of add statement must be Node or Edge type, " ^ 
 				string_of_valid_type t ^ " given."))
 
-	 		(*check that its a node or an edge, return access_t of (stored type, id name (expr_t), tag name) *)
-
-	 		
-	 		(*check_att_type stored type == attribute type? gotten from tag name*)
-
-
-
-	 	(*let (nt, nstr, nid) = check_valid_id n env in
-	 		let (att, atstr, atid)  = check_valid_id at env in
-	 			if (nt != Node && nt != Edge) then raise(Failure("First argument must " ^ 
-	 				"be of type Node, " ^ string_of_valid_type nt ^ " was given."))
-	 		else
-	 			match att with
-	 				Int_at -> Add_at_t((Id_t(nt, nstr, nid), Id_t(att, atstr, atid)))
-	 				| Bool_at -> Add_at_t((Id_t(nt, nstr, nid), Id_t(att, atstr, atid)))
-	 				| Char_at -> Add_at_t((Id_t(nt, nstr, nid), Id_t(att, atstr, atid)))
-	 				| String_at -> Add_at_t((Id_t(nt, nstr, nid), Id_t(att, atstr, atid)))
-	 				| _ -> raise(Failure("Second argument must " ^ 
-	 				"be an attribute type, " ^ string_of_valid_type nt ^ " was given."))*)
-
 and check_exprList (eList: expr list) env = 
 	match eList with
 		  [] -> []
@@ -305,7 +250,7 @@ let rec check_statement (s:stmt) ret_type env (scope:int) =
 and check_block (b:block) (ret_type:validtype) env (scope:int) = 
 	let (table, _) = env in 
 		let variables = check_is_vdecl_list b.locals (table, b.block_num) in
-			let stmts = check_stmt_list b.statements ret_type (table, b.block_num) scope in
+			let stmts = check_stmt_list (List.rev b.statements) ret_type (table, b.block_num) scope in
 				{locals_t = variables; statements_t = stmts; block_num_t = b.block_num}
 
 
