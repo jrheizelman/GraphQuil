@@ -46,7 +46,9 @@ and gen_func func =
       let helper = function
         "main" -> sprintf "public static void main(String[] args) {"
       | _ -> (
-        let paramshelper para = List.fold_left (fun a b -> a ^ ((gen_var b) ^ ", ")) "" para in
+        let paramshelper para = 
+          let paraams = List.fold_left (fun a b -> a ^ ((gen_var b) ^ ", ")) "" para in
+          String.sub paraams 0 (String.length paraams - 1) in
         let helper2 rt fn para = 
           let t = gen_type rt in
           sprintf "public %s %s (%s) {\n" t fn (paramshelper para)
@@ -70,9 +72,16 @@ and gen_stmt = function
   | Expr_t(expr) -> gen_expr expr
   | Return_t(toreturn) -> gen_return_stmt toreturn
   | If_t(condition, block1, block2) -> gen_if_stmt condition block1 block2
-  | For_t(expr1, expr2, expr3, block) -> sprintf "for"
-  | While_t(expr, block) -> sprintf "while"
+  | For_t(expr1, expr2, expr3, block) -> gen_for_stmt expr1 expr2 expr3 block
+  | While_t(expr, block) -> gen_while_stmt expr block
 
+and gen_for_stmt expr1 expr2 expr3 block =
+  let output = sprintf "for(%s; %s; %s) {\n%s\n}" (gen_expr expr1) (gen_expr expr2) (gen_expr expr3) (gen_block block) in
+  sprintf "%s\n" output
+
+and gen_while_stmt expr block = 
+  let output = sprintf "while(%s) {\n%s\n}" (gen_expr expr) (gen_block block) in
+  sprintf "%s\n" output
 
 and gen_return_stmt expr = 
   let output = (gen_expr expr) in
