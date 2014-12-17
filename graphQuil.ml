@@ -2,7 +2,6 @@ open Unix
 open Printf
 
 let java_compiler = "javac"
-let java = "java"
 
 type action = Ast | SymbolTable | Sast | SAnalysis | Intermediate | Compile | Java | Help
 
@@ -64,7 +63,6 @@ let _ =
                      let execuatble_file_name = Javagen.write_code "graphQuil" checked in
                      let dot_java_file = execuatble_file_name ^ ".java" in
                     execvp java_compiler [|"";dot_java_file|] ;
-                      execv "chmod" [|"+x"; dot_java_file|]
         | Help -> print_endline (usage Sys.argv.(0)) (* impossible case *)
 
 

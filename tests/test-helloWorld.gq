@@ -1,0 +1,8 @@
+/*
+ * Hello World Example
+ * Author: Gemma Ragozzine
+ */
+
+ void main(){
+ 	print("hello world");
+ }

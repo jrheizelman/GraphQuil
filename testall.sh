@@ -6,6 +6,7 @@
 
 graphquil="./graphquil"
 java_output="java graphQuil"
+java_file="graphQuil"
 
 # Set time limit for all operations
 ulimit -t 30
@@ -211,6 +212,7 @@ TestRunningProgram() {
     # Compare ${basename}.i.out ${reffile}.out ${basename}.i.diff
 
     generatedfiles="$generatedfiles ${basename}.j.out" &&
+    tmpfiles="$tmpfiles " &&
     Run "$graphquil" "-j" $1 &&
     Run "$java_output" ">" ${basename}.j.out &&
     Compare ${basename}.j.out ${reffile}.out ${basename}.f.diff
