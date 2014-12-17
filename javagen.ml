@@ -1,3 +1,4 @@
+open Ast
 open Sast
 open Printf
 
@@ -6,25 +7,36 @@ let rec writeToFile filename pString = (* writes to file *)
     fprintf file "%s" pString
 
 and write_code filename p = (* adds class structure to java file and has the code written *)
-  let stmtString = gen_stmt_list p in
-  (*let stmtString = match_type p in*)
+  let (symbolvarlist, functionlist) = p in
+  let stmtString = gen_function_list functionlist
+  and symbolString = gen_var_list symbolvarlist in
   let output = sprintf "
-  public class %s {
-      %s
-  }
-  " filename stmtString in
-    writeToFile filename output;
-    output
+public class %s {
+  %s
+  %s
+}
+  " filename symbolString stmtString in
+  writeToFile filename output
 
-and match_type toType =
-  match toType with
-    fname_t -> sprintf "%s" (string_of_func_t toType)
-  | formals_t -> sprintf "other"
-  | ret_t -> sprintf "other"
-  | body_block_t -> sprintf "other"
+and gen_var_list varlist = 
+  let output = List.fold_left (fun a b -> a ^ (gen_var b)) "" varlist in
+  sprintf "%s" output
 
+and gen_var var = 
+  let (name, t, scope) = var in
+  sprintf "%s" name
+
+and gen_function_list functionlist = 
+  let output = List.fold_left (fun a b -> a ^ (gen_func b)) "" functionlist in
+  sprintf "%s" output
+
+and gen_func func = 
+  let funcname = func.fname_t in ignore func;
+
+  sprintf "hello2"
+(*
 and gen_stmt_list stmts =
-  let output = List.fold_left (fun a b -> a ^ (match_type b)) "" stmts in
+  let output = List.fold_left (fun a b -> a ^ (gen_stmt b)) "" stmts in
   sprintf "%s" output
 
 and gen_stmt stmt = (* generates statements in java *)
@@ -40,4 +52,4 @@ and gen_expr expr =
 
 and gen_return_stmt exp = (* generates return statement in java *)
   (*let output = (gen_expr exp) in*)
-  sprintf "return %s;" (string_of_expr_t exp)
+  sprintf "return %s;" (string_of_expr_t exp)*)
